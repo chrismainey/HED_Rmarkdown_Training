@@ -1,0 +1,35 @@
+---
+title: "Exercise 14: RMarkdown"
+author: "Chris Mainey"
+date: "16/09/2019"
+output: html_document
+params:
+  Trust: "Trust1"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown Exercise
+
+This exercise is used to develop a sample report using the `LOS_model` dataset from the `NHSRdatasets` package.
+More information about this package is avaialble at:  [here](https://cran.r-project.org/web/packages/NHSRdatasets/index.html).
+
+
+
+## Full dataset statistics
+
+
+
+<br><br>
+
+***
+
+<br><br>
+
+## Now parameterised:
+
+We will use the same chunks from above, but using `filter` to taget our dataset at a parameter, Trust:1
+
+

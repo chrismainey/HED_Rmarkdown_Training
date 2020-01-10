@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>R Markdown</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Chris Mainey chris.mainey@uhb.nhs.uk" />
+    <link href="libs/font-awesome-5.3.1/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="libs\HED.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+
+
+
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+# Introduction to `R` - Day 2
+
+&lt;br&gt;
+
+__Chris Mainey__
+
+&lt;a href="mailto:chris.mainey@uhb.nhs.uk"&gt;chris.mainey@uhb.nhs.uk&lt;/a&gt;
+
+&lt;br&gt;&lt;br&gt;
+2019/06/20 (updated: 2020-01-10)
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;span style="font-size:14px !important;"&gt; __&amp;copy; Healthcare Evaluation Data (HED)__- part of Health Informatics, University Hospitals Birmingham NHS Foundation Trust.  
+&lt;b&gt;NOT TO BE REPUBLISHED OR DISTRIBUTED WITHOUT CONSENT&lt;/b&gt; &lt;/span&gt;
+
+---
+
+# RStudio Cloud
+
+We are using RStudio cloud for this course.
+
++ Browser-based RStudio session
++ All materials are pre-loaded
++ Material will be available on GitHub afterwards for two weeks
++ We will send round details after the course
+
+&lt;br&gt;&lt;br&gt;
+### Please got to the following link and register for the workspace:
+# https://bit.ly/34ntbTx
+
+
+---
+
+# Summary (1)
+
+__Day 1: Morning__
+- What is `R`, and how does RStudio fit in?
+- How to get installed and started
+- Packages, Functions &amp; Data Types
+- Basic Syntax
+- Importing and exporting data
+- Summary statistics
+
+__Day 1: Afternoon__
+- The Tidyverse
+
+- `dplyr` for manipulation, `tidyr` and "pivoting"
+- Connections to databases: `RODBC` vs. `DBI` &amp; `dplyr`
+
+---
+
+# Summary (2)
+
+__Day 2: Morning__
+
+- Recap
+- `ggplot2`: high quality visualisations
+- Simple predictive models using regression
+
+&lt;br&gt;&lt;br&gt;
+
+__Day 2: Afternoon__
+- Rmarkdown
+- Analysis Exercise
+- R clinic
+
+---
+
+---
+class: middle
+
+# Rmarkdown: 
+### Documentation, Notebooks, and Reporting Structures in `R`
+
+
+---
+
+# Overview
+
+`Markdown` (.md) is a common free-text format.  It can be used to write documents then mark the various different sections, formats etc.
+
+--
+
+&lt;br&gt;
+
+`Rmarkdown` is an `R`-specific flavour that adds `R` code into the `Mardown` paradigm.  You can write a document that runs code, chose whether to show this code at the output, and then render it to various output formats.
+
+
+--
+
++ Can `knit` to HTML, PDF, Word or find other connectors, from a single `Rmarkdown` file using `knitr` package.
+
+--
+
++ Allows you to collaborate and share your code in well formatted reports, or notebooks.
+
+--
+
++ It could also be used as a final report, teaching material, blog post etc.
+
+
++ Can be parameterised to provide standard/regular reports control by parameters like date, or specialty code.
+
+&lt;br&gt;
+
+This is section is primarily taken from __R Markdown: The Definitive Guide__ by _Yihui Xie, J. J. Allaire, Garrett Grolemund_
+https://bookdown.org/yihui/rmarkdown/
+
+
+---
+
+# Structure
+
+Markdown documents are composed of three main elements:
+
++ Metadata
++ Text
++ Code
+
+--
+
+&lt;br&gt;
+Other elements, depending on the output, might be:
++ CSS files
++ javascript
++ html 'widgets'
++ Shiny apps
+
+---
+
+# Metadata: YAML
+
+The metadata of a markdown file is the first thing you see at the top of the document.  
+
++ It sets properties like document name, author but also functional elements like:
+  + File locations
+  + Output formats (HTML, PDF, Word etc.)
+  + Styling elements, including CSS
+--
+&lt;br&gt;&lt;br&gt;
++ It is written in __YAML__ - ('YAML Ain't Markup Language') [Wikipedia article](https://en.wikipedia.org/wiki/YAML)
+  - Reference: https://bookdown.org/yihui/bookdown/yaml-options.html
+  
+```yaml
+---
+title: "An introduction Rmarkdown"
+author: "Chris Mainey"
+date: "16/05/2019"
+output: 
+  html_doucment
+  word_document
+bibliography: references.bib
+---
+```
+
+---
+
+# Text
+
+Free-text is treated as such, and coded as a paragraph `&lt;p&gt;` element in HTML.  Other formatting is achieved using special characters, pandoc, HTML etc.
+
+--
+
+.pull-left[
+
+```text
+
++ Bullet 1
+
+  + Bullet 2
+
+
+
+
+
+
+# Heading 1
+
+
+
+
+
+## Heading 2
+
+
+
+### Heading 3
+
+
+
+_italic_ and __bold__
+
+
+[BBC News](www.bbc.co.uk/news)
+```
+]
+
+
+.pull-right[
++ Bullet 1
+  + Bullet 2
+
+# Heading 1
+## Heading 2
+### Heading 3
+
+_italic_ and __bold__
+
+[BBC News](www.bbc.co.uk/news)
+]
+
+
+---
+
+# Code (1)
+
+In-line code uses single backticks e.g. `` `r mean(rnorm(50,50,12))` ``  evalautes to 50.4984941 (figure is generated from `R` code here)
+
+&lt;br&gt;
+Similarly you can start code blocks with three backticks:  ` ``` ` , e.g. 
+
+--
+
+
+```r
+library(ggplot2)
+data(mtcars)
+ggplot(mtcars, aes(x=mpg))+
+  geom_histogram(col=1,fill="orange", alpha=0.75,bins=10)+
+  ggtitle("Miles per gallon (mpg) of cars in 'mtcars' dataset")
+```
+
+&lt;img src="Rmarkdown_presentation_files/figure-html/plotexample-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Code(2)
+
+The header of the last section was:
+
+&lt;img src= 'Assets/Code_Header.png' width=100%&gt;
+
+&lt;br&gt;&lt;br&gt;
+So we gave it the language (r), a name for the chunk ('plotexample'), 
+turned warnings and messages off, and set 
+options for alignment and size.
+
+--
+
+&lt;br&gt;&lt;br&gt;
+There are a lot of options for code chunks, but here are the main important ones:
++ eval=FALSE -  __Don't evaluate/run the code block__
++ echo=FALSE -  __Don't display the code block__
++ include=FALSE -  __Run the code but don't include in final document__
++ collapse = TRUE -  __Merge the code and all outputs into a single chunk for display__
+
+---
+
+# Parameters:
+
+Here's where it gets even more useful.  If you have a report that you need to repeat many times, you might want to use 'parameters.'
+
++ You may want to:
+ + Run daily reports for different wards / gp practises
+ + Change the key measure of a standard report
+ + Change report dates etc.
+
+--
+
+You add parameters to your YAML header:
+
+
+```r
+---
+title: "An introduction Rmarkdown"
+author: "Chris Mainey"
+date: "16/05/2019"
+output: 
+  html_doucment
+*params:
+*  Trust: "Trust1"
+---
+```
+--
+
++ ...then refer to them as if in a `data.frame`: `params$Trust`
+--
+
++ You can call `rmarkdown::render()` with `params` or `params="ask"` 
+
+
+
+---
+
+# Fancier Stuff
+
+There are lots of fancier thing you can do, some of which require plugins, HTML or CSS but many don't.
+
+.pull-left[
++ MathJax
++ LaTeX
++ Footnotes and annotations
++ BibTeX Bibliographies (including integration with zotero etc.)
++ `htmlWidgets` like interactive maps, paginated tables with filters
++ Shiny documents
++ Powerpoint and Word templates
+
+]
+
+.pull-right[
+&lt;br&gt;
+&lt;a href="https://imgflip.com/i/30tnps"&gt;&lt;img src="https://i.imgflip.com/30tnps.jpg" title="made at imgflip.com" width=100%/&gt;&lt;/a&gt;
+]
+---
+
+class: left, middle
+
+
+# Exercise 9: 
+## Build an `Rmarkdown` document from template
+
++ Use the `File` menu to create a new Markdown document
++ Read through it and see the formatting
++ 'knit' the document together, using the `knitr` package, button at the top
++ Look at the output
+
+
+---
+
+# Exercise 10: 
+### Build a parametrised `Rmarkdown` using `LOS_models`
+
++ Create a new markdown document or clear your last one.
++ In this document, please do the following:
+ + Create a hidden code block that loads the data
+ + Add some titles and text to explain what is happening
+ + Add a hyper-link to the `NHSRdataset` package (find it via Google)
+ + Add a code block using `dplyr` to summarise the `mean` and `median` LOS
+ + Add a horizontal rule 
+ + Do the same again for just `Trust1`
+ + Can you use a parameter to set the Trust?
+
+---
+# Rmarkdown tips
+
++ Check the 'options' via the tools menu and check you are using `knitr` not `sweave`
++ You can `knit` to PDF or Word easily, but may need to install additional packages
++ You may need Latex installed on Windows, I use Miktex or `tinytex`
++ You can control lots of stuff using the YAML or chunk options
++ You can use CCS to style outputs consistently
++ You can write presentations, e.g. this is using `rmakrdown` with `xaringan`
++ Other extension include `blogdown`, `bookdown`, `thesisdown` and many others
++ You can use with reference managers, e.g. Endnote or Zotero, using BibTeX
+
+
+---
+
+# Thanks!
+
+<i class="fas  fa-envelope " style="color:#94C600;"></i> &lt;a href="mailto:hed@uhb.nhs.uk;" style="line-height:2;"&gt; hed@uhb.nhs.uk &lt;/a&gt;
+&lt;br&gt;
+<i class="fas  fa-globe " style="color:#94C600;"></i> &lt;a href="http://www.hed.nhs.uk" style="line-height:2;"&gt;http://www.hed.nhs.uk&lt;/a&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+<i class="fas  fa-envelope " style="color:#94C600;"></i> &lt;a href="mailto:chris.mainey@uhb.nhs.uk;" style="line-height:2;"&gt; chris.mainey@uhb.nhs.uk &lt;/a&gt;
+&lt;br&gt;
+<i class="fab  fa-twitter " style="color:#94C600;"></i> &lt;a href="https://twitter.com/chrismainey?s=09" style="line-height:2;"&gt;@chrismainey&lt;/a&gt;
+&lt;br&gt;
+<i class="fab  fa-github " style="color:#94C600;"></i> &lt;a href="https://github.com/chrismainey)" style="line-height:2;"&gt;chrismainey&lt;/a&gt;
+&lt;br&gt;
+<i class="fas  fa-globe " style="color:#94C600;"></i> &lt;a href="http://www.mainard.co.uk" style="line-height:2;"&gt;http://www.mainard.co.uk&lt;/a&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;img src= 'Assets/funnelplotr.png' width=10% height=10% align="middle"&gt; `FunnelPlotR`  <i class="fas  fa-box "></i>  now available on CRAN!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

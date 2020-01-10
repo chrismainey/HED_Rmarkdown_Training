@@ -1,0 +1,433 @@
+---
+title: "R Markdown"
+author: "Chris Mainey chris.mainey@uhb.nhs.uk"
+date: "2020/01/10 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    chakra: libs/remark-latest.min.js
+    css: "libs/HED.css"
+    lib_dir: libs
+    seal: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: center, middle
+
+```{r setup, include=FALSE}
+# Create a vector called 'events' with 10 random numbers in it.
+library(dplyr)
+library(NHSRdatasets)
+data("LOS_model")
+
+set.seed(123)
+
+events<- c(10,3,6,2,5,7,9,3,5,6)
+
+# Create a second vector called 'predictor' with:
+
+predictor<- events * runif(10,min = 2, 4)
+
+
+# Use the `plot` function to visualise the points
+
+plot(events, predictor)
+
+# ggplot2 version, ggplot takes a data.frame:
+library(ggplot2)
+
+
+# Create a data frame called 'my_data' from both 'events' and 'predictor'
+
+my_data <- data.frame(events, predictor)
+
+
+# What is the next statement doing?  
+group<- factor(rep_len(c("A","B","C"), 10))
+
+
+# How would you add this as a column to your data frame?
+
+my_data$group<-group
+
+
+```
+
+
+
+<br><br><br><br><br><br>
+# Introduction to `R` - Day 2
+
+<br>
+
+__Chris Mainey__
+
+<a href="mailto:chris.mainey@uhb.nhs.uk">chris.mainey@uhb.nhs.uk</a>
+
+<br><br>
+2019/06/20 (updated: `r Sys.Date()`)
+<br><br><br><br><br><br>
+<span style="font-size:14px !important;"> __&copy; Healthcare Evaluation Data (HED)__- part of Health Informatics, University Hospitals Birmingham NHS Foundation Trust.  
+<b>NOT TO BE REPUBLISHED OR DISTRIBUTED WITHOUT CONSENT</b> </span>
+
+---
+
+# RStudio Cloud
+
+We are using RStudio cloud for this course.
+
++ Browser-based RStudio session
++ All materials are pre-loaded
++ Material will be available on GitHub afterwards for two weeks
++ We will send round details after the course
+
+<br><br>
+### Please got to the following link and register for the workspace:
+# https://bit.ly/34ntbTx
+
+
+---
+
+# Summary (1)
+
+__Day 1: Morning__
+- What is `R`, and how does RStudio fit in?
+- How to get installed and started
+- Packages, Functions & Data Types
+- Basic Syntax
+- Importing and exporting data
+- Summary statistics
+
+__Day 1: Afternoon__
+- The Tidyverse
+
+- `dplyr` for manipulation, `tidyr` and "pivoting"
+- Connections to databases: `RODBC` vs. `DBI` & `dplyr`
+
+---
+
+# Summary (2)
+
+__Day 2: Morning__
+
+- Recap
+- `ggplot2`: high quality visualisations
+- Simple predictive models using regression
+
+<br><br>
+
+__Day 2: Afternoon__
+- Rmarkdown
+- Analysis Exercise
+- R clinic
+
+---
+
+---
+class: middle
+
+# Rmarkdown: 
+### Documentation, Notebooks, and Reporting Structures in `R`
+
+
+---
+
+# Overview
+
+`Markdown` (.md) is a common free-text format.  It can be used to write documents then mark the various different sections, formats etc.
+
+--
+
+<br>
+
+`Rmarkdown` is an `R`-specific flavour that adds `R` code into the `Mardown` paradigm.  You can write a document that runs code, chose whether to show this code at the output, and then render it to various output formats.
+
+
+--
+
++ Can `knit` to HTML, PDF, Word or find other connectors, from a single `Rmarkdown` file using `knitr` package.
+
+--
+
++ Allows you to collaborate and share your code in well formatted reports, or notebooks.
+
+--
+
++ It could also be used as a final report, teaching material, blog post etc.
+
+
++ Can be parameterised to provide standard/regular reports control by parameters like date, or specialty code.
+
+<br>
+
+This is section is primarily taken from __R Markdown: The Definitive Guide__ by _Yihui Xie, J. J. Allaire, Garrett Grolemund_
+https://bookdown.org/yihui/rmarkdown/
+
+
+---
+
+# Structure
+
+Markdown documents are composed of three main elements:
+
++ Metadata
++ Text
++ Code
+
+--
+
+<br>
+Other elements, depending on the output, might be:
++ CSS files
++ javascript
++ html 'widgets'
++ Shiny apps
+
+---
+
+# Metadata: YAML
+
+The metadata of a markdown file is the first thing you see at the top of the document.  
+
++ It sets properties like document name, author but also functional elements like:
+  + File locations
+  + Output formats (HTML, PDF, Word etc.)
+  + Styling elements, including CSS
+--
+<br><br>
++ It is written in __YAML__ - ('YAML Ain't Markup Language') [Wikipedia article](https://en.wikipedia.org/wiki/YAML)
+  - Reference: https://bookdown.org/yihui/bookdown/yaml-options.html
+  
+```yaml
+---
+title: "An introduction Rmarkdown"
+author: "Chris Mainey"
+date: "16/05/2019"
+output: 
+  html_doucment
+  word_document
+bibliography: references.bib
+---
+```
+
+---
+
+# Text
+
+Free-text is treated as such, and coded as a paragraph `<p>` element in HTML.  Other formatting is achieved using special characters, pandoc, HTML etc.
+
+--
+
+.pull-left[
+
+```text
+
++ Bullet 1
+
+  + Bullet 2
+
+
+
+
+
+
+# Heading 1
+
+
+
+
+
+## Heading 2
+
+
+
+### Heading 3
+
+
+
+_italic_ and __bold__
+
+
+[BBC News](www.bbc.co.uk/news)
+```
+]
+
+
+.pull-right[
++ Bullet 1
+  + Bullet 2
+
+# Heading 1
+## Heading 2
+### Heading 3
+
+_italic_ and __bold__
+
+[BBC News](www.bbc.co.uk/news)
+]
+
+
+---
+
+# Code (1)
+
+In-line code uses single backticks e.g. `` `r "\u0060r mean(rnorm(50,50,12))\u0060"` ``  evalautes to `r mean(rnorm(50,50,12))` (figure is generated from `R` code here)
+
+<br>
+Similarly you can start code blocks with three backticks:  ` ``` ` , e.g. 
+
+--
+
+```{r plotexample, message=FALSE, warning=FALSE, fig.align='center', fig.width=5,fig.height=4.3}
+library(ggplot2)
+data(mtcars)
+ggplot(mtcars, aes(x=mpg))+
+  geom_histogram(col=1,fill="orange", alpha=0.75,bins=10)+
+  ggtitle("Miles per gallon (mpg) of cars in 'mtcars' dataset")
+
+```
+
+
+---
+
+# Code(2)
+
+The header of the last section was:
+
+<img src= 'Assets/Code_Header.png' width=100%>
+
+<br><br>
+So we gave it the language (r), a name for the chunk ('plotexample'), 
+turned warnings and messages off, and set 
+options for alignment and size.
+
+--
+
+<br><br>
+There are a lot of options for code chunks, but here are the main important ones:
++ eval=FALSE -  __Don't evaluate/run the code block__
++ echo=FALSE -  __Don't display the code block__
++ include=FALSE -  __Run the code but don't include in final document__
++ collapse = TRUE -  __Merge the code and all outputs into a single chunk for display__
+
+---
+
+# Parameters:
+
+Here's where it gets even more useful.  If you have a report that you need to repeat many times, you might want to use 'parameters.'
+
++ You may want to:
+ + Run daily reports for different wards / gp practises
+ + Change the key measure of a standard report
+ + Change report dates etc.
+
+--
+
+You add parameters to your YAML header:
+
+```{r yaml2, eval=FALSE}
+---
+title: "An introduction Rmarkdown"
+author: "Chris Mainey"
+date: "16/05/2019"
+output: 
+  html_doucment
+{{params:}}
+{{  Trust: "Trust1"}}
+---
+```
+--
+
++ ...then refer to them as if in a `data.frame`: `params$Trust`
+--
+
++ You can call `rmarkdown::render()` with `params` or `params="ask"` 
+
+
+
+---
+
+# Fancier Stuff
+
+There are lots of fancier thing you can do, some of which require plugins, HTML or CSS but many don't.
+
+.pull-left[
++ MathJax
++ LaTeX
++ Footnotes and annotations
++ BibTeX Bibliographies (including integration with zotero etc.)
++ `htmlWidgets` like interactive maps, paginated tables with filters
++ Shiny documents
++ Powerpoint and Word templates
+
+]
+
+.pull-right[
+<br>
+<a href="https://imgflip.com/i/30tnps"><img src="https://i.imgflip.com/30tnps.jpg" title="made at imgflip.com" width=100%/></a>
+]
+---
+
+class: left, middle
+
+
+# Exercise 9: 
+## Build an `Rmarkdown` document from template
+
++ Use the `File` menu to create a new Markdown document
++ Read through it and see the formatting
++ 'knit' the document together, using the `knitr` package, button at the top
++ Look at the output
+
+
+---
+
+# Exercise 10: 
+### Build a parametrised `Rmarkdown` using `LOS_models`
+
++ Create a new markdown document or clear your last one.
++ In this document, please do the following:
+ + Create a hidden code block that loads the data
+ + Add some titles and text to explain what is happening
+ + Add a hyper-link to the `NHSRdataset` package (find it via Google)
+ + Add a code block using `dplyr` to summarise the `mean` and `median` LOS
+ + Add a horizontal rule 
+ + Do the same again for just `Trust1`
+ + Can you use a parameter to set the Trust?
+
+---
+# Rmarkdown tips
+
++ Check the 'options' via the tools menu and check you are using `knitr` not `sweave`
++ You can `knit` to PDF or Word easily, but may need to install additional packages
++ You may need Latex installed on Windows, I use Miktex or `tinytex`
++ You can control lots of stuff using the YAML or chunk options
++ You can use CCS to style outputs consistently
++ You can write presentations, e.g. this is using `rmakrdown` with `xaringan`
++ Other extension include `blogdown`, `bookdown`, `thesisdown` and many others
++ You can use with reference managers, e.g. Endnote or Zotero, using BibTeX
+
+
+---
+
+# Thanks!
+
+`r icon::fa("envelope", color=rgb(148, 198, 0, maxColorValue = 255))` <a href="mailto:hed@uhb.nhs.uk;" style="line-height:2;"> hed@uhb.nhs.uk </a>
+<br>
+`r icon::fa("globe", color=rgb(148, 198, 0, maxColorValue = 255))` <a href="http://www.hed.nhs.uk" style="line-height:2;">http://www.hed.nhs.uk</a>
+<br>
+<br>
+<br>
+`r icon::fa("envelope", color=rgb(148, 198, 0, maxColorValue = 255))` <a href="mailto:chris.mainey@uhb.nhs.uk;" style="line-height:2;"> chris.mainey@uhb.nhs.uk </a>
+<br>
+`r icon::fa("twitter", color=rgb(148, 198, 0, maxColorValue = 255))` <a href="https://twitter.com/chrismainey?s=09" style="line-height:2;">@chrismainey</a>
+<br>
+`r icon::fa("github", color=rgb(148, 198, 0, maxColorValue = 255))` <a href="https://github.com/chrismainey)" style="line-height:2;">chrismainey</a>
+<br>
+`r icon::fa("globe", color=rgb(148, 198, 0, maxColorValue = 255))` <a href="http://www.mainard.co.uk" style="line-height:2;">http://www.mainard.co.uk</a>
+<br>
+<br>
+<img src= 'Assets/funnelplotr.png' width=10% height=10% align="middle"> `FunnelPlotR`  `r icon::fa("box")`  now available on CRAN!
+
+
