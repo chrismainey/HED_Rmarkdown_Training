@@ -1,0 +1,50 @@
+---
+title: 'Exercise 11: RMarkdown Batches'
+author: "Chris Mainey"
+date: "14/01/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This exercise is used to develop a batch of reports using the `LOS_model` dataset from the `NHSRdatasets` package.
+More information about this package is avaialble at:  [here](https://cran.r-project.org/web/packages/NHSRdatasets/index.html).
+
+```{r load, echo = FALSE}
+library(NHSRdatasets)
+data(LOS_model)
+```
+
+The RMarkdown file in the previous exercise used a parameter in its YAML header in order to select data for 'Trust1'. We could change this value and then press 'Knit' each time that we wanted to make a report for a different trust, but if there are 200 trusts this would take a very long time.
+
+Instead of doing this manually, we can change the parameter and create the report using the `render` function of rmarkdown.
+
+`render` is called as part of the 'knit' process and takes its function arguments from the YAML header by default. If arguments are given to the function they will _override_ the YAML header values, including the `params` variable. `render` can be used to customise the output file name, input parameters, and many other important features.
+
+To write a report for every trust in the LOS_model dataset and not just Trust1, we could run the following:
+
+```{r Rmarkdown_batch echo = TRUE, eval=FALSE}
+# Make a list of trusts to build reports for
+trusts <- levels(LOS_model$Organisation)
+
+# Make a folder to keep the files in
+if(!dir.exists("report_batch")){
+  dir.create("report_batch")
+}
+
+# for loop to write the reports with the render function
+for(trust_name in trusts){
+  
+  # render can take a lot of parameters. For this exercise we have used:
+  #     input is the .Rmd file to build a report from. Use your own file or the one in Exercises/Solutions/
+  #     output_file is the name of the file which will be created. Make sure it is different for each loop, or it will overwrite the existing file each time
+  #     params is a LIST of named variables to pass to the report. The solution report has the variable Trust = "Trust1"
+      
+  rmarkdown::render(input = "Ex10_RMarkdown_Report.Rmd"
+                    , output_file = file.path("report_batch", paste("Ex10_report_", trust_name, sep = ""))
+                    , params = list(Trust = trust_name)
+  )
+}
+```
