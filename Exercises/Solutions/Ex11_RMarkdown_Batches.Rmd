@@ -9,14 +9,6 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This exercise is used to develop a batch of reports using the `LOS_model` dataset from the `NHSRdatasets` package.
-More information about this package is avaialble at:  [here](https://cran.r-project.org/web/packages/NHSRdatasets/index.html).
-
-```{r load, echo = FALSE}
-library(NHSRdatasets)
-data(LOS_model)
-```
-
 The RMarkdown file in the previous exercise used a parameter in its YAML header in order to select data for 'Trust1'. We could change this value and then press 'Knit' each time that we wanted to make a report for a different trust, but if there are 200 trusts this would take a very long time.
 
 Instead of doing this manually, we can change the parameter and create the report using the `render` function of rmarkdown.
@@ -26,6 +18,9 @@ Instead of doing this manually, we can change the parameter and create the repor
 To write a report for every trust in the LOS_model dataset and not just Trust1, we could run the following:
 
 ```{r Rmarkdown_batch echo = TRUE, eval=FALSE}
+library(NHSRdatasets)
+data(LOS_model)
+
 # Make a list of trusts to build reports for
 trusts <- levels(LOS_model$Organisation)
 
@@ -42,9 +37,43 @@ for(trust_name in trusts){
   #     output_file is the name of the file which will be created. Make sure it is different for each loop, or it will overwrite the existing file each time
   #     params is a LIST of named variables to pass to the report. The solution report has the variable Trust = "Trust1"
       
-  rmarkdown::render(input = "Ex10_RMarkdown_Report.Rmd"
+  rmarkdown::render(input = "Ex10C_RMarkdown_Report.Rmd"
                     , output_file = file.path("report_batch", paste("Ex10_report_", trust_name, sep = ""))
                     , params = list(Trust = trust_name)
   )
 }
 ```
+
+Now make a _single_ RMarkdown document which can create two reports for each trust; one the same as the reports we just made but with the title "Length of Stay Report: <trust name>". The other report should have the title "Extended Length of Stay Report: <trust name>" which includes an extra code chunk and a plot of age vs number of deaths for that trust, grouped into the age categories 0-16, 17-64, 65+
+
+Build the extended and non-extended report for Trust2 and Trust5 in the code chunk below.
+
+```{r build_extended_reports, eval = FALSE}
+
+# Make a folder to keep the files in
+if(!dir.exists("report_batch")){
+  dir.create("report_batch")
+}
+
+# for loop to write the reports with the render function
+for(trust_name in c("Trust2", "Trust5")){
+  for(extended in c(0,1)){
+  # render can take a lot of parameters. For this exercise we have used:
+  #     input is the .Rmd file to build a report from. Use your own file or the one in Exercises/Solutions/
+  #     output_file is the name of the file which will be created. Make sure it is different for each loop, or it will overwrite the existing file each time
+  #     params is a LIST of named variables to pass to the report. The solution report has the variable Trust = "Trust1"
+      
+  rmarkdown::render(input = "Ex11B_report.Rmd"
+                    , output_file = file.path("report_batch", paste("Ex11_report_"
+                                                                    , trust_name
+                                                                    , ifelse(extended == 0, "", "_extended")
+                                                                    , sep = "")
+                                              )
+                    , params = list(Trust = trust_name, extended = extended)
+                    )
+  }
+}
+
+
+```
+
