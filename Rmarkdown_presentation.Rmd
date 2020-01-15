@@ -51,7 +51,6 @@ group<- factor(rep_len(c("A","B","C"), 10))
 
 my_data$group<-group
 
-
 ```
 
 
@@ -270,12 +269,10 @@ _italic_ and __bold__
 
 ---
 
-# Code (1)
+# Code Chunks
 
-In-line code uses single backticks e.g. `` `r "\u0060r mean(rnorm(50,50,12))\u0060"` ``  evalautes to `r mean(rnorm(50,50,12))` (figure is generated from `R` code here)
-
-<br>
-Similarly you can start code blocks with three backticks:  ` ``` ` , e.g. 
+Blocks of code in R, SQL, Python and other languages can be run as part of the document in __chunks__.
+The result of the code can be shown on its own, with the code chunk or not at all.
 
 --
 
@@ -291,20 +288,20 @@ ggplot(mtcars, aes(x=mpg))+
 
 ---
 
-# Code(2)
+# Code Chunks (2)
 
-The header of the last section was:
+Start and end code chunks with three backticks 
 
-<img src= 'Assets/Code_Header.png' width=100%>
+The last section looked like this:
 
-<br><br>
-So we gave it the language (r), a name for the chunk ('plotexample'), 
-turned warnings and messages off, and set 
-options for alignment and size.
+<img src= 'Assets/code-chunk-header-1.PNG' width=100%>
+
+The chunk header is inside {curly brackets}. We gave it the language (r), a name for the chunk ('plotexample'), 
+turned warnings and messages off, and set options for figure alignment and size.
 
 --
 
-<br><br>
+<br>
 There are a lot of options for code chunks, but here are the main important ones:
 + eval=FALSE -  __Don't evaluate/run the code block__
 + echo=FALSE -  __Don't display the code block__
@@ -313,14 +310,44 @@ There are a lot of options for code chunks, but here are the main important ones
 
 ---
 
+# Inline Code
+
+Code can be run within the text by surrounding it with <code>&#96;r &#96;</code>
+
+<br>
+
+Insert numeric values and change the text with conditional statements
+
+<br>
+
+--
+
+.pull-left[
+The sum of 4 and 5 is <code>&#96;r 4+5&#96;</code>
+
+<br>
+
+4 is <code>&#96;r if(4>5){"greater than"} else {"less than"}&#96;</code> 5
+]
+
+.pull-right[
+&rarr; The sum of 4 and 5 is `r 4+5`
+
+<br>
+
+&rarr; 4 is `r if(4>5){"greater than"} else {"less than"}` than 5
+]
+
+---
+
 # Parameters:
 
-Here's where it gets even more useful.  If you have a report that you need to repeat many times, you might want to use 'parameters.'
+Here's where it gets even more useful.  If you have a report that you need to repeat many times, you might want to use 'parameters'.
 
 + You may want to:
- + Run daily reports for different wards / gp practises
- + Change the key measure of a standard report
- + Change report dates etc.
+  + Run daily reports for different wards / gp practises
+  + Change the key measure of a standard report
+  + Change report dates etc.
 
 --
 
@@ -328,7 +355,7 @@ You add parameters to your YAML header:
 
 ```{r yaml2, eval=FALSE}
 ---
-title: "An introduction Rmarkdown"
+title: "An introduction to Rmarkdown"
 author: "Chris Mainey"
 date: "16/05/2019"
 output: 
@@ -340,11 +367,39 @@ output:
 --
 
 + ...then refer to them as if in a `data.frame`: `params$Trust`
---
 
-+ You can call `rmarkdown::render()` with `params` or `params="ask"` 
+---
 
+# Creating a batch
 
+It is possible to generate each report by manually changing the parameters in the YAML header. But that is slow.
+
+Create reports with different parameters using a `for` loop and the `render` function.
+
+``` {r batch_reporting, eval = FALSE}
+
+trusts <- c("trust1", "trust 2", "etc...")
+
+for(trust_name in trusts){
+  rmarkdown::render(input = "my_report.Rmd"
+                    , output_file = file.path("report_batch"
+                                              , paste("my_report_"
+                                                      , trust_name
+                                                      , sep = ""
+                                                      )
+                                              )
+                    , params = list(Trust = trust_name) #<<
+                    )
+}
+```
+
+This will create a report for each trust in the `trusts` vector
+
+The `params` argument must be in the format of a _named list_
+
+Values in `params` will override values in the YAML header, but will keep any other values there.
+
+Change the output file name or it will keep overwriting the same file!
 
 ---
 
@@ -385,18 +440,44 @@ class: left, middle
 
 # Exercise 10: 
 ### Build a parametrised `Rmarkdown` using `LOS_models`
-
+#### Part (a)
 + Create a new markdown document or clear your last one.
 + In this document, please do the following:
  + Create a hidden code block that loads the data
  + Add some titles and text to explain what is happening
  + Add a hyper-link to the `NHSRdataset` package (find it via Google)
  + Add a code block using `dplyr` to summarise the `mean` and `median` LOS
+
+---
+
+# Exercise 10: 
+### Build a parametrised `Rmarkdown` using `LOS_models`
+#### Part (b)
++ Using the same document:
  + Add a horizontal rule 
- + Do the same again for just `Trust1`
+ + Do the same as part (a) for just `Trust1`
  + Can you use a parameter to set the Trust?
 
 ---
+
+# Exercise 10: 
+### Build a parametrised `Rmarkdown` using `LOS_models`
+#### Part (c)
++ Using the same document:
+  + Change the title of the last section to the name of the trust
+  + Add a sentence at the end that says
+  
+    &#60;Trust Name&#62; has a length of stay which is &#60;shorter/longer&#62; than average
+    
+---
+
+# Exercise 11: 
+### Create a batch of reports
+
++ Use a `for` loop inside an `Rmarkdown` document to build the report from the previous exercise for __all 10 trusts__ in the LOS_model data.
+
+---
+
 # Rmarkdown tips
 
 + Check the 'options' via the tools menu and check you are using `knitr` not `sweave`
