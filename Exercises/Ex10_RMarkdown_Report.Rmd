@@ -1,12 +1,10 @@
 ---
-title: "Exercise 14: RMarkdown"
+title: "Exercise 10: Rmarkdown & Parameters"
 author: "Chris Mainey"
-date: "16/09/2019"
+date: "14/01/2020"
 output: html_document
-params:
-  Trust: "Trust1"
 ---
-
+  
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -14,22 +12,59 @@ knitr::opts_chunk$set(echo = TRUE)
 ## R Markdown Exercise
 
 This exercise is used to develop a sample report using the `LOS_model` dataset from the `NHSRdatasets` package.
-More information about this package is avaialble at:  [here](https://cran.r-project.org/web/packages/NHSRdatasets/index.html).
+More information about this package is avaialble here
 
+```{r}
+# Load the data set here
 
+```
 
 ## Full dataset statistics
 
 
+```{r summary, collapse=TRUE, message=FALSE}
 
-<br><br>
+LOS_model %>%
+  
+  knitr::kable(caption = "LOS_model summary data for all organisations")
+```
 
-***
+Now we will create a histogram of the LOS stay:
 
-<br><br>
+```{r}
+ggplot(   , aes(x=LOS)) +
+  
+  labs(title = paste("Length of Stay for all patients at",  "a trust", "in `LOS_models`")) +
+  scale_x_continuous(name="Length-of-Stay (LOS)")+
+  scale_y_continuous(name="Patients")
+```
 
-## Now parameterised:
 
-We will use the same chunks from above, but using `filter` to taget our dataset at a parameter, Trust:1
+## Report For a single trust
 
+We will use the same code from above, but for a single organisation.
 
+```{r summary_trust1, collapse=TRUE, message=FALSE}
+LOS_model %>%
+  
+  knitr::kable(caption = paste("LOS_model summary data for", params$Trust))
+```
+
+Now we will create a histogram of the LOS stay:
+
+```{r}
+ggplot(   , aes(x=LOS)) +
+  
+  labs(title = paste("Length of Stay for all patients at",  "a trust", "in `LOS_models`")) +
+  scale_x_continuous(name="Length-of-Stay (LOS)")+
+  scale_y_continuous(name="Patients")
+```
+
+The report text can be changed based on the performance of each trust. The sentence below will tell us if this trust has an average length of stay which is below or above average.
+
+```{r}
+# calculate the means here
+
+```
+
+&#60;Trust Name&#62; has a length of stay which is &#60;shorter/longer&#62; than average

@@ -19,33 +19,16 @@ Create a `for` loop to write a report for every trust in the `LOS_model` dataset
 
 ```{r Rmarkdown_batch echo = TRUE, eval=FALSE}
 # Load the data set
-library(NHSRdatasets)
-data(LOS_model)
 
-# Make a list of trusts to build reports for
-trusts <- levels(LOS_model$Organisation)
-
-# Make a folder to keep the files in
-if(!dir.exists("report_batch")){
-  dir.create("report_batch")
-}
+# Make a vector of trusts to build reports for
+trusts <- 
 
 # for loop to write the reports with the render function
 for(trust_name in trusts){
   
-  # render can take a lot of parameters. For this exercise we have used:
-  #     input is the .Rmd file to build a report from. Use your own file or the one in Exercises/Solutions/
-  #     output_file is the name of the file which will be created. Make sure it is different for each loop, or it will overwrite the existing file each time
-  #     params is a LIST of named variables to pass to the report. The solution report has the variable Trust = "Trust1"
-      
-  rmarkdown::render(input = "Ex10_RMarkdown_Report.Rmd"
-                    , output_file = file.path("report_batch"
-                                              , paste("Ex10_report_"
-                                                      , trust_name
-                                                      , sep = ""
-                                                      )
-                                              )
-                    , params = list(Trust = trust_name)
+  rmarkdown::render(input = 
+                    , output_file = 
+                    , params = list()
   )
 }
 ```
