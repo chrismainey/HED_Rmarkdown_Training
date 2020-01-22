@@ -65,7 +65,8 @@ __Afternoon__
 - Inline Code
 - Parameters
 - Generating multiple reports
-- Tables
+- DT Tables
+- Flex Tables
 - Shiny Apps
 
 ---
@@ -442,9 +443,10 @@ Change the output file name or it will keep overwriting the same file!
 
 # Fancier Stuff
 
-There are lots of fancier thing you can do, some of which require plugins, HTML or CSS but many don't.
+There are lots of fancier things you can do, some of which require plugins, HTML or CSS but many don't.
 
 .pull-left[
++ Flextable
 + MathJax
 + LaTeX
 + Footnotes and annotations
@@ -461,9 +463,11 @@ There are lots of fancier thing you can do, some of which require plugins, HTML 
 ]
 ---
 
-# Fancy Tables with DT
+# HTML Tables with `DT`
 
 The DT package creates HTML tables from R data frames and includes filters, searching and pagination
+
+Can be used in interactive Rmarkdown documents, shiny apps and html outputs
 
 ```{r using_DT, message=FALSE, warning=FALSE}
 library(NHSRdatasets)
@@ -472,6 +476,44 @@ data(LOS_model)
 
 datatable(LOS_model, options = list(pageLength = 5))
 ```
+
+---
+
+# Tables with `flextable`
+
+```{r using_flextable_shown, message=FALSE, warning=FALSE, eval=FALSE}
+library(NHSRdatasets)
+library(flextable)
+library(dplyr) # for %>% and arrange()
+data(LOS_model)
+
+flextable(data = LOS_model %>% arrange(Organisation, Death, ID) #order the data
+          , col_keys = c("Organisation", "Age", "LOS", "Death") #display these columns (not ID)
+          ) %>%
+  merge_v(j = c(1,4)) %>% # merge the Organisation and Death columns
+  valign(j = c(1,4),valign = "top") # move the merged column entries to the top
+```
+
+.pull-left[
++ Creates well formatted tables that will render in html, pdf, Word and Powerpoint.
++ Can also 'plot' the tables as images
++ Excellent range of formatting options including fonts, borders, merging, cell sizes, etc.
+]
+
+.pull-right[
+```{r using_flextable_hidden, message=FALSE, warning=FALSE, echo=FALSE}
+library(NHSRdatasets)
+library(flextable)
+library(dplyr) # for %>% and arrange()
+data(LOS_model)
+
+flextable(data = LOS_model %>% arrange(Organisation, Death, ID) #order the data
+          , col_keys = c("Organisation", "Age", "LOS", "Death") #display these columns (not ID)
+          ) %>%
+  merge_v(j = c(1,4)) %>% # merge the Organisation and Death columns
+  valign(j = c(1,4),valign = "top") # move the merged column entries to the top
+```
+]
 
 ---
 
