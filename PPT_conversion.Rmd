@@ -1,0 +1,271 @@
+---
+title: "CSS with R Markdown"
+author: "Anthony Harmon"
+date: "2020/02/03 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    chakra: libs/remark-latest.min.js
+    css: "libs/HED.css"
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+# What is CSS?
+
+- CSS stands for Cascading Style Sheets
+- They are typically used in conjunction with HTML to help style websites
+- They aid with formatting and appearance, allowing for a consistent approach to be used
+- Not exclusive to R - used in other programming languages such as Node.js
+
+--
+
+# Do I have to use it?
+
+- No!  It is not required to build Markdown documents
+- You can just choose to format area of text using HTML tags or 'free' text
+- You may find Markdown's 'base formatting sufficient for your needs
+
+---
+
+# Pros and cons of using CSS
+
+```{css, echo=FALSE}
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#Code above is to overwrite the CSS styles from the HED.css example, specifically for this table only
+```
+
+```{r tbl4, echo = FALSE}
+tbl4 <- tibble::tribble(
+~`Pros`, ~`Cons`,
+"Consistency across your document","Takes time to code",
+"Able to share CSS files to help improve","Can be very sensitive to small changes",
+"Simple coding, once you understand how it works","Doesn't always work as you expect it to!  Expect trial and error!",
+"Has many options to improve visuals- I still learn new elements regularly!","Unless you code it in a certain way, it can appear differently from computer to computer",
+"Well established","CSS files can be considerably lengthy in some instances",
+"Has many more formatting options than basic Markdown"," "
+)
+library(knitr)
+library(kableExtra)
+
+dt <- tbl4
+kable(dt) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover","condensed"))
+
+
+```
+
+---
+
+# Markdown output without CSS
+
+####Is the default style enough for you??
+
+``` {css, echo=FALSE}
+figcaption {
+  font-style: italic;
+  font-size: smaller;
+  text-align: center;
+}
+
+.aligncenter {
+    text-align: center;
+}
+
+```
+
+.pull-left[
+<figure>
+  <p> <img src='./Assets/no_markdown_output.png' 
+  width=130% height=130%>
+  <figcaption> Original Markdown output
+  </figcaption>
+  </p>
+</figure>
+]
+
+.pull-right[
+<figure>
+  <p> <img src='./Assets/dataset_without_formatting.png' 
+  width=130% height=130%>
+  <figcaption> How a dataset appears without formatting
+  </figcaption>
+  </p>
+</figure>
+]
+
+---
+
+# What do I need to code in CSS?
+
+.pull-left[
+- Notepad!  The most basic of all applications is sufficient
+- R Studio also allows you to create text files you can save as CSS
+
+
+<br>
+
+* Better alternatives do exist - I prefer a program called 'Atom' (free!)
+<br>
+  + It has colour coding for tag/section/class identification
+  + Code suggestions for open tags
+
+]
+
+.pull-right[
+<figure>
+  <p class="aligncenter"> <img src='./Assets/notepad_css.png' 
+  width=100% height=100%>
+  <figcaption> Notepad use in CSS
+  </figcaption>
+  </p>
+</figure>
+
+<figure>
+  <p class="aligncenter"> <img src='./Assets/Atom_CSS.png' 
+  width=75% height=75%>
+  <figcaption> Atom view of CSS files
+  </figcaption>
+  </p>
+</figure>
+
+]
+
+---
+
+# Attaching and storing CSS files
+
+At the top of a Markdown document, in the YAML section, you will have see a section that looks similar to the below - 
+```{r eval=FALSE}
+  title: "Trust review of LOS, 2018 - 2019"
+  output:
+  html_document:default
+  pdf_document: default
+```
+--
+A small change to the `html_document` property attaches a CSS file to the Markdown
+
+```{r eval=FALSE}
+  html_document:
+    css:styles.css
+```
+--
+## Locating files 
+
+.pull-left[
+In a simple implementation of CSS, keep CSS files in the same folder as the Markdown file.  You can however, use sub-directories
+]
+
+.pull-right[
+<figure>
+  <p> <img src='./Assets/file_locations.png' 
+  width=100% height=100%>
+  <figcaption> Typical folder location
+  </figcaption>
+  </p>
+</figure>
+]
+
+---
+
+# HTML tags
+
++ Not essential for formatting Markdown, but important if you use CSS
++ They identify a section of HTML code and allow you to apply rules to it
++ All tags 'open' and 'close' in a particular way
+  + Not following this method causes strange behaviour!
+
+##How they work
+
++ All tags use angle brackets `<  >` to contain an identifier
++ Opening tags start of a tag and contain the identifier of what you are creating e.g. `<p>`
++ Closing tags use the same content as the opener, but you add a `/` before the content of the tag e.g. `</p>`
+
+---
+
+# Examples of HTML tags
+
+```{r tbl15, echo = FALSE}
+tbl15 <- tibble::tribble(
+~`No.`, ~`Code`, ~`What it does`,
+"1","<h4>","Creates a header tag.  Used to make titles & subtitles",
+"2","<p>","Creates a paragraph tag.  Used to put in standard/paragraphed text",
+"3","<li>","Creates a list tag.  Used to make a bullet pointed list",
+"4","<body>","This is what HTML elements should be contained in e.g. text, hyperlinks, tables etc.",
+"5","<div>","Divides the HTML code up into a section, allowing you to refer to that specific block"
+)
+
+kableExtra::kable_styling(knitr::kable(tbl15), font_size = 18)
+```
+
+---
+
+# Internal vs external CSS
+
++ You can choose to either build your CSS into your Markdown file directly, or...
++ Put it into an external file (the route I prefer!)
+
+--
+
+## Think about your needs...
+
++ Internal/inline CSS code makes your Markdown file much longer, but it is in one place
++ External CSS means switching backwards and forwards, but is easier to find errors
+
+--
+
+## Today's use of CSS
+
++ Will be through external files
++ If you look at this Markdown file, you can see how internal CSS works
+
+---
+
+# CSS Rules
+
+All CSS tags start and end with braces/curly brackets `{ }`.  For example -
+
+```{CSS eval=FALSE}
+{margin-top:0;
+text-align:justify;}
+```
+
+<br>
+--
+CSS mainly uses classes or element selectors.  The key difference is the dot before the reference to the section.  An element selector has no dot -
+
+```{CSS eval=FALSE}
+h3 { position:absolute;
+     font:sans-serif;
+   }
+```
+
+<br>
+--
+A class has a dot before the name of the section  -
+
+```{CSS eval=FALSE}
+.sidebar { margin-left:600px;
+           right: 0;
+         }
+```
+
+
+
+
+
+---
+# Closing remarks
+
++ We have built a CSS file here in stages to see what individual components do 
++ One of the best ways to learn is to experiment with an existing CSS file and make changes
+
+
+
+
+
