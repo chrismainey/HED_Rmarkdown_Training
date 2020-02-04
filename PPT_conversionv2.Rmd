@@ -255,8 +255,24 @@ A class has a dot before the name of the section  -
          }
 ```
 
-Testing that there is a change in the file.  This is another change added.
+---
+# Further CSS rules
 
+Properties in a CSS file use a colon after the property identifier -
+
+```{CSS eval=FALSE}
+footer { text-align:center;
+       }
+```
+
+At the end of each rule, a semi colon is used
+
+```{CSS eval=FALSE}
+header { padding-top:20px;
+       }
+```
+
+To use a sub-class (change of a property inside of a class), put a space after the class name 
 
 
 ---
