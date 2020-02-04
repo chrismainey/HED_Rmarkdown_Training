@@ -274,6 +274,7 @@ header { padding-top:20px;
 
 To use a sub-class (change of a property inside of a class), put a space after the class name 
 
+An extra comment for testing
 
 ---
 # Closing remarks
