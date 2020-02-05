@@ -40,8 +40,8 @@ th {
 #Code above is to overwrite the CSS styles from the HED.css example, specifically for this table only
 ```
 
-```{r tbl4, echo = FALSE}
-tbl4 <- tibble::tribble(
+```{r tbl1, echo = FALSE}
+tbl1 <- tibble::tribble(
 ~`Pros`, ~`Cons`,
 "Consistency across your document","Takes time to code",
 "Able to share CSS files to help improve","Can be very sensitive to small changes",
@@ -53,7 +53,7 @@ tbl4 <- tibble::tribble(
 library(knitr)
 library(kableExtra)
 
-dt <- tbl4
+dt <- tbl1
 kable(dt) %>% 
   kable_styling(bootstrap_options = c("striped", "hover","condensed"))
 
@@ -190,18 +190,14 @@ In a simple implementation of CSS, keep CSS files in the same folder as the Mark
 
 # Examples of HTML tags
 
-```{r tbl15, echo = FALSE}
-tbl15 <- tibble::tribble(
-~`No.`, ~`Code`, ~`What it does`,
-"1","<h4>","Creates a header tag.  Used to make titles & subtitles",
-"2","<p>","Creates a paragraph tag.  Used to put in standard/paragraphed text",
-"3","<li>","Creates a list tag.  Used to make a bullet pointed list",
-"4","<body>","This is what HTML elements should be contained in e.g. text, hyperlinks, tables etc.",
-"5","<div>","Divides the HTML code up into a section, allowing you to refer to that specific block"
-)
+| Code |  Purpose |
+| :------------: | :------:|
+| `<h4>` | Creates a header tag.  Used to make titles & subtitles|
+| `<p>` | Creates a paragraph tag.  Used to put in standard/paragraphed text|
+| `<li>`  | Creates a list tag.  Used to make a bullet pointed list|
+| `<body>` | This is what HTML elements should be contained in e.g. text, hyperlinks, tables etc.
+| `<div>` | Divides the HTML code up into a section, allowing you to refer to that specific block
 
-kableExtra::kable_styling(knitr::kable(tbl15), font_size = 18)
-```
 
 ---
 
@@ -240,9 +236,7 @@ text-align:justify;}
 CSS mainly uses classes or element selectors.  The key difference is the dot before the reference to the section.  An element selector has no dot -
 
 ```{CSS eval=FALSE}
-h3 { position:absolute;
-     font:sans-serif;
-   }
+h3 { position:absolute; }
 ```
 
 <br>
@@ -250,9 +244,7 @@ h3 { position:absolute;
 A class has a dot before the name of the section  -
 
 ```{CSS eval=FALSE}
-.sidebar { margin-left:600px;
-           right: 0;
-         }
+.sidebar { margin-left:600px;}
 ```
 
 ---
@@ -261,22 +253,66 @@ A class has a dot before the name of the section  -
 Properties in a CSS file use a colon after the property identifier -
 
 ```{CSS eval=FALSE}
-footer { text-align:center;
-       }
+footer { text-align:center;}
 ```
+
+--
 
 At the end of each rule, a semi colon is used
 
 ```{CSS eval=FALSE}
-header { padding-top:20px;
-       }
+header {padding-top:20px;}
 ```
 
-To use a sub-class (change of a property inside of a class), put a space after the class name 
+--
 
-An extra comment for testing
+To use a sub-class (change of a property inside of a class), put a space after the class name 
+```{CSS eval=FALSE}
+.sidebar ul {margin : 0;}
+```
+
+--
+
+##Tip of the iceberg...
+
+Go to https://www.w3schools.com/css/ for many more examples
 
 ---
+
+# Quick CSS reference guide & examples
+
+| CSS Property | Example | Purpose |
+| :------------: | :------:| :-------:|
+| margin |`margin-top:100px`|Puts a buffer/margin on the side of something|
+| color | `<h1 style=background-color:DodgerBlue;>`|Simply sets the colour of that element.  Can use names or hexadecimal values|
+| padding |`div{padding-top:50px};`|Allows a section of space around the area to be added|
+| Font-family, font-size | `font-family: Arial; font-weight: bold;`|Allows you to select a specific font(e.g. Arial), size (e.g. 12) and weight (e.g. bold)
+
+
+---
+
+#Activity 1
+
+| Choice 1 | Choice 2 | Choice 3 |
+| :------------: | :------:| :-------:|
+| Use an existing R Markdown template I have created and tackle the areas that are commented out (CSS_Activity_1.rmd) in the 'Exercises' folder | Produce an R Markdown with HTML and CSS from scratch that utilise these skills | Adapt an existing R Markdown file that you have used in today's sessions
+
+### Look for the below in the code for where to action areas -
+
+``` {diff eval=FALSE} 
+-<!-- Replace the two hashtags below to setup the header with a 'h2' tag -->
+
+## Using HTML & a little CSS  for formatting 
+
+<h4> Summarising an existing dataset - </h4>
+
+-<!-- Insert some text below that can be used to introduce the cars dataset (inside the 'p' tags) -->
+
+<p>  </p>
+```
+
+---
+
 # Closing remarks
 
 + We have built a CSS file here in stages to see what individual components do 
