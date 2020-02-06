@@ -297,21 +297,158 @@ Go to https://www.w3schools.com/css/ for many more examples
 | :------------: | :------:| :-------:|
 | Use an existing R Markdown template I have created and tackle the areas that are commented out (CSS_Activity_1.rmd) in the 'Exercises' folder | Produce an R Markdown with HTML and CSS from scratch that utilise these skills | Adapt an existing R Markdown file that you have used in today's sessions
 
+<br>
+<br>
+
+Extension - Add in stylings for bullet points / list elements in your CSS file (may need research)
+
+<br>
+<br>
+
 ### Look for the below in the code for where to action areas -
 
-``` {diff eval=FALSE} 
--<!-- Replace the two hashtags below to setup the header with a 'h2' tag -->
-
-## Using HTML & a little CSS  for formatting 
-
-<h4> Summarising an existing dataset - </h4>
-
+``` {diff eval=FALSE}
 -<!-- Insert some text below that can be used to introduce the cars dataset (inside the 'p' tags) -->
-
+<p>  </p>
+<p>  </p>
 <p>  </p>
 ```
+---
+
+# Body formatting
+
++ Affects ALL elements of the HTML section, unless overriden with other HTML tags
++ For example, adding a `<p>` tag into your body code means that text will then follow the rules of the `<p>` tag, rather than the body tag rules
++ Do not ignore body formatting!  We will investigate this more in the next activity
+
+<br>
+
+# Backgrounds in CSS
+
+* Backgrounds be changed in CSS at various levels including -
+  + Overall 'body', header, div tags (looked at later), paragraphs and many more
++ Can use the usual colour formatting style e.g. hex, RGB, name values, or can use images
 
 ---
+
+# Code examples
+
+```{CSS eval=-FALSE}
+
+body { background-color:lightblue;
+}
+
+h1   { background-color:lightblue;
+}
+
+div  { background-color:lightblue;
+}
+
+p    { background-color:lightblue;
+}
+```
+
+<br>
+
+Examples above showing you to use CSS to respectively change the body, h1, div and p tag content in your document
+
+---
+
+# More complete example and output
+
+.pull-left[
+
+``` {CSS eval=FALSE}
+
+p {
+ font-family: Arial;
+ font-size: 14px;
+ color: #6870B8;
+}
+
+body{
+  font-family: Verdana;
+  font-size:12px;
+  color: #303248;
+}
+
+
+```
+]
+.pull-right[
+
+<figure>
+  <p class="aligncenter"> <img src='./Assets/Activity_1_Output.png' 
+  width=125% height=125%>
+  <figcaption> Output in Markdown
+  </figcaption>
+  </p>
+</figure>
+
+]
+
+---
+
+# Borders in CSS
+
++ These create 'zones' and borders around text in the same way you would in any application
++ Can choose to put a border around the whole body, some it, individual parts etc.
++ One extra line of code in a CSS section e.g. - `border: 5px solid red;`
+
+<figure>
+  <p class="aligncenter"> <img src='./Assets/CSS_border.png' 
+  width=75% height=75%>
+  <figcaption> Output in Markdown
+  </figcaption>
+  </p>
+</figure>
+
+Further options available at https://www.w3schools.com/css/css_border.asp
+
+---
+
+# Activity 2
+
++ Add in a suitable 'body' tag in the R Markdown code around the areas that you wish to use it in (you can just keep it as it is, if preferred)
++ Add in background-color (forgive the Americanisation!) property tags into the CSS file for relevant tags of your choice
++ Try using a text and hex value for the colours so that you are aware of how to do it either way
++ Add in some borders to your CSS text.  Try and keep them relevant and not random!
+
+<br>
+
+As before, a 'complete' example of this can be seen in the file called `styles(Activity_2_complete).css`
+
+
+---
+
+# Using images in a CSS file
+
++ By using the `background-image` property, you can add a picture to your background  
++ This could be a logo or something similar to represent your trust
++ The default view for this is for the image to repeat itself (if it is not large enough to fit the whole page)
+
+<br>
+
+The code might look like this - 
+
+``` {CSS eval=FALSE}
+
+body {  background-color: #fff;
+        background-position: right top;
+        background-image: url("Rightblox2.png");
+        display: table-cell;
+}
+```
+---
+
+# Some caveats of default background images
+
+
+
+
+
+---
+
 
 # Closing remarks
 
