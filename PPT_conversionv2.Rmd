@@ -625,38 +625,244 @@ p{
 + A class in CSS has a dot before the selector, which has to be specifically referred to in the HTMLK
 
 ---
-
 # Using classes with lists
 
 .pull-left[
 
 ``` {CSS eval=FALSE}
 
-#CSS
+# CSS
 
 .listformat {
   font-family: Arial;
   font-size: 14px;
   color: darkgreen;
 }
-
-#HTML
+```
+``` {HTML eval=FALSE}
+# HTML
 
 <span class ="listformat>
 Your text to go here
 Your text to go here
 Your text to go here
+Your text to go here
+</span>
+```
+
+<br>
+<figcaption> A new class has been added here called 'listformat' (can be called whatever you wish). <br><br>  This is then referred to in the HTML tags by using the 'class' addition to the right of the word 'span'. </figcaption>
+]
+.pull-right[
+<figure>
+  <p> <img src='./Assets/Classes_output.png' 
+  width=150% height=150%>
+  </p>
+  <figcaption> The output from running the HTML & CSS</figcaption>
+</figure>
+]
+
+---
+
+#Tidied up further
+
+.pull-left[
+
+``` {HTML eval=FALSE}
+# HTML
+
+<body() class ="listformat>
+Your text to go here
+Your text to go here
+Your text to go here
+Your text to go here
+</span>
+```
+
+<br>
+<figcaption> The R HTML/Markdown code used with the new class structure </figcaption>
+]
+.pull-right[
+<figure>
+  <p> <img src='./Assets/Classes_output_body.png' 
+  width=150% height=150%>
+  </p>
+  <figcaption> The new output using the 'body' class</figcaption>
+</figure>
+]
+
+---
+
+#Space: The Final Frontier
+
+
+<figure>
+  <p> <img src='./Assets/Space_incorrect.png' 
+  width=100% height=100%>
+  </p>
+</figure>
+
+
+<figure>
+  <p> <img src='./Assets/Space_correct.png' 
+  width=100% height=100%>
+  </p>
+</figure>
+
+<br>
+<br>
+Warning!  The span tag in Markdown in particular is VERY sensitive to extra and unnecessary spaces/line breaks! For example -
+
+---
+
+#Activity 4 - Combining Markdown & HTML
+
++ Refine your R Markdown file so that it has a 'best of both worlds' approach - some Markdown, some HTML
++ Use HTML if you have something in particular in mind that you would like to do in Markdown that isn't possible with built-in options, but, for straight forward text and titles, tags can be overkill
+
+## Extended
+
++ We haven't used these so far, but you may find 'div' tags useful, 
++ Or, using the newer HTML5 standards, the layout elements such as 'header' & 'section'
++ These all allow for your page to be split up into sections, personalising each part
++ Try it yourself!  Feel free to look at `styles(Activity_4_complete).css` and `CSS_Activity_4_complete.rmd`
+
+---
+
+# Kable
+
++ Kable is an R package that allows for advanced table formatting
++ 'Standard' views of tables can be dull without any styling applied
++ Kable code is simple and allows for easy, pleasurable output
+
+``` {r, include=TRUE, echo=TRUE, warning =FALSE}
+library(kableExtra)
+dt <-  LOS_model
+head(dt) %>%    # Only shows the first 6 lines of the table
+  kable %>% 
+  kable_styling()   # Applies the 'Twitter' bootstrap styling
+```
+
+---
+
+# More Kable
+
+``` {r, include=TRUE, echo=TRUE, warning =FALSE}
+
+dt[1:2, 1:5] %>%    
+  kable %>% 
+            # The additional parameters in the line below adds striping to the table and stops
+            # it from spreading across the full page (this is overridden by our CSS file)
+  kable_styling(bootstrap_options="striped", full_width = F) 
+  
+
+```
+
+## Activity 5
+
++ Convert a table that you have already loaded into R into Kable format.  
++ You can use the example I have shown and stick to the same styling or experiment with other Kable options
++ Look at the vignette -`vignette("awesome_table_in_html")`
+
+---
+
+# Using images
+
++ Inserting images is an inevtiable requirement
++ Like other CSS/HTML elements, you can apply properties in image tags across all images
++ The image example looked at so far for our CSS background is  different to how it is done elsewhere in HTML
++ If you have used the `align` attribute in the past, HTML5 has changed things...
+
+.pull-left[
+```{HTML eval=FALSE}
+.center {
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%
+}
+
+<section>
+  <p> <img src = "./Assets/hospital_bed.jpeg" width = 100% class="center"> </p>
+</section> 
 ```
 ]
 .pull-right[
-
-
+<section>
+  <p> <img src = "./Assets/hospital_bed.jpeg" 
+  width = 100% 
+  class="center"> 
+  </p>
+</section> 
 ]
 
 ---
 
+# Figures and captions
+
++ You can make reports more professional by using a 'figures' and 'captions' approach
++ Needs a little more coding, but it's well worth it!
+``` {CSS eval = FALSE}
+# CSS coding
+
+figure {
+  float: left;
+  border: thin silver solid;
+  margin: 0.5em;
+  padding: 0.5em;
+}
+img.scaled {
+  width: 50%;
+}
+figcaption {
+  font-size: 0.9em;
+  font-style: italic;
+  color: grey;
+  margin-right: 10%;
+  margin-left: 10%;
+  text-align: center;
+}
+```
+
+--
+
+``` {HTML eval=FALSE}
+# HTML coding
+
+<figure>
+  <p><img src= "hospital_bed.jpeg"
+  width= 50% height=50%
+  class = "center"
+    alt="Hospital bed">
+  <figcaption> As of September 2019, the average length of stay in England's NHS hospitals is 4.52 days </figcaption>
+</figure>
+```
 
 ---
+
+# Output of figures & captions
+
+<figure>
+  <p><img src= "/Assets/figure_caption_output.png"
+  width= 100% height=100%
+</figure>
+
+
+---
+
+# Activity 6
+
++ Add in a figure with an appropriate caption of your choice to your Markdown and CSS file.  
++ You will need to add in a new section to your CSS file to do this - a 'figure' one and a 'figcaption' one
++ If you wish to extend this further, you can also add in some 'normal' images that are not figures
++ There are ways to do this in Markdown without using HTML tags, but this session revolves specifically around the use of these!
++ An example of how to do this can be found in the file `CSS_Activity_6.rmd` on line 78
+
+
+
+---
+  
+  
 # Closing remarks
 
 + We have built a CSS file here in stages to see what individual components do 
