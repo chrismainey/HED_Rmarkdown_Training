@@ -853,15 +853,57 @@ figcaption {
 # Activity 6
 
 + Add in a figure with an appropriate caption of your choice to your Markdown and CSS file.  
-+ You will need to add in a new section to your CSS file to do this - a 'figure' one and a 'figcaption' one
++ You will need to add in a new section to your CSS file to do this - a `figure` one and a `figcaption` one
 + If you wish to extend this further, you can also add in some 'normal' images that are not figures
 + There are ways to do this in Markdown without using HTML tags, but this session revolves specifically around the use of these!
 + An example of how to do this can be found in the file `CSS_Activity_6.rmd` on line 78
 
+---
+
+# Tidy CSS!
+
++ Over the course of this CSS session, you will have been adding in various CSS tags.  
++ Good practice with CSS tags in a file is to order them in alphabetical order
++ This makes it easier in future to find any areas that you need to modify or add to
+
+.pull-left[
+
+``` {CSS eval = FALSE}
+
+body{
+  border: 2px #94C11F;
+}
+
+.center {
+  display:block;
+}
+
+figure {
+  float: left;
+}
+
+figcaption {
+  font-size: 0.9em;
+}
+
+```
+
+]
+--
+.pull-right[
+<br>
+<br>
+### Activity 7
++ The final activity here is to rearrange your CSS tags in the file so that they are in alphabetical order
++ Be careful not to mix any areas up though - it could stop your CSS file from working
+]
+
+---
+
+
 
 
 ---
-  
   
 # Closing remarks
 
