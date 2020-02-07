@@ -1,0 +1,28 @@
+p {
+ font-family: Arial;
+ font-size: 14px;
+ color: #6870B8;
+ background-color: lightyellow;
+}
+
+body{
+  font-family: Verdana;
+  font-size:12px;
+  color: #303248;
+  background-color: lightblue;
+  border: 5px solid red;
+}
+
+h2{
+  font-weight: bold;
+  font-family: Verdana;
+  font-size:26px;
+  color: #095203;
+}
+
+h4{
+  font-weight: bold;
+  font-family: Verdana;
+  font-size:22px;
+  color: #095203;
+}
