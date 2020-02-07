@@ -900,11 +900,71 @@ figcaption {
 
 ---
 
+# Easy stlying of Markdown
 
++ Whilst CSS and HTML are powerful and allow you to fully customise your document, it can be quite time consuming if all you want to do is apply a straight forward theme
++ This is where the 'themes' section comes in - it allows you to automatically produce themed Markdown documents based on the use of a single word e.g. 'striped', 'sandstone'
++ This removes the need to add in all of the CSS coding you have done if you want a generically applied theme
 
+``` {eval = FALSE}
+---
+title: Trust evaluation of LOS_model
+output:
+  html_document:
+    theme:united
+---  
+```
+
+By adding the above `theme:united` section of code into the YAML header, you can instantly apply the theme.  Let's see what this does.
 
 ---
-  
+
+# Applying themes
+
+<figure>
+  <p><img src= "./Assets/themes_output.png"
+  width= 50% height=50%
+  class="center"
+    alt="Theme output">
+  <figcaption> How the 'united' theme appears on output </figcaption>
+</figure>
+
+--
+
+## Activity 8
+<br>
++ Try out a theme on your Markdown file instead of using CSS
++ Use the example on the previous slide to see how to do it
++ Remember to comment / hashtag out your CSS file reference in the YAML header
+
+---
+
+# Other methods of presentation
+
++ Respected data visualisation experts like Edward Tufte have produced, such as the 'Tufte handout' style, can also be easily produced in Markdown without the use of CSS files
++ For more details, have a look at the Bookdown section on this
+<br><br>https://bookdown.org/yihui/rmarkdown/tufte-handouts.html
+
+<figure>
+  <p><img src= "./Assets/tufte_output.png"
+  width= 75% height=75%
+  class="center"
+    alt="Theme output">
+</figure>
+
+---
+
+# Other areas to consider investigating
+
+| Method | Explanation | Website |
+| :------------: | :------:| :-------:|
+| Dillinger |Supports conversion of Markdown into HTML5 files, including the ability to import, save and export to Dropbox, Google Drive, One Drive & Github|https://dillinger.io/|
+| Flexbox | This is a method of designing a structured, full layout of a webpage|https://www.w3schools.com/css/css3_flexbox.asp|
+| Bootstrap |Bootstrap is a way of using newer techniques as well as pre-made CSS layouts for your design needs - very professional & well made ones!  Great for mobile site development & resizable pages|https://www.w3schools.com/bootstrap/default.asp|
+| CSS Floats | Uses 'floating' techniques to get elements of your page to float to the left or right.  Quite simple in practice, and allows for an easier build|https://www.w3schools.com/css/css_float.asp
+
+---
+
 # Closing remarks
 
 + We have built a CSS file here in stages to see what individual components do 
