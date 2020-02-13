@@ -144,6 +144,10 @@ https://bookdown.org/yihui/rmarkdown/
 
 + DT
 
+--
+
++ flextable
+
 ---
 
 # Document Structure
@@ -357,6 +361,56 @@ The sum of 4 and 5 is <code>&#96;r 4+5&#96;</code>
 
 ---
 
+# Rmarkdown Output Formats
+
++ HTML
+
+--
+
++ PDF
+
+--
+
++ PowerPoint
++ Word
+
+---
+
+# Word Documents
+
+.pull-left[
++ Available by default
++ Not all features will work in the Word file (e.g. interactive figures)
++ Uses Word styles to format content
+]
+
+.pull-right[
+<img src='Assests/make_new_word_doc.png'>
+]
+
+---
+
+# Customising Word Documents
+
++ Provide a 'style guide' .docx file in the YAML header
++ Text content doesn't matter, just the styles
++ Create one by making a new Word file with Rmarkdown
++ Copy it and call it something helpful ('style-guide.docx')
++ Open in Word and change the styles
++ Save it, point to it in the YAML
++ The styles will be used in the new Rmarkdown output.
+
+---
+
+# Redoc: Word and Rmarkdown in the same file
+
++ Experimental
++ Creates Word documents with the raw Rmarkdown hidden inside
++ Keeps comments and changes made in Word
++ Can be converted back into Rmarkdown to work on it again
+
+---
+
 # Parameters:
 
 Here's where it gets even more useful.  If you have a report that you need to repeat many times, you might want to use 'parameters'.
@@ -465,7 +519,7 @@ There are lots of fancier things you can do, some of which require plugins, HTML
 
 # HTML Tables with `DT`
 
-The DT package creates HTML tables from R data frames and includes filters, searching and pagination
+Creates HTML tables from R data frames and includes filters, searching and pagination
 
 Can be used in interactive Rmarkdown documents, shiny apps and html outputs
 
