@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>R Markdown</title>
     <meta charset="utf-8" />
@@ -17,7 +17,7 @@ class: center, middle
 
 
 &lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
-# Introduction to `R` - Day 2
+# Using R Markdown
 
 &lt;br&gt;
 
@@ -26,7 +26,7 @@ __Chris Mainey__
 &lt;a href="mailto:chris.mainey@uhb.nhs.uk"&gt;chris.mainey@uhb.nhs.uk&lt;/a&gt;
 
 &lt;br&gt;&lt;br&gt;
-2019/06/20 (updated: 2020-01-10)
+2019/06/20 (updated: 2020-02-13)
 &lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
 &lt;span style="font-size:14px !important;"&gt; __&amp;copy; Healthcare Evaluation Data (HED)__- part of Health Informatics, University Hospitals Birmingham NHS Foundation Trust.  
 &lt;b&gt;NOT TO BE REPUBLISHED OR DISTRIBUTED WITHOUT CONSENT&lt;/b&gt; &lt;/span&gt;
@@ -51,78 +51,82 @@ We are using RStudio cloud for this course.
 
 # Summary (1)
 
-__Day 1: Morning__
-- What is `R`, and how does RStudio fit in?
-- How to get installed and started
-- Packages, Functions &amp; Data Types
-- Basic Syntax
-- Importing and exporting data
-- Summary statistics
+- What is `R` markdown?
+- Structure
+- Formats
+- Output types
+ - HTML &amp; CSS
+ - PDF / Latex
+ - MS Office
+- Parametrisation
+ - Icluding and using prarmeters
+ - Automating reports
 
-__Day 1: Afternoon__
-- The Tidyverse
-
-- `dplyr` for manipulation, `tidyr` and "pivoting"
-- Connections to databases: `RODBC` vs. `DBI` &amp; `dplyr`
-
+_(Plus coffe, and lunch, of course...)_
 ---
 
-# Summary (2)
+## What is it?
 
-__Day 2: Morning__
+&lt;img src="https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/rmarkdown_rockstar.png?raw=true" width="500" class="center"&gt;
 
-- Recap
-- `ggplot2`: high quality visualisations
-- Simple predictive models using regression
+&lt;div style="text-align: center;"&gt; &lt;span style="font-size: 14px;"&gt; Artwork by &lt;b&gt;@allison_horst&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;
 
-&lt;br&gt;&lt;br&gt;
 
-__Day 2: Afternoon__
-- Rmarkdown
-- Analysis Exercise
-- R clinic
+&lt;br&gt;
 
----
 
----
-class: middle
-
-# Rmarkdown: 
-### Documentation, Notebooks, and Reporting Structures in `R`
-
+Much of our intro section is based on: __R Markdown: The Definitive Guide__ by _Yihui Xie, J. J. Allaire, Garrett Grolemund_
+https://bookdown.org/yihui/rmarkdown/
 
 ---
 
 # Overview
 
-`Markdown` (.md) is a common free-text format.  It can be used to write documents then mark the various different sections, formats etc.
+`Markdown` (.md) is a common free-text format.  
+- Originally by 
+[John Gruber](https://daringfireball.net/projects/markdown/), simple communication medium for writers
+- Text to HTML tool
+- Initially limited syntax, but signficantly enriched over time
 
 --
 
-&lt;br&gt;
-
-`Rmarkdown` is an `R`-specific flavour that adds `R` code into the `Mardown` paradigm.  You can write a document that runs code, chose whether to show this code at the output, and then render it to various output formats.
-
-
---
-
-+ Can `knit` to HTML, PDF, Word or find other connectors, from a single `Rmarkdown` file using `knitr` package.
+`Pandoc`
+- Written by [John McFarlane](http://pandoc.org/), a universal document converter
+- Allows markdown to be parsed to other formats like Latex, with powerful formatting
+- Latex can then be converted to PDF and others
 
 --
 
-+ Allows you to collaborate and share your code in well formatted reports, or notebooks.
+`Rmarkdown`
+- Created by Yihui Xie, to embed code chunks in markdown
+- Expanded to include fine control of elements
+- Intergrated in RStudio environment
+- Lots of extensions 
 
---
+---
 
-+ It could also be used as a final report, teaching material, blog post etc.
+# Why would I want to use it?
+
+You can write a single document with all your text, code and graphics in the same place.
+
+.pull-left[
+### Advantages:
++ Collaborate and share well-formatted reports, or notebooks.
++ Write your documentaion as you go.
++ Reproducible
++ Can be used as both scripts and final reports (and more...)
++ Can be parameterised to build regular reports / multiple versions of outputs.
+]
+
+.pull-right[
+### Challenges
++ Requires some `R` knowledge
++ Output formats can be tricky, particularly with PDF
++ Works best if shared.  Difficult if lone analyst using it.
+
+]
 
 
-+ Can be parameterised to provide standard/regular reports control by parameters like date, or specialty code.
-
-&lt;br&gt;
-
-This is section is primarily taken from __R Markdown: The Definitive Guide__ by _Yihui Xie, J. J. Allaire, Garrett Grolemund_
-https://bookdown.org/yihui/rmarkdown/
 
 
 ---
@@ -230,7 +234,7 @@ _italic_ and __bold__
 
 ---
 
-# Code (1)
+## Code (1)
 
 In-line code uses single backticks e.g. `` `r mean(rnorm(50,50,12))` ``  evalautes to 50.4984941 (figure is generated from `R` code here)
 
@@ -253,7 +257,7 @@ ggplot(mtcars, aes(x=mpg))+
 
 ---
 
-# Code(2)
+## Code(2)
 
 The header of the last section was:
 
@@ -272,6 +276,15 @@ There are a lot of options for code chunks, but here are the main important ones
 + echo=FALSE -  __Don't display the code block__
 + include=FALSE -  __Run the code but don't include in final document__
 + collapse = TRUE -  __Merge the code and all outputs into a single chunk for display__
+
+---
+
+# knitr
+
+&lt;img src="https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/rmarkdown_wizards.png" width="500"&gt;
+
+
+https://yihui.org/knitr/
 
 ---
 
