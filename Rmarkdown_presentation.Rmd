@@ -148,6 +148,10 @@ https://bookdown.org/yihui/rmarkdown/
 
 + flextable
 
+--
+
++ redoc
+
 ---
 
 # Document Structure
@@ -385,7 +389,7 @@ The sum of 4 and 5 is <code>&#96;r 4+5&#96;</code>
 ]
 
 .pull-right[
-<img src='Assests/make_new_word_doc.png'>
+<img src='Assets/make_new_word_doc.png'>
 ]
 
 ---
@@ -393,12 +397,33 @@ The sum of 4 and 5 is <code>&#96;r 4+5&#96;</code>
 # Customising Word Documents
 
 + Provide a 'style guide' .docx file in the YAML header
-+ Text content doesn't matter, just the styles
+
+--
+
+```{r yaml_word, eval = FALSE}
+---
+title: "Word Report"
+author: "J. Smith"
+date: "01-01-2000"
+output:
+  word_document:
+    reference_docx: style-guide.docx #<<
+---
+```
+
+--
+
++ File content doesn't matter, just the styles
+
+--
+
 + Create one by making a new Word file with Rmarkdown
 + Copy it and call it something helpful ('style-guide.docx')
-+ Open in Word and change the styles
-+ Save it, point to it in the YAML
-+ The styles will be used in the new Rmarkdown output.
++ Open in Word and change the **styles**
+
+--
+
++ Save it and make it the reference_docx in the YAML
 
 ---
 
@@ -555,6 +580,7 @@ flextable(data = LOS_model %>% arrange(Organisation, Death, ID) #order the data
 ]
 
 .pull-right[
+
 ```{r using_flextable_hidden, message=FALSE, warning=FALSE, echo=FALSE}
 library(NHSRdatasets)
 library(flextable)
@@ -564,9 +590,10 @@ data(LOS_model)
 flextable(data = LOS_model %>% arrange(Organisation, Death, ID) #order the data
           , col_keys = c("Organisation", "Age", "LOS", "Death") #display these columns (not ID)
           ) %>%
-  merge_v(j = c(1,4)) %>% # merge the Organisation and Death columns
-  valign(j = c(1,4),valign = "top") # move the merged column entries to the top
+  merge_v(j = c("Organisation", "Death")) %>% # merge the Organisation and Death columns
+  valign(j = c("Organisation", "Death"),valign = "top") # move the merged column entries to the top
 ```
+
 ]
 
 ---
