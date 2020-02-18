@@ -1,0 +1,34 @@
+---
+title: 'Exercise 11: RMarkdown Batches'
+author: "Chris Mainey"
+date: "14/01/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The RMarkdown file in the previous exercise used a parameter in its YAML header in order to select data for 'Trust1'. We could change this value and then press 'Knit' each time that we wanted to make a report for a different trust, but if there are 200 trusts this would take a very long time.
+
+Instead of doing this manually, we can change the parameter and create the report using the `render` function of rmarkdown.
+
+`render` is called as part of the 'knit' process and takes its function arguments from the YAML header by default. If arguments are given to the function they will _override_ the YAML header values, including the `params` variable. `render` can be used to customise the output file name, input parameters, and many other important features.
+
+Create a `for` loop to write a report for every trust in the `LOS_model` dataset:
+
+```{r Rmarkdown_batch echo = TRUE, eval=FALSE}
+# Load the data set
+
+# Make a vector of trusts to build reports for
+trusts <- 
+
+# for loop to write the reports with the render function
+for(trust_name in trusts){
+  
+  rmarkdown::render(input = 
+                    , output_file = 
+                    , params = list()
+  )
+}
+```

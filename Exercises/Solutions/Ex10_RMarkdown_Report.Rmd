@@ -1,7 +1,7 @@
 ---
-title: "Exercise 14: RMarkdown"
+title: "Exercise 10: Rmarkdown & Parameters"
 author: "Chris Mainey"
-date: "16/09/2019"
+date: "14/01/2020"
 output: html_document
 params:
   Trust: "Trust1"
@@ -17,14 +17,14 @@ This exercise is used to develop a sample report using the `LOS_model` dataset f
 More information about this package is avaialble at:  [here](https://cran.r-project.org/web/packages/NHSRdatasets/index.html).
 
 ```{r load, echo = FALSE}
+# Load the data set here
 library(NHSRdatasets)
 data(LOS_model)
 ```
 
-
 ## Full dataset statistics
 
-Here is a summary of the LOS using `dplyr`, collapsing the results into a single piece of code, with warnings surpressed, and sending  the using `knitr::kable` on the table to format it nicely. 
+Here is a summary of the LOS using `dplyr`, collapsing the results into a single piece of code, with warnings surpressed, and using `knitr::kable` on the table to format it nicely. 
 
 ```{r summary, collapse=TRUE, message=FALSE}
 library(dplyr)
@@ -51,20 +51,21 @@ ggplot(LOS_model, aes(x=LOS)) +
   
 <br><br>
   
-## Now parameterised:
+## Report For `r params$Trust`
  
-We will use the same chunks from above, but using `filter` to taget our dataset at a parameter, Trust:1
-
+It is possible to change the in-line text using parameters. The title of this section of the report takes the value of the 'Trust' parameter.
+ 
+We will use the same code from above, but using `filter` to return the data for the organisation named in the parameter 'Trust'.
 
 ```{r summary_trust1, collapse=TRUE, message=FALSE}
 LOS_model %>%
-  filter(Organisation==params$Trust) %>%
+  filter(Organisation == params$Trust) %>%
   summarise("Mean LOS" = mean(LOS),
             "Median LOS" = median(LOS))  %>%
-  knitr::kable(caption = "LOS_model summary data for Trust1")
+  knitr::kable(caption = paste("LOS_model summary data for", params$Trust))
 ```
 
-Here I've used the subset function, rathe than filter, as it's another way to do the same thing.  This is base R, so marginally quicker than filter.
+Here I've used the subset function rather than filter, as its another way to do the same thing and is marginally quicker than filter.
 
 ```{r LOS_trust1_plot, message=FALSE, fig.retina=2}
 ggplot(subset(LOS_model, Organisation==params$Trust), aes(x=LOS)) +
@@ -73,3 +74,13 @@ ggplot(subset(LOS_model, Organisation==params$Trust), aes(x=LOS)) +
   scale_x_continuous(name="Length-of-Stay (LOS)")+
   scale_y_continuous(name="Patients")
 ```
+
+The report text can be changed based on the performance of each trust. The sentence below will tell us if this trust has an average length of stay which is below or above average.
+
+```{r find_means, echo = FALSE}
+# calculate the means here
+All_LOS_mean <- mean(LOS_model$LOS)
+trust_LOS_mean <- mean(LOS_model[which(LOS_model["Organisation"] == params$Trust), "LOS"])
+```
+
+`r params$Trust` has a length of stay which is `r if(trust_LOS_mean < All_LOS_mean){"shorter than average."} else {"longer than average."}`.
