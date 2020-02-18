@@ -49,7 +49,7 @@ We are using RStudio cloud for this course.
 
 ---
 
-# Summary (1)
+# Course Content
 
 - What is `R` markdown?
 - Structure
@@ -392,6 +392,115 @@ https://yihui.org/knitr/
 
 
 ---
+class middle, left
+
+# Formatting R markdown documents
+
+---
+
+# Blah
+
+You want to make it look nice....
+
+
+---
+
+
+# Kable
+
++ Kable is an R package that allows for advanced table formatting
++ 'Standard' views of tables can be dull without any styling applied
++ Kable code is simple and allows for easy, pleasurable output
+
+``` {r, include=TRUE, echo=TRUE, warning =FALSE}
+library(NHSRdatasets)
+data("LOS_model")
+LOS_summary <- (summary(LOS_model))
+library(kableExtra)
+dt <-  LOS_model
+head(dt) %>%    # Only shows the first 6 lines of the table
+  kable %>% 
+  kable_styling()   # Applies the 'Twitter' bootstrap styling
+```
+
+---
+
+# More Kable
+
+``` {r, include=TRUE, echo=TRUE, warning =FALSE}
+
+dt[1:2, 1:5] %>%    
+  kable %>% 
+            # The additional parameters in the line below adds striping to the table and stops
+            # it from spreading across the full page (this is overridden by our CSS file)
+  kable_styling(bootstrap_options="striped", full_width = F) 
+  
+
+```
+
+## Activity 
+
++ Convert a table that you have already loaded into R into Kable format.  
++ You can use the example I have shown and stick to the same styling or experiment with other Kable options
++ Look at the vignette -`vignette("awesome_table_in_html")`
+
+---
+
+
+# HTML Tables with `DT`
+
+Creates HTML tables from R data frames and includes filters, searching and pagination
+
+Can be used in interactive Rmarkdown documents, shiny apps and html outputs
+
+```{r using_DT, message=FALSE, warning=FALSE}
+library(NHSRdatasets)
+library(DT)
+data(LOS_model)
+
+datatable(LOS_model, options = list(pageLength = 5))
+```
+
+---
+
+# Tables with `flextable`
+
+```{r using_flextable_shown, message=FALSE, warning=FALSE, eval=FALSE}
+library(NHSRdatasets)
+library(flextable)
+library(dplyr) # for %>% and arrange()
+data(head(LOS_model))
+
+flextable(data = (LOS_model %>% arrange(Organisation, Death, ID) #order the data
+          , col_keys = c("Organisation", "Age", "LOS", "Death") #display these columns (not ID)
+          ) %>%
+  merge_v(j = c(1,4)) %>% # merge the Organisation and Death columns
+  valign(j = c(1,4),valign = "top") # move the merged column entries to the top
+```
+
+.pull-left[
++ Creates well formatted tables that will render in html, pdf, Word and Powerpoint.
++ Can also 'plot' the tables as images
++ Excellent range of formatting options including fonts, borders, merging, cell sizes, etc.
+]
+
+.pull-right[
+
+```{r using_flextable_hidden, message=FALSE, warning=FALSE, echo=FALSE}
+library(NHSRdatasets)
+library(flextable)
+library(dplyr) # for %>% and arrange()
+data(LOS_model)
+
+flextable(data = LOS_model %>% arrange(Organisation, Death, ID) #order the data
+          , col_keys = c("Organisation", "Age", "LOS", "Death") #display these columns (not ID)
+          ) %>%
+  merge_v(j = c("Organisation", "Death")) %>% # merge the Organisation and Death columns
+  valign(j = c("Organisation", "Death"),valign = "top") # move the merged column entries to the top
+```
+
+]
+---
 class: middle, left
 
 # Output Styles
@@ -401,7 +510,6 @@ class: middle, left
 Anthony
 
 ---
-
 # HTML Tables with `DT`
 
 The DT package creates HTML tables from R data frames and includes filters, searching and pagination
@@ -454,8 +562,52 @@ flextable(data = LOS_model %>% arrange(Organisation, Death, ID) #order the data
 ```
 ]
 
+---
+
+# HTML & CSS
 
 ---
+
+# Easy styling of Markdown
+
++ Whilst CSS and HTML are powerful and allow you to fully customise your document, it can be quite time consuming if all you want to do is apply a straight forward theme
++ This is where the 'themes' section comes in - it allows you to automatically produce themed Markdown documents based on the use of a single word e.g. 'striped', 'sandstone'
++ This removes the need to add in all of the CSS coding you have done if you want a generically applied theme
+
+``` {eval = FALSE}
+---
+title: Trust evaluation of LOS_model
+output:
+  html_document:
+    theme:united
+---  
+```
+
+By adding the above `theme:united` section of code into the YAML header, you can instantly apply the theme.  Let's see what this does.
+
+---
+
+# Applying themes
+
+<figure>
+  <p><img src= "./Assets/themes_output.png"
+  width= 50% height=50%
+  class="center"
+    alt="Theme output">
+  <figcaption> How the 'united' theme appears on output </figcaption>
+</figure>
+
+--
+
+## Activity 
+<br>
++ Try out a theme on your Markdown file instead of using CSS
++ Use the example on the previous slide to see how to do it
++ Remember to comment / hashtag out your CSS file reference in the YAML header
+
+
+---
+
 class: middle, left
 
 # Lunch
@@ -590,6 +742,51 @@ Rmarkdown documents can be served by a Shiny Server to make accessing them as si
 <br>
 
 Congratulations, you are now a web developer!
+
+---
+
+
+# Leaflet package
+
+``` {r}
+
+library(leaflet)
+
+m <- leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(lng=-1.93917290996, lat=52.4510115293, popup="QE Hospital, Birmingham") # This uses the 'decimal degrees' measurement of longitude and latitude
+
+m
+```
+
+---
+
+# Using leaflet with purpose
+
++ By using the `LOS_model` that we have been using today, you could produce 'heat maps'or similar concepts to represent a distribution of data
++ I will add in a small, additional data frame with some longitude 
++ You could then use something like this to identify where there may be patterns
+
+
+``` {r echo=FALSE}
+
+latitude <-  c(52.47819,52.48372,52.4790)
+
+longitude <-  c(-1.89984,-1.89837,-1.8925)
+
+df <- data.frame(latitude,longitude)
+
+m <- leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(data=df,lat= ~latitude,lng= ~longitude, popup="Cardiology patients with LOS above 4 days in the Birmingham area") # This uses the 'decimal degrees' measurement of longitude and latitude
+
+m
+
+
+```
+
+---
+
 
 ---
 
