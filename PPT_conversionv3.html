@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>CSS with R Markdown</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Anthony Harmon" />
+    <script src="libs/kePrint-0.0.1/kePrint.js"></script>
+    <link rel="stylesheet" href="libs\HED.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# CSS with R Markdown
+### Anthony Harmon
+### 2020/02/03 (updated: 2020-02-18)
+
+---
+
+# What is CSS?
+
+- CSS stands for Cascading Style Sheets
+- They are typically used in conjunction with HTML to help style websites
+- They aid with formatting and appearance, allowing for a consistent approach to be used
+- Not exclusive to R - used in other programming languages such as Node.js
+
+
+---
+
+# What do I need to code in CSS?
+
+.pull-left[
+- Notepad!  The most basic of all applications is sufficient
+- R Studio also allows you to create text files you can save as CSS
+
+
+&lt;br&gt;
+
+* Better alternatives do exist - I prefer a program called 'Atom' (free!)
+&lt;br&gt;
+  + It has colour coding for tag/section/class identification
+  + Code suggestions for open tags
+
+]
+
+.pull-right[
+&lt;figure&gt;
+  &lt;p class="aligncenter"&gt; &lt;img src='./Assets/notepad_css.png' 
+  width=100% height=100%&gt;
+  &lt;figcaption&gt; Notepad use in CSS
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;
+  &lt;p class="aligncenter"&gt; &lt;img src='./Assets/Atom_CSS.png' 
+  width=75% height=75%&gt;
+  &lt;figcaption&gt; Atom view of CSS files
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+]
+
+---
+
+# Attaching and storing CSS files
+
+At the top of a Markdown document, in the YAML section, you will have see a section that looks similar to the below - 
+
+```r
+  title: "Trust review of LOS, 2018 - 2019"
+  output:
+  html_document:default
+  pdf_document: default
+```
+--
+A small change to the `html_document` property attaches a CSS file to the Markdown
+
+
+```r
+  html_document:
+    css:styles.css
+```
+--
+## Locating files 
+
+.pull-left[
+In a simple implementation of CSS, keep CSS files in the same folder as the Markdown file.  You can however, use sub-directories
+]
+
+.pull-right[
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/file_locations.png' 
+  width=100% height=100%&gt;
+  &lt;figcaption&gt; Typical folder location
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# HTML tags
+
++ Not essential for formatting Markdown, but important if you use CSS
++ They identify a section of HTML code and allow you to apply rules to it
++ All tags 'open' and 'close' in a particular way
+  + Not following this method causes strange behaviour!
+
+##How they work
+
++ All tags use angle brackets `&lt;  &gt;` to contain an identifier
++ Opening tags start of a tag and contain the identifier of what you are creating e.g. `&lt;p&gt;`
++ Closing tags use the same content as the opener, but you add a `/` before the content of the tag e.g. `&lt;/p&gt;`
+
+---
+
+# Examples of HTML tags
+
+| Code |  Purpose |
+| :------------: | :------:|
+| `&lt;h4&gt;` | Creates a header tag.  Used to make titles &amp; subtitles|
+| `&lt;p&gt;` | Creates a paragraph tag.  Used to put in standard/paragraphed text|
+| `&lt;li&gt;`  | Creates a list tag.  Used to make a bullet pointed list|
+| `&lt;body&gt;` | This is what HTML elements should be contained in e.g. text, hyperlinks, tables etc.
+| `&lt;div&gt;` | Divides the HTML code up into a section, allowing you to refer to that specific block
+
+
+---
+
+# Internal vs external CSS
+
++ You can choose to either build your CSS into your Markdown file directly, or...
++ Put it into an external file (the route I prefer!)
+
+--
+
+## Think about your needs...
+
++ Internal/inline CSS code makes your Markdown file much longer, but it is in one place
++ External CSS means switching backwards and forwards, but is easier to find errors
+
+--
+
+## Today's use of CSS
+
++ Will be through external files
++ If you look at this Markdown file, you can see how internal CSS works
+
+---
+
+# CSS Rules
+
+All CSS tags start and end with braces/curly brackets `{ }`.  For example -
+
+
+```css
+{margin-top:0;
+text-align:justify;}
+```
+
+&lt;br&gt;
+--
+CSS mainly uses classes or element selectors.  The key difference is the dot before the reference to the section.  An element selector has no dot -
+
+
+```css
+h3 { position:absolute; }
+```
+
+&lt;br&gt;
+--
+A class has a dot before the name of the section  -
+
+
+```css
+.sidebar { margin-left:600px;}
+```
+
+---
+# Further CSS rules
+
+Properties in a CSS file use a colon after the property identifier -
+
+
+```css
+footer { text-align:center;}
+```
+
+--
+
+At the end of each rule, a semi colon is used
+
+
+```css
+header {padding-top:20px;}
+```
+
+--
+
+To use a sub-class (change of a property inside of a class), put a space after the class name 
+
+```css
+.sidebar ul {margin : 0;}
+```
+
+--
+
+##Tip of the iceberg...
+
+Go to https://www.w3schools.com/css/ for many more examples
+
+---
+
+# Quick CSS reference guide &amp; examples
+
+| CSS Property | Example | Purpose |
+| :------------: | :------:| :-------:|
+| margin |`margin-top:100px`|Puts a buffer/margin on the side of something|
+| color | `&lt;h1 style=background-color:DodgerBlue;&gt;`|Simply sets the colour of that element.  Can use names or hexadecimal values|
+| padding |`div{padding-top:50px};`|Allows a section of space around the area to be added|
+| Font-family, font-size | `font-family: Arial; font-weight: bold;`|Allows you to select a specific font(e.g. Arial), size (e.g. 12) and weight (e.g. bold)
+
+
+---
+
+#Activity 1
+
+| Choice 1 | Choice 2 | Choice 3 |
+| :------------: | :------:| :-------:|
+| Use an existing R Markdown template I have created and tackle the areas that are commented out (CSS_Activity_1.rmd) in the 'Exercises' folder | Produce an R Markdown with HTML and CSS from scratch that utilise these skills | Adapt an existing R Markdown file that you have used in today's sessions
+
+&lt;br&gt;
+&lt;br&gt;
+
+Extension - Add in stylings for bullet points / list elements in your CSS file (may need research)
+
+&lt;br&gt;
+&lt;br&gt;
+
+### Look for the below in the code for where to action areas -
+
+
+```diff
+-&lt;!-- Insert some text below that can be used to introduce the cars dataset (inside the 'p' tags) --&gt;
+&lt;p&gt;  &lt;/p&gt;
+&lt;p&gt;  &lt;/p&gt;
+&lt;p&gt;  &lt;/p&gt;
+```
+---
+
+# Body formatting
+
++ Affects ALL elements of the HTML section, unless overriden with other HTML tags
++ For example, adding a `&lt;p&gt;` tag into your body code means that text will then follow the rules of the `&lt;p&gt;` tag, rather than the body tag rules
++ Do not ignore body formatting!  We will investigate this more in the next activity
+
+&lt;br&gt;
+--
+
+# Backgrounds in CSS
+
+* Backgrounds be changed in CSS at various levels including -
+  + Overall 'body', header, div tags (looked at later), paragraphs and many more
++ Can use the usual colour formatting style e.g. hex, RGB, name values, or can use images
+
+---
+
+# Code examples
+
+
+```css
+
+body { background-color:lightblue;
+}
+
+h1   { background-color:lightblue;
+}
+
+div  { background-color:lightblue;
+}
+
+p    { background-color:lightblue;
+}
+```
+
+&lt;br&gt;
+
+Examples above showing you to use CSS to respectively change the `body`, `h1`, `div` and `p` tag content in your document
+
+---
+
+# More complete example and output
+
+.pull-left[
+
+
+```css
+
+p {
+ font-family: Arial;
+ font-size: 14px;
+ color: #6870B8;
+}
+
+body{
+  font-family: Verdana;
+  font-size:12px;
+  color: #303248;
+}
+
+```
+]
+.pull-right[
+
+&lt;figure&gt;
+  &lt;p class="aligncenter"&gt; &lt;img src='./Assets/Activity_1_Output.png' 
+  width=125% height=125%&gt;
+  &lt;figcaption&gt; Output in Markdown
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+]
+
+---
+
+# Borders in CSS
+
++ These create 'zones' and borders around text in the same way you would in any application
++ Can choose to put a border around the whole body, some it, individual parts etc.
++ One extra line of code in a CSS section e.g. - `border: 5px solid red;`
+
+&lt;figure&gt;
+  &lt;p class="aligncenter"&gt; &lt;img src='./Assets/CSS_border.png' 
+  width=75% height=75%&gt;
+  &lt;figcaption&gt; Output in Markdown
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+Further options available at https://www.w3schools.com/css/css_border.asp
+
+---
+
+# Activity 2
+
++ Add in a suitable 'body' tag in the R Markdown code around the areas that you wish to use it in (you can just keep it as it is, if preferred)
++ Add in background-color (forgive the Americanisation!) property tags into the CSS file for relevant tags of your choice
++ Try using a text and hex value for the colours so that you are aware of how to do it either way
++ Add in some borders to your CSS text.  Try and keep them relevant and not random!
+
+&lt;br&gt;
+
+As before, a 'complete' example of this can be seen in the file called `styles(Activity_2_complete).css`
+
+
+---
+
+# Using images in a CSS file
+
++ By using the `background-image` property, you can add a picture to your background  
++ This could be a logo or something similar to represent your trust
++ The default view for this is for the image to repeat itself (if it is not large enough to fit the whole page)
+
+&lt;br&gt;
+
+The code and output might look like this (not good!) - 
+
+| Code &lt;img width=375/&gt;  | Output &lt;img width=375/&gt;  |
+|------|--------|
+|` body`&lt;br&gt;`{  background-color: #fff;`&lt;br&gt; `background-position: right top;` &lt;br&gt; `background-image:url("Rightblox2.png");`&lt;br&gt;`display: table-cell;`&lt;br&gt;`}`|&lt;p class="aligncenter"&gt;&lt;img src='./Assets/CSS_background.png' width=100% height=50%&gt;&lt;/p&gt;&lt;/figure&gt; |
+
+
+---
+
+#  Fixing backgrounds
+
+By adding a line using `background-repeat`, you can prevent the image from repeating.  With a few extra tweaks, the final output is much better
+&lt;br&gt;
+&lt;br&gt;
+
+| Code &lt;img width=400/&gt;  | Output &lt;img width=400/&gt;   |
+|------|--------|
+|` body`&lt;br&gt;`{  background-position: right top;`&lt;br&gt; `background-image: url("Rightblox2.png");` &lt;br&gt; `background-repeat: no-repeat;`&lt;br&gt;`display: table-cell;`&lt;br&gt;`}`|&lt;p class="aligncenter"&gt;&lt;img src='./Assets/Background_repeat_fixed.png' width=100% height=100%&gt;&lt;/p&gt;&lt;/figure&gt; |
+
+---
+
+# Using data in Markdown
+
++ You have already seen how to use data in Markdown today
++ You can use additional formatting to improve the appearance of these outputs
++ When using the summary function, some data that you see is less relevant than others
+&lt;br&gt;
+&lt;br&gt;
+For example, the highlighted columns below are irrelevant in this context
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt;       ID &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt;  Organisation &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt;      Age &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt;      LOS &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt;     Death &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Min.   :  1.00 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Trust1 : 30 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Min.   : 5.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Min.   : 1.000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Min.   :0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; 1st Qu.: 75.75 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Trust2 : 30 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1st Qu.:24.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1st Qu.: 2.000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1st Qu.:0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Median :150.50 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Trust3 : 30 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Median :54.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Median : 4.000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Median :0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Mean   :150.50 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Trust4 : 30 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mean   :50.66 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mean   : 4.937 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mean   :0.1767 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; 3rd Qu.:225.25 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Trust5 : 30 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3rd Qu.:75.25 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3rd Qu.: 7.000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3rd Qu.:0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Max.   :300.00 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Trust6 : 30 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Max.   :95.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Max.   :18.000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Max.   :1.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; (Other):120 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+---
+
+# Improving summary output
+
+Using the `within` function, you can remove column names from the output
+
+&lt;br&gt;&lt;br&gt;
+
+
+```r
+LOS_summary &lt;-  within(LOS_model, rm(ID,Organisation))
+LOS_without_columns &lt;- summary(LOS_summary)
+LOS_without_columns
+##       Age             LOS             Death       
+##  Min.   : 5.00   Min.   : 1.000   Min.   :0.0000  
+##  1st Qu.:24.00   1st Qu.: 2.000   1st Qu.:0.0000  
+##  Median :54.00   Median : 4.000   Median :0.0000  
+##  Mean   :50.66   Mean   : 4.937   Mean   :0.1767  
+##  3rd Qu.:75.25   3rd Qu.: 7.000   3rd Qu.:0.0000  
+##  Max.   :95.00   Max.   :18.000   Max.   :1.0000
+```
+
+---
+
+# Activity 3
+
++ If you wish to use Markdown for making reports that are specific to your trust, why not start by making a suitable template today!
++ In the `Activity_3_complete.css` CSS file in the library, you will see some part customisation towards 'HED' colours.  
++ All I have done here is change a few elements around and it is now similar to HED's
+
+---
+
+# Messy HTML in Markdown!
+
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/HTML_in_R.png' 
+  width=110% height=110%&gt;
+  &lt;figcaption&gt; In R Studio, HTML is not colour coded and blends in too easily
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/HTML_in_Atom.png' 
+  width=110% height=110%&gt;
+  &lt;figcaption&gt; In programs like Atom, proper colour coding helps to seperate out 
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+&lt;br&gt;
+
+It is not always necessary to use pure HTML tags in Markdown.  Fully removing HTML is not wise, as you lose some of the unique abilities &amp; facilities it provides.
+
+&lt;br&gt;
+
+There is however a compromise...
+
+---
+
+# The compromise
+
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/Refined_HTML.png' 
+  width=80% height=80%&gt;
+  &lt;figcaption&gt; The h4 tags have been replaced with four hashtags, which means the same thing in Markdown
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+&lt;br&gt;
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/Refined_HTML_output.png' 
+  width=80% height=80%&gt;
+  &lt;figcaption&gt; Identical output to using the h4 tags
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+---
+
+# Span tags
+
++ We have used `&lt;p&gt;` tags so far to enclose text
++ Span tags can be used to enclose multiple lines of text, saving time
++ You need to add a span reference in your CSS file.  You then use span tags in HTML sections
+
+
+```css
+
+# CSS coding
+span {
+  font-family: Verdana;
+  font-size: 14px;
+  color:darkblue;
+}
+```
+
+```html
+# HTML coding
+&lt;span&gt;
+  The report ahead outlines some key statistics involved in the Length of the Stay metric on a national basis.  The table you see next is a simple summary of key findings from this dataset.
+&lt;/span&gt;
+```
+&lt;br&gt;
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/Span_output.png' 
+  width=100% height=100%&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+---
+
+# More adjustments
+
++ Span is just the start of what we can change.  We can adjust other parts of the CSS file
++ We have used properties in our `body` section that could interfere with our `span` tag
++ If you wanted to use a span tag to apply to all text, we would no longer need the 'p' tag in our CSS file
+&lt;br&gt;
+
+
+```css
+body{
+  border: 2px #94C11F;
+  background-color: #fff;
+  background-position: right top;
+  background-image: url("Rightblox2.png");
+  background-repeat: no-repeat;
+  display: table-cell;
+}
+span {
+  font-family: Verdana;
+  font-size: 14px;
+  color:darkblue;
+}
+```
+
+&lt;br&gt;
+&lt;br&gt;
+The body tag no longer includes references to the text size, colour or style.
+
+The span tag now includes the font details that were in the previous 'body' tag
+
+---
+
+# Classes vs element selectors
+
++ Reminder - No dot before a selector means it &lt;i&gt; directly&lt;/i&gt; affects a HTML element
+&lt;br&gt;&lt;br&gt;
+Example -
+
+```css
+p{
+  font-family:Arial;
+}
+```
+&lt;br&gt;&lt;br&gt;
++ This is the approach we have taken so far in the CSS section.  Now we will look at classes
++ A class in CSS has a dot before the selector, which has to be specifically referred to in the HTMLK
+
+---
+# Using classes with lists
+
+.pull-left[
+
+
+```css
+
+# CSS
+
+.listformat {
+  font-family: Arial;
+  font-size: 14px;
+  color: darkgreen;
+}
+```
+
+```html
+# HTML
+
+&lt;span class ="listformat&gt;
+Your text to go here
+Your text to go here
+Your text to go here
+Your text to go here
+&lt;/span&gt;
+```
+
+&lt;br&gt;
+&lt;figcaption&gt; A new class has been added here called 'listformat' (can be called whatever you wish). &lt;br&gt;&lt;br&gt;  This is then referred to in the HTML tags by using the 'class' addition to the right of the word 'span'. &lt;/figcaption&gt;
+]
+.pull-right[
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/Classes_output.png' 
+  width=150% height=150%&gt;
+  &lt;/p&gt;
+  &lt;figcaption&gt; The output from running the HTML &amp; CSS&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+---
+
+#Tidied up further
+
+.pull-left[
+
+
+```html
+# HTML
+
+&lt;body() class ="listformat&gt;
+Your text to go here
+Your text to go here
+Your text to go here
+Your text to go here
+&lt;/span&gt;
+```
+
+&lt;br&gt;
+&lt;figcaption&gt; The R HTML/Markdown code used with the new class structure &lt;/figcaption&gt;
+]
+.pull-right[
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/Classes_output_body.png' 
+  width=150% height=150%&gt;
+  &lt;/p&gt;
+  &lt;figcaption&gt; The new output using the 'body' class&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+---
+
+#Space: The Final Frontier
+
+
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/Space_incorrect.png' 
+  width=100% height=100%&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/Space_correct.png' 
+  width=100% height=100%&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+Warning!  The span tag in Markdown in particular is VERY sensitive to extra and unnecessary spaces/line breaks! For example -
+
+---
+
+#Activity 4 - Combining Markdown &amp; HTML
+
++ Refine your R Markdown file so that it has a 'best of both worlds' approach - some Markdown, some HTML
++ Use HTML if you have something in particular in mind that you would like to do in Markdown that isn't possible with built-in options, but, for straight forward text and titles, tags can be overkill
+
+## Extended
+
++ We haven't used these so far, but you may find 'div' tags useful, 
++ Or, using the newer HTML5 standards, the layout elements such as 'header' &amp; 'section'
++ These all allow for your page to be split up into sections, personalising each part
++ Try it yourself!  Feel free to look at `styles(Activity_4_complete).css` and `CSS_Activity_4_complete.rmd`
+
+---
+
+# Using images
+
++ Inserting images is an inevitable requirement
++ Like other CSS/HTML elements, you can apply properties in image tags across all images
++ The image example looked at so far for our CSS background is  different to how it is done elsewhere in HTML
++ If you have used the `align` attribute in the past, HTML5 has changed things...
+
+.pull-left[
+
+```html
+.center {
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%
+}
+
+&lt;section&gt;
+  &lt;p&gt; &lt;img src = "./Assets/hospital_bed.jpeg" width = 100% class="center"&gt; &lt;/p&gt;
+&lt;/section&gt; 
+```
+]
+.pull-right[
+&lt;section&gt;
+  &lt;p&gt; &lt;img src = "./Assets/hospital_bed.jpeg" 
+  width = 100% 
+  class="center"&gt; 
+  &lt;/p&gt;
+&lt;/section&gt; 
+]
+
+---
+
+# Figures and captions
+
++ You can make reports more professional by using a 'figures' and 'captions' approach
++ Needs a little more coding, but it's well worth it!
+
+```css
+# CSS coding
+
+figure {
+  float: left;
+  border: thin silver solid;
+  margin: 0.5em;
+  padding: 0.5em;
+}
+img.scaled {
+  width: 50%;
+}
+figcaption {
+  font-size: 0.9em;
+  font-style: italic;
+  color: grey;
+  margin-right: 10%;
+  margin-left: 10%;
+  text-align: center;
+}
+```
+
+--
+
+
+```html
+# HTML coding
+
+&lt;figure&gt;
+  &lt;p&gt;&lt;img src= "hospital_bed.jpeg"
+  width= 50% height=50%
+  class = "center"
+    alt="Hospital bed"&gt;
+  &lt;figcaption&gt; As of September 2019, the average length of stay in England's NHS hospitals is 4.52 days &lt;/figcaption&gt;
+&lt;/figure&gt;
+```
+
+---
+
+# Output of figures &amp; captions
+
+&lt;figure&gt;
+  &lt;p&gt;&lt;img src= "/Assets/figure_caption_output.png"
+  width= 100% height=100%
+&lt;/figure&gt;
+
+
+---
+
+# Activity 6
+
++ Add in a figure with an appropriate caption of your choice to your Markdown and CSS file.  
++ You will need to add in a new section to your CSS file to do this - a `figure` one and a `figcaption` one
++ If you wish to extend this further, you can also add in some 'normal' images that are not figures
++ There are ways to do this in Markdown without using HTML tags, but this session revolves specifically around the use of these!
++ An example of how to do this can be found in the file `CSS_Activity_6.rmd` on line 78
+
+---
+
+# Tidy CSS!
+
++ Over the course of this CSS session, you will have been adding in various CSS tags.  
++ Good practice with CSS tags in a file is to order them in alphabetical order
++ This makes it easier in future to find any areas that you need to modify or add to
+
+.pull-left[
+
+
+```css
+
+body{
+  border: 2px #94C11F;
+}
+
+.center {
+  display:block;
+}
+
+figure {
+  float: left;
+}
+
+figcaption {
+  font-size: 0.9em;
+}
+
+```
+
+]
+--
+.pull-right[
+&lt;br&gt;
+&lt;br&gt;
+### Activity 7
++ The final activity here is to rearrange your CSS tags in the file so that they are in alphabetical order
++ Be careful not to mix any areas up though - it could stop your CSS file from working
+]
+
+---
+
+# Other methods of presentation
+
++ Respected data visualisation experts like Edward Tufte have produced, such as the 'Tufte handout' style, can also be easily produced in Markdown without the use of CSS files
++ For more details, have a look at the Bookdown section on this
+&lt;br&gt;&lt;br&gt;https://bookdown.org/yihui/rmarkdown/tufte-handouts.html
+
+&lt;figure&gt;
+  &lt;p&gt;&lt;img src= "./Assets/tufte_output.png"
+  width= 75% height=75%
+  class="center"
+    alt="Theme output"&gt;
+&lt;/figure&gt;
+
+---
+
+# Other areas to consider investigating
+
+| Method | Explanation | Website |
+| :------------: | :------:| :-------:|
+| Dillinger |Supports conversion of Markdown into HTML5 files, including the ability to import, save and export to Dropbox, Google Drive, One Drive &amp; Github|https://dillinger.io/|
+| Flexbox | This is a method of designing a structured, full layout of a webpage|https://www.w3schools.com/css/css3_flexbox.asp|
+| Bootstrap |Bootstrap is a way of using newer techniques as well as pre-made CSS layouts for your design needs - very professional &amp; well made ones!  Great for mobile site development &amp; resizable pages|https://www.w3schools.com/bootstrap/default.asp|
+| CSS Floats | Uses 'floating' techniques to get elements of your page to float to the left or right.  Quite simple in practice, and allows for an easier build|https://www.w3schools.com/css/css_float.asp
+
+---
+
+# Closing remarks
+
++ We have built a CSS file here in stages to see what individual components do 
++ One of the best ways to learn is to experiment with an existing CSS file and make changes
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
