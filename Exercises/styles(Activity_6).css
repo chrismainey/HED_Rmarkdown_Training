@@ -1,0 +1,44 @@
+body{
+  border: 2px #94C11F;
+  background-color: #fff;
+  background-position: right top;
+  background-image: url("Rightblox2.png");
+  background-repeat: no-repeat;
+  display: table-cell;
+}
+
+h2{
+  font-weight: bold;
+  font-family: Verdana;
+  font-size:26px;
+  color: #095203;
+}
+
+h4{
+  font-weight: bold;
+  font-family: Verdana;
+  font-size:22px;
+  color: #94C11F;
+}
+
+.listformat {
+  font-family: Arial;
+  font-size: 14px;
+  color: darkgreen;
+}
+
+span {
+  font-family: Verdana;
+  font-size: 14px;
+  color:darkblue;
+}
+
+
+p.caption {
+  font-size: 0.9em;
+  font-style: italic;
+  color: grey;
+  margin-right: 10%;
+  margin-left: 10%;
+  text-align: justify;
+}
