@@ -1,0 +1,44 @@
+---
+title: "Activity 1"
+output:
+  pdf_document: default
+  html_document:
+    
+    # Add in a reference below to use the CSS file that you have created separately
+    
+    # For example  css: styles.css
+    css: styles(Activity_3_complete).css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<!-- Replace the two hashtags below to setup the header with a 'h2' tag -->
+
+<h2> Using HTML & a little CSS for formatting </h2>
+
+<h4> Summarising an existing dataset - </h4>
+
+
+<p> The subtitle that you see above is an example of a 'h4' tag.  This is done using HTML </p>
+<p> A 'h4' tag is a 'header' tag that is used to produce titles and subtitles in documents </p>
+<p> The higher the lower the number next to the 'h', the bigger the title is.  'h2' is the equivalent of the size of the text that Markdown uses by default for headings - using the '##' approach </p>
+
+
+<li> This 'li' tag is used inside of text to start a new list / bullet point. </li>
+<li> Bullet points can be formatted individually in the same way that other elements can be. </li>
+
+
+## Changing the background using CSS
+
+
+<p> You can change the background easily in a CSS file.  It also allows you to change specific elements of the background it you wish to alternate or change it over the course of a Markdown page </p>
+
+<p> You will notice here in the Markdown code that a 'body' tag has been added at the top of the HTML </p>
+<p> Tyically, you would 'wrap' it around all of the HTML code, like it is here.  It then affects all HTML </p>
+
+
+</body> 
+
+<!-- Activity 2 - add in code into your CSS file to change the background & change the body tags -->
