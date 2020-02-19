@@ -2,8 +2,7 @@
 title: "Trust review of LOS, 2018 - 2019"
 output:
   html_document:
-    css: styles(Activity_5_complete).css
-    #theme: united
+    css: "../Solutions/styles(Ex_8_complete).css"
   pdf_document: default
 ---
 
@@ -38,7 +37,6 @@ data("LOS_model")
 
 #### Preview of the data style (what the headings mean)
 
-<!-- Activity 5 - Add in a 'kable' method of displaying a section of data from the table of your choice -->
 
 <section>
 

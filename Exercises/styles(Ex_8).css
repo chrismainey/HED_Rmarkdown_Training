@@ -2,9 +2,8 @@ body{
   border: 2px #94C11F;
   background-color: #fff;
   background-position: right top;
-  background-image: url("Rightblox2.png");
+  background-image: url("../Assets/Rightblox2.png");
   background-repeat: no-repeat;
-  display: table-cell;
 }
 
 h2{

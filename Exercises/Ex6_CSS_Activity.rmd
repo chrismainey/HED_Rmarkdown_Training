@@ -1,12 +1,12 @@
 ---
-title: "Activity 1"
+title: "Activity 6"
 output:
   html_document:
     
     # Add in a reference below to use the CSS file that you have created separately
     
     # For example  css: styles.css
-    css: styles(Activity_3_complete).css
+    css: 
   pdf_document: default
 ---
 
@@ -14,7 +14,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<!-- Activity 3 - Come up with a couple of headings and opening 'blurb' about what you would expect to see in a sample report that you could produce for your trust -->
+<!-- Activity 6 - Come up with a couple of headings and opening 'blurb' about what you would expect to see in a sample report that you could produce for your trust -->
 
 ```{r, include =FALSE}
 library(NHSRdatasets)

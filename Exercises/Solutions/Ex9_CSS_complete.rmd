@@ -2,8 +2,7 @@
 title: "Trust review of LOS, 2018 - 2019"
 output:
   html_document:
-    css: styles(Activity_6_complete).css
-    #theme: united
+    css: "../Solutions/styles(Ex_8_complete).css"
   pdf_document: default
 ---
 
@@ -70,8 +69,6 @@ Key metric analysis include the following headline figures -
 
 #### Closing report remarks 
 
-<!-- Activity 6 - Add in a figure of your choice in this section (feel free to use the one with the hospital bed shown) -->
-
 
 <section>
 
@@ -84,7 +81,7 @@ There are several benefits to improving the metrics around Length of Stay and so
 For one example, please click here - <a href = https://improvement.nhs.uk/documents/2898/Guide_to_reducing_long_hospital_stays_FINAL_v2.pdf> NHS Improvement Guide for reducing LOS </a>
 
 <figure>
-  <p><img src= "hospital_bed.jpeg"
+  <p><img src= "../../Assets/hospital_bed.jpeg"
   width= 50% height=50%
   class = "center"
     alt="Hospital bed">

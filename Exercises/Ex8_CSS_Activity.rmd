@@ -2,7 +2,7 @@
 title: "Trust review of LOS, 2018 - 2019"
 output:
   html_document:
-    #css: styles(Activity_4_complete).css
+    css: "styles(Ex_8).css"
     theme: sandstone
   pdf_document: default
 ---
@@ -47,7 +47,7 @@ Key metric analysis include the following headline figures -
 </span>
 
 
-<!-- Activity 5 - Add in a 'kable' method below of displaying a section of data from the table of your choice -->
+<!-- Activity 8 - Add in a 'kable' method below of displaying a section of data from the table of your choice -->
 
 ```{r, include =TRUE, echo=FALSE, warning=FALSE}
   library(kableExtra)

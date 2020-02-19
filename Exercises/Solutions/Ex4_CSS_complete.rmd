@@ -3,9 +3,7 @@ title: "Exercise 4"
 output:
   html_document:
     
-    # Add in a reference below to use the CSS file that you have created separately
-    # For example  css: styles.css
-    css: styles(Ex_4_complete).css
+    css: "../Solutions/styles(Ex_4_complete).css"
     
   pdf_document: default
 ---
@@ -14,7 +12,6 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<!-- Replace the two hashtags below to setup the header with a 'h2' tag -->
 
 <h2> Using HTML & a little CSS for formatting </h2>
 

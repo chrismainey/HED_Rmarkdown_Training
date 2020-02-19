@@ -1,13 +1,10 @@
 ---
-title: "Activity 1"
+title: "Activity 5"
 output:
-  pdf_document: default
   html_document:
     
-    # Add in a reference below to use the CSS file that you have created separately
-    
-    # For example  css: styles.css
-    css: styles(Activity_3_complete).css
+    css: "styles(Ex_5).css"
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -41,4 +38,4 @@ knitr::opts_chunk$set(echo = TRUE)
 
 </body> 
 
-<!-- Activity 2 - add in code into your CSS file to change the background & change the body tags -->
+<!-- Activity 5 - add in code into your CSS file to change the background & change the body tags -->

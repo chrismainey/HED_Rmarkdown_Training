@@ -2,8 +2,7 @@
 title: "Trust review of LOS, 2018 - 2019"
 output:
   html_document:
-    css: styles(Activity_6_complete).css
-    #theme: united
+    css: "../Solutions/styles(Ex_8_complete).css"
   pdf_document: default
 ---
 
@@ -70,7 +69,7 @@ Key metric analysis include the following headline figures -
 
 #### Closing report remarks 
 
-<!-- Activity 6 - Add in a figure (do not leave it as just an image, as seen below!) of your choice in this section. Feel free to use the one with the hospital bed shown -->
+<!-- Activity 9 - Add in a figure (do not leave it as just an image, as seen below!) of your choice in this section. Feel free to use the one with the hospital bed shown -->
 
 
 <section>

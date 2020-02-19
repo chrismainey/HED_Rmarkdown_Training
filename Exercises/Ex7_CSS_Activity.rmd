@@ -1,12 +1,9 @@
 ---
-title: "Activity 1"
+title: "Activity 7"
 output:
   html_document:
     
-    # Add in a reference below to use the CSS file that you have created separately
-    
-    # For example  css: styles.css
-    css: styles(Activity_4).css
+    css: "styles(Ex_7).css"
   pdf_document: default
 ---
 
@@ -14,7 +11,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<!-- Activity 4 : Switch some of the code below so that it uses a combination of traditional Markdown as well as HTML.  The first heading has been changed for you, as has the evolution of the 'span' tag, replacing 'p' tags -->
+<!-- Activity 7 : Switch some of the code below so that it uses a combination of traditional Markdown as well as HTML.  The first heading has been changed for you, as has the evolution of the 'span' tag, replacing 'p' tags -->
 
 ```{r, include =FALSE}
 library(NHSRdatasets)

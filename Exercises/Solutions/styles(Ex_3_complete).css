@@ -11,7 +11,7 @@ body{
   border: 2px #94C11F;
   background-color: #fff;
   background-position: right top;
-  background-image: url("../Assets/Rightblox2.png");
+  background-image: url("../../Assets/Rightblox2.png");
   background-repeat: no-repeat;
 }
 
@@ -32,11 +32,5 @@ h4{
 li {
   font-family: Arial;
   font-size: 14px;
-  color: darkgreen;
-}
-
-span {
-  font-family: Verdana;
-  font-size: 14px;
-  color:darkblue;
+  color: darkblue;
 }
