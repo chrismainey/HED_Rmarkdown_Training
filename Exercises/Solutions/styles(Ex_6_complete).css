@@ -1,19 +1,9 @@
-p {
- font-family: Arial;
- font-size: 14px;
- color: black;
-}
-
 body{
-  font-family: Verdana;
-  font-size:12px;
-  color: #94C11F
   border: 2px #94C11F;
   background-color: #fff;
   background-position: right top;
-  background-image: url("Rightblox2.png");
+  background-image: url("../../Assets/Rightblox2.png");
   background-repeat: no-repeat;
-  display: table-cell;
 }
 
 h2{
@@ -30,8 +20,14 @@ h4{
   color: #94C11F;
 }
 
-li {
+.listformat {
   font-family: Arial;
   font-size: 14px;
-  color: darkblue;
+  color: darkgreen;
+}
+
+span {
+  font-family: Verdana;
+  font-size: 14px;
+  color:darkblue;
 }

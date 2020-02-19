@@ -1,16 +1,14 @@
 ---
-title: "Activity 1"
+title: "Activity 7"
 output:
   html_document:
-    css: styles(Activity_4_complete).css
+    css: "../Solutions/styles(Ex_7_complete).css"
   pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-<!-- Activity 4 : Switch some of the code below so that it uses a combination of traditional Markdown as well as HTML.  The first heading has been changed for you, as has the evolution of the 'span' tag, replacing 'p' tags -->
 
 ```{r, include =FALSE}
 library(NHSRdatasets)

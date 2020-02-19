@@ -469,9 +469,9 @@ dt[1:2, 1:5] %>%
 ---
 class: middle, left
 
-## Exercise 3: Activity 
+## Exercise 3: 
 
-+ Create a new document
++ Create a new Markdown file, or use an existing one created from earlier
 + Load the NHSRdatasets package and the `LOS_models` dataset
 + Print the table using Kable format.  
 + You can use the example above, and stick to the same styling, or experiment with other Kable options
@@ -1368,7 +1368,7 @@ figcaption {
 + You will need to add in a new section to your CSS file to do this - a `figure` one and a `figcaption` one
 + If you wish to extend this further, you can also add in some 'normal' images that are not figures
 + There are ways to do this in Markdown without using HTML tags, but this session revolves specifically around the use of these!
-+ An example of how to do this can be found in the file `CSS_Activity_6.rmd` on line 78
++ An example of how to do this can be found in the file `Ex_CSS_Activity_8.rmd` on line 78
 
 ---
 

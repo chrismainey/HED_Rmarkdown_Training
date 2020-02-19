@@ -2,8 +2,7 @@
 title: "Trust review of LOS, 2018 - 2019"
 output:
   html_document:
-    css: styles(Activity_5_complete).css
-    #theme: united
+    css: "../Solutions/styles(Ex_8_complete).css"
   pdf_document: default
 ---
 
@@ -38,7 +37,6 @@ data("LOS_model")
 
 #### Preview of the data style (what the headings mean)
 
-<!-- Activity 5 - Add in a 'kable' method of displaying a section of data from the table of your choice -->
 
 <section>
 
@@ -71,9 +69,28 @@ Key metric analysis include the following headline figures -
 
 #### Closing report remarks 
 
+
 <section>
 
+<span>
 
+
+
+There are several benefits to improving the metrics around Length of Stay and some of these case studies can be found in many places across the Internet.  
+
+For one example, please click here - <a href = https://improvement.nhs.uk/documents/2898/Guide_to_reducing_long_hospital_stays_FINAL_v2.pdf> NHS Improvement Guide for reducing LOS </a>
+
+<figure>
+  <p><img src= "../../Assets/hospital_bed.jpeg"
+  width= 50% height=50%
+  class = "center"
+    alt="Hospital bed">
+  <figcaption> As of September 2019, the average length of stay in England's NHS hospitals is 4.52 days </figcaption>
+</figure>
+
+
+
+</span>
 
 </section>
 
