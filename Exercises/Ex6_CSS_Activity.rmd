@@ -1,0 +1,63 @@
+---
+title: "Activity 1"
+output:
+  html_document:
+    
+    # Add in a reference below to use the CSS file that you have created separately
+    
+    # For example  css: styles.css
+    css: styles(Activity_3_complete).css
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<!-- Activity 3 - Come up with a couple of headings and opening 'blurb' about what you would expect to see in a sample report that you could produce for your trust -->
+
+```{r, include =FALSE}
+library(NHSRdatasets)
+data("LOS_model")
+```
+
+***
+
+<h4>  Background of report </h4>
+
+
+<p> The report ahead outlines some key statistics involved in the Length of Stay metric on a national basis </p>
+<p> The table you see next is a simple summary of key findings from that this dataset.<p>
+
+
+```{r, include =TRUE}
+LOS_summary <- within(LOS_model, rm(ID,Organisation)) 
+summary(LOS_summary)
+```
+
+*** 
+
+<h4> Other views of the summary of data </h4>
+
+
+<!-- Insert your own headings and text from here onwards -->
+
+<p> Your text to go here </p>
+<p> Your text to go here </p>
+<p> Your text to go here </p>
+<p> Your text to go here </p>
+<p> Your text to go here </p>
+
+***
+
+<h4> Closing report remarks </h4>
+
+
+
+***
+
+</body> 
+
+
+
+

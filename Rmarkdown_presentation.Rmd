@@ -745,7 +745,7 @@ Go to https://www.w3schools.com/css/ for many more examples
 
 | Choice 1 | Choice 2 | Choice 3 |
 | :------------: | :------:| :-------:|
-| Use an existing R Markdown template I have created and tackle the areas that are commented out (CSS_Activity_1.rmd) in the 'Exercises' folder | Produce an R Markdown with HTML and CSS from scratch that utilise these skills | Adapt an existing R Markdown file that you have used in today's sessions
+| Use an existing R Markdown template I have created and tackle the areas that are commented out (Ex4_CSS_Activity_1.rmd) in the 'Exercises' folder | Produce an R Markdown with HTML and CSS from scratch that utilise these skills | Adapt an existing R Markdown file that you have used in today's sessions
 
 <br>
 <br>
@@ -867,7 +867,7 @@ Further options available at https://www.w3schools.com/css/css_border.asp
 
 <br>
 
-As before, a 'complete' example of this can be seen in the file called `styles(Activity_2_complete).css`
+As before, a 'complete' example of this can be seen in the file called `styles(Ex5_CSS_complete).css`
 
 
 ---
@@ -941,10 +941,10 @@ LOS_without_columns
 
 ---
 
-# Activity 3
+# Exercise 6
 
 + If you wish to use Markdown for making reports that are specific to your trust, why not start by making a suitable template today!
-+ In the `Activity_3_complete.css` CSS file in the library, you will see some part customisation towards 'HED' colours.  
++ In the `Ex6_CSS_complete.css` CSS file in the library, you will see some part customisation towards 'HED' colours.  
 + All I have done here is change a few elements around and it is now similar to HED's
 
 ---
@@ -1114,7 +1114,7 @@ Your text to go here
 
 ---
 
-#Tidied up further
+# Tidied up further
 
 .pull-left[
 
@@ -1143,7 +1143,7 @@ Your text to go here
 
 ---
 
-#Space: The Final Frontier
+# Space: The Final Frontier
 
 
 <figure>
@@ -1165,17 +1165,17 @@ Warning!  The span tag in Markdown in particular is VERY sensitive to extra and 
 
 ---
 
-#Activity 4 - Combining Markdown & HTML
+## Exercise 7 - Combining Markdown & HTML
 
 + Refine your R Markdown file so that it has a 'best of both worlds' approach - some Markdown, some HTML
 + Use HTML if you have something in particular in mind that you would like to do in Markdown that isn't possible with built-in options, but, for straight forward text and titles, tags can be overkill
 
-## Extended
+### Extended
 
 + We haven't used these so far, but you may find 'div' tags useful, 
 + Or, using the newer HTML5 standards, the layout elements such as 'header' & 'section'
 + These all allow for your page to be split up into sections, personalising each part
-+ Try it yourself!  Feel free to look at `styles(Activity_4_complete).css` and `CSS_Activity_4_complete.rmd`
++ Try it yourself!  Feel free to look at `styles(Ex_7_complete).css` and `Ex7_CSS_complete.rmd`
 
 ---
 
@@ -1263,7 +1263,7 @@ figcaption {
 
 ---
 
-# Activity 6
+# Exercise 8
 
 + Add in a figure with an appropriate caption of your choice to your Markdown and CSS file.  
 + You will need to add in a new section to your CSS file to do this - a `figure` one and a `figcaption` one
@@ -1306,7 +1306,7 @@ figcaption {
 .pull-right[
 <br>
 <br>
-### Activity 7
+### Exercise 9
 + The final activity here is to rearrange your CSS tags in the file so that they are in alphabetical order
 + Be careful not to mix any areas up though - it could stop your CSS file from working
 ]
