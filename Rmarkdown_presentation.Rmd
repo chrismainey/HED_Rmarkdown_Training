@@ -22,8 +22,10 @@ class: center, middle
 <br>
 
 __Chris Mainey__
+__Matthew Bass__
+__Anthony Harmon__
 
-<a href="mailto:chris.mainey@uhb.nhs.uk">chris.mainey@uhb.nhs.uk</a>
+<a href="mailto:HED@uhb.nhs.uk">HED@uhb.nhs.uk</a>
 
 <br><br>
 2020-01-20 (updated: `r Sys.Date()`)
@@ -1641,7 +1643,6 @@ Change the output file name or it will keep overwriting the same file!
 There are lots of fancier things you can do, some of which require plugins, HTML or CSS but many don't.
 
 .pull-left[
-+ Flextable
 + MathJax
 + LaTeX
 + Footnotes and annotations
@@ -1657,6 +1658,18 @@ There are lots of fancier things you can do, some of which require plugins, HTML
 <a href="https://imgflip.com/i/30tnps"><img src="https://i.imgflip.com/30tnps.jpg" title="made at imgflip.com" width=100%/></a>
 ]
 
+
+---
+
+# Other 'down' formats:
+
++ `pagedown` - Page HTML files, shown earlier
++ `bookdown` - Create online books.  Many books written in this, including the Rmarkdown book and R4DS
++ `thesisdown` - Extenstion for building academic theses in Rmarkdown
++ `blogdown` - BUild websites using Rmarkdown, and the static site generator 'Hugo'
++ `pkgdown` - Turn your documentaion and help files for and R package into a website
+
++ `xaringan` - Rmarkdown presentations using HTML slides.  Presentation
 
 ---
 
@@ -1738,13 +1751,12 @@ m
 `r icon::fa("globe", color=rgb(148, 198, 0, maxColorValue = 255))` <a href="http://www.hed.nhs.uk" style="line-height:2;">http://www.hed.nhs.uk</a>
 <br>
 <br>
-<br>
-`r icon::fa("envelope", color=rgb(148, 198, 0, maxColorValue = 255))` <a href="mailto:chris.mainey@uhb.nhs.uk;" style="line-height:2;"> chris.mainey@uhb.nhs.uk </a>
-<br>
 `r icon::fa("twitter", color=rgb(148, 198, 0, maxColorValue = 255))` <a href="https://twitter.com/chrismainey?s=09" style="line-height:2;">@chrismainey</a>
 <br>
 `r icon::fa("github", color=rgb(148, 198, 0, maxColorValue = 255))` <a href="https://github.com/chrismainey)" style="line-height:2;">chrismainey</a>
 <br>
+
+# CM's website build in blogdown
 `r icon::fa("globe", color=rgb(148, 198, 0, maxColorValue = 255))` <a href="http://www.mainard.co.uk" style="line-height:2;">http://www.mainard.co.uk</a>
 <br>
 <br>
