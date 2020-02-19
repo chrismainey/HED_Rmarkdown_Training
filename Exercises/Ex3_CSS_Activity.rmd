@@ -2,7 +2,8 @@
 title: "Trust review of LOS, 2018 - 2019"
 output:
   html_document:
-    css: "../Solutions/styles(Ex_8_complete).css"
+    css: "styles(Ex_8).css"
+    theme: sandstone
   pdf_document: default
 ---
 
@@ -38,29 +39,31 @@ data("LOS_model")
 #### Preview of the data style (what the headings mean)
 
 
+
 <section>
 
 <span>
 Key metric analysis include the following headline figures -
 </span>
 
+
+<!-- Activity 8 - Add in a 'kable' method below of displaying a section of data from the table of your choice -->
+
 ```{r, include =TRUE, echo=FALSE, warning=FALSE}
   library(kableExtra)
-  dt <- LOS_model 
-  head(dt) %>% 
-    kable() %>% 
-    kable_styling(bootstrap_options = "striped", full_width = F)
+
     
 ```
 
 ##### Explaining the table
-  
+
+
 <body class="listformat">
-- The ID is a unique numeric identifier for a trust (unique only to this table)
-- For the purposes of anonymity, trust names are simply listed as 'Trust1', 'Trust2' etc.
-- Age of the patient (in years)
-- LOS (Length of Stay) for a patient, in days
-- A binary value for whether a patient lived or died in that spell ( 0 for lived, 1 for died)
+- Your text to go here  
+- Your text to go here  
+- Your text to go here  
+- Your text to go here  
+- Your text to go here  
 </body>
 
 </section>
@@ -69,12 +72,9 @@ Key metric analysis include the following headline figures -
 
 #### Closing report remarks 
 
-<!-- Activity 9 - Add in a figure (do not leave it as just an image, as seen below!) of your choice in this section. Feel free to use the one with the hospital bed shown -->
-
-
 <section>
 
-<!-- <p> <img src = "hospital_bed.jpeg" class="center"> </p>    If you wish to use this line of code to show an image, please remove the everything from the this line outside of the <p> tags    --> 
+Your text to go here 
 
 </section>
 
