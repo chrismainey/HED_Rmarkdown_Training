@@ -1397,7 +1397,58 @@ class: middle, left
 
 
 ---
-# Using R markdown with Office
+# Using R markdown with Office# Word Documents
+
+.pull-left[
++ Available by default
++ Not all features will work in the Word file (e.g. interactive figures)
++ Uses Word styles to format content
+]
+
+.pull-right[
+<img src='Assets/make_new_word_doc.png'>
+]
+
+---
+# Customising Word Documents
+
++ Provide a 'style guide' .docx file in the YAML header
+
+--
+
+```{r yaml_word, eval = FALSE}
+---
+title: "Word Report"
+author: "J. Smith"
+date: "01-01-2000"
+output:
+  word_document:
+    reference_docx: style-guide.docx #<<
+---
+```
+
+--
+
++ File content doesn't matter, just the styles
+
+--
+
++ Create one by making a new Word file with Rmarkdown
++ Copy it and call it something helpful ('style-guide.docx')
++ Open in Word and change the **styles**
+
+--
+
++ Save it and make it the reference_docx in the YAML
+
+---
+
+# Redoc: Word and Rmarkdown in the same file
+
++ Experimental
++ Creates Word documents with the raw Rmarkdown hidden inside
++ Keeps comments and changes made in Word
++ Can be converted back into Rmarkdown to work on it again
 
 
 ---
@@ -1563,8 +1614,6 @@ m
 
 
 ```
-
----
 
 
 ---
