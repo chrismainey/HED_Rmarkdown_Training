@@ -386,16 +386,53 @@ class: middle, left
 
 ---
 
-# Blah
+# You want to make it look nice!
 
-You want to make it look nice....
+Three common elements:
++ Figure sizes
++ Presenting data tables
++ Consider output style (later section)
 
 
-Figure sizes
+--
 
-COnsider output style (later section)
+## Figure sizes
+
+Five main options: `fig.width`, `fig.height`, `fig.asp`, `out.width`, `out.height`
+
++ `fig.width` and `fig.height` are in inches (_America..._).
++ __Golden ratio:__ set fig.width = 6 and fig.asp = 0.618 (Hadley Wickham, R4DS)
++ `out.width` controls proporiton of line width, e.g. "70%"
++ To tile two plots across page, set `out.width = "50%"` and `fig.align = "default"`
 
 ---
+
+# Static Markdown tables
+
+If you are not presenting a data set, but want a table, you can use markdown syntax:
+<br><br>
+
+```{r mdtbl1, eval=FALSE}
+|Presenters    | Favourite Drink | Favourite R package     |
+|:-------------|-----------------|------------------------:|
+|Matthew Bass  | Pepsi           | `data.table`            |
+|Anthony Harmon| A good, peaty, single malt| `xaringan`     |
+|Chris Mainey  | Coffee          | `mgcv`                  |
+```
+
+
+<br><br>
+
+|Presenters    | Favourite Drink | Favourite R package     |
+|:-------------|:---------------:|------------------------:|
+|Matthew Bass  | Pepsi           | `data.table`            |
+|Anthony Harmon| A good, peaty, single malt| `xaringan`     |
+|Chris Mainey  | Coffee          | `mgcv`                  |
+
+
+
+---
+
 
 # Kable
 
@@ -528,11 +565,73 @@ As menitoned earlier, there are various output styles you can use, including:
 
 # PDF output
 
-PDF is a tricky format, but Pandoc is your friend.
++ Output style `pdf_output`.
 
-Default PDF output converts markdown to Latex, and Pandoc converts Latex to PDF.
++ PDF is a tricky format, but Pandoc is your friend.
 
-Tex installed: 'tinytex'
++ Default PDF output converts markdown to Latex, and Pandoc converts Latex to PDF.
+
+--
+
++ This means that you can use Latex commands in YAML and formating, but you need Latex installed.
+
++ Easiest way is: `install.packages("tinytex")` 
+
+--
+
++ You many have trouble with firewalls and mirrors being blocked.
+
+
+#### Reference:  https://bookdown.org/yihui/rmarkdown/pdf-document.html
+
+---
+
+# Useful Latex for YAML in PDF
+
+|Option |Description |
+|:------|:-----------|
+|toc| Include a table of contents (true/false)|
+|toc_depth| Set the depth of the table of contents|
+|number_sections| Number each of the section titles and toc (true/false)
+|geometry| Options for geometry class (e.g., `margin=1in`)|
+|df_print| Enhanced display type for tables (default/kable/tibble)|
+|dev| Graphics device to use, e.g. Cairo|
+|keep_tex| Keep the intermediate Tex (true/false)|
+|template| Use a latex (.tex) template|
+|fontsize| Font size (e.g. `10pt`)|
+
+---
+
+# pagedown
+
++ The alternative to the complicated PDF generation is the `pagedown`.
+
++ It doens't require the Latex translation, and paginated HTML
+
++ `pagedown` has templates for page html, thesis, posters, CV, business cards, journals etc.
+
+```{YAML, eval=FALSE}
+---
+title: My Report
+Name: Chris Mainey
+output:
+  pagedown::html_paged:
+    toc: true
+    number_sections: true
+    self_contained: true
+    front_cover: https://i.imgflip.com/30tnps.jpg
+    back_cover: https://www.r-project.org/Rlogo.png
+  
+---
+
+```
+
+---
+class: middle, left
+
+# Exercise 3.5
+
+Knit your  document together as a PDF using both the default `pdf_output` and `pagedown`.
 
 
 ---
