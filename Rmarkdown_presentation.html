@@ -4,6 +4,7 @@
     <title>R Markdown</title>
     <meta charset="utf-8" />
     <meta name="author" content="Chris Mainey chris.mainey@uhb.nhs.uk" />
+    <script src="libs/kePrint-0.0.1/kePrint.js"></script>
     <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
     <script src="libs/jquery-1.12.4/jquery.min.js"></script>
     <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
@@ -15,6 +16,13 @@
     <script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
     <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
     <script src="libs/tabwid-1.0.0/tabwid.js"></script>
+    <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+    <script src="libs/leaflet-1.3.1/leaflet.js"></script>
+    <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+    <script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+    <script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+    <link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+    <script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
     <link href="libs/font-awesome-5.3.1/css/fontawesome-all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="libs\HED.css" type="text/css" />
   </head>
@@ -34,7 +42,7 @@ __Chris Mainey__
 &lt;a href="mailto:chris.mainey@uhb.nhs.uk"&gt;chris.mainey@uhb.nhs.uk&lt;/a&gt;
 
 &lt;br&gt;&lt;br&gt;
-2020-01-20 (updated: 2020-02-18)
+2020-01-20 (updated: 2020-02-19)
 &lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
 &lt;span style="font-size:14px !important;"&gt; __&amp;copy; Healthcare Evaluation Data (HED)__- part of Health Informatics, University Hospitals Birmingham NHS Foundation Trust.  
 &lt;b&gt;NOT TO BE REPUBLISHED OR DISTRIBUTED WITHOUT CONSENT&lt;/b&gt; &lt;/span&gt;
@@ -57,7 +65,7 @@ We are using RStudio cloud for this course.
 
 ---
 
-# Summary (1)
+# Course Content
 
 - What is `R` markdown?
 - Structure
@@ -82,7 +90,7 @@ _(Plus coffee, and lunch, of course...)_
 &lt;br&gt;
 
 
-Much of our intro section is based on: __R Markdown: The Definitive Guide__ by _Yihui Xie, J. J. Allaire, Garrett Grolemund_
+Sections of this course are based on the free ebook: __R Markdown: The Definitive Guide__ by _Yihui Xie, J. J. Allaire, Garrett Grolemund_
 https://bookdown.org/yihui/rmarkdown/
 
 ---
@@ -126,25 +134,16 @@ It could also be used as a final report, teaching material, blog post etc.
 + Write your documentaion as you go.
 + Reproducible
 + Can be used as both scripts and final reports (and more...)
-+ Can be parameterised to build regular reports / multiple versions of outputs.
++ Can be parameterised to build regular reports / multiple versions.
 ]
 
 .pull-right[
 ### Challenges
 + Requires some `R` knowledge
-+ Output formats can be tricky, particularly with PDF
++ Output formats can be tricky at first, particularly with PDF
 + Works best if shared.  Difficult if lone analyst using it.
 
 ]
-
-
-
-
---
-
-&lt;br&gt;
-This course pairs well with the free ebook __R Markdown: The Definitive Guide__ by _Yihui Xie, J. J. Allaire, Garrett Grolemund_
-https://bookdown.org/yihui/rmarkdown/
 
 
 ---
@@ -178,6 +177,11 @@ https://bookdown.org/yihui/rmarkdown/
 --
 
 + DT
+
++ flextable
+
++ kable &amp; kableExtra
+
 
 ---
 
@@ -347,19 +351,6 @@ Can also be changed in RStudio by clicking on the cog in the top right of the co
 
 &lt;img src= 'Assets/code-chunk-header-1.PNG' width=100%&gt;
 
----
-class: left, middle
-
-# Exercise 2: 
-### Build a parametrised `Rmarkdown` using `LOS_model`
-#### Part (a)
-+ Create a new markdown document or clear your last one.
-+ In this document, please do the following:
- + Create a hidden code block that loads the LOS_model data
- + Add some titles and text to explain what is happening
- + Add a hyper-link to the `NHSRdataset` package (find it via Google)
- + Add a code block using `dplyr` to summarise the `mean` and `median` LOS
- + Create a histogram of the LOS
 
 ---
 
@@ -392,26 +383,166 @@ The sum of 4 and 5 is &lt;code&gt;&amp;#96;r 4+5&amp;#96;&lt;/code&gt;
 ]
 
 ---
+class: left, middle
 
-# knitr
+# Exercise 2: 
+### Build an `Rmarkdown` using `LOS_model`
+#### Part (a)
++ Create a new markdown document or clear your last one.
++ In this document, please do the following:
+ + Create a hidden code block that loads the LOS_model data
+ + Add some titles and text to explain what is happening
+ + Add a hyper-link to the `NHSRdataset` package (find it via Google)
+ + Add a code block using `dplyr` to summarise the `mean` and `median` LOS
+ + Create a chart/histogram of the LOS
+ 
+ 
+---
+class: middle, left
 
-&lt;img src="https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/rmarkdown_wizards.png" width="500"&gt;
+# Formatting R markdown documents
+
+---
+
+# Blah
+
+You want to make it look nice....
 
 
-https://yihui.org/knitr/
+Figure sizes
 
+COnsider output style (later section)
+
+---
+
+# Kable
+
++ Kable is an R package that allows for advanced table formatting
++ 'Standard' views of tables can be dull without any styling applied
++ Kable code is simple and allows for easy, pleasurable output
+
+
+```r
+library(NHSRdatasets)
+data("LOS_model")
+LOS_summary &lt;- (summary(LOS_model))
+library(kableExtra)
+dt &lt;-  LOS_model
+head(dt) %&gt;%    # Only shows the first 6 lines of the table
+  kable %&gt;% 
+  kable_styling()   # Applies the 'Twitter' bootstrap styling
+```
+
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Organisation &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Age &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; LOS &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Death &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Trust1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 55 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Trust2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Trust3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 93 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Trust4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 45 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Trust5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Trust6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 60 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+# More Kable
+
+
+```r
+dt[1:2, 1:5] %&gt;%    
+  kable %&gt;% 
+            # The additional parameters in the line below adds striping to the table and stops
+            # it from spreading across the full page (this is overridden by our CSS file)
+  kable_styling(bootstrap_options="striped", full_width = F) 
+```
+
+&lt;table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ID &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Organisation &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Age &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; LOS &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Death &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Trust1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 55 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Trust2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
 ---
 class: middle, left
 
-# Output Styles
+## Exercise 3: Activity 
+
++ Create a new document
++ Load the NHSRdatasets package and the `LOS_models` dataset
++ Print the table using Kable format.  
++ You can use the example above, and stick to the same styling, or experiment with other Kable options
++ Look at the vignette -`vignette("awesome_table_in_html")`
+
 
 ---
-
-Anthony
-
----
-git merge
 # HTML Tables with `DT`
 
 The DT package creates HTML tables from R data frames and includes filters, searching and pagination
@@ -427,8 +558,8 @@ data(LOS_model)
 datatable(LOS_model, options = list(pageLength = 5))
 ```
 
-<div id="htmlwidget-da02167f3f16c2531709" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-da02167f3f16c2531709">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","215","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233","234","235","236","237","238","239","240","241","242","243","244","245","246","247","248","249","250","251","252","253","254","255","256","257","258","259","260","261","262","263","264","265","266","267","268","269","270","271","272","273","274","275","276","277","278","279","280","281","282","283","284","285","286","287","288","289","290","291","292","293","294","295","296","297","298","299","300"],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300],["Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10"],[55,27,93,45,70,60,25,48,51,81,58,16,21,82,11,76,72,29,59,88,64,53,12,16,83,49,84,58,57,6,13,82,94,24,18,92,13,83,30,67,40,59,24,67,33,49,94,95,46,21,34,18,14,69,81,11,8,95,19,12,67,39,78,60,49,8,44,79,43,66,91,79,7,93,18,66,41,13,17,90,27,54,9,19,90,13,26,22,13,6,84,60,55,28,67,33,66,77,92,32,77,71,28,11,15,83,76,40,65,42,41,19,49,23,16,40,16,14,83,20,8,59,82,18,20,39,8,42,95,91,30,8,29,44,93,27,78,62,87,29,92,86,16,14,74,11,38,33,20,26,79,44,69,75,22,74,49,50,53,92,82,17,5,36,24,18,58,26,49,31,70,10,78,22,77,42,94,9,26,72,5,65,69,63,59,63,33,83,8,34,58,7,69,46,12,59,5,91,61,40,80,69,65,27,15,10,58,58,74,56,15,59,48,55,9,25,14,51,69,38,82,14,24,50,24,13,79,82,11,69,68,76,20,21,31,70,74,75,89,77,60,90,58,76,62,87,70,12,74,60,73,90,75,87,72,93,91,79,7,11,17,84,73,79,68,81,79,45,88,20,81,54,54,89,44,81,95,55,95,69,95,74,38,70,81,52,67,14,35,90,17,53,81,75,32,32,55,21,54,93],[2,1,12,3,11,7,4,4,7,1,4,3,1,9,12,1,4,3,4,2,7,7,5,3,7,10,14,10,3,10,2,2,4,3,1,11,2,7,3,8,7,2,6,9,3,7,15,1,3,3,5,1,18,4,13,1,2,14,1,1,8,2,5,10,4,1,2,11,6,1,9,6,1,5,2,7,1,2,1,5,12,8,1,1,12,2,3,2,3,4,9,1,5,4,10,5,5,10,10,2,9,3,3,1,1,9,3,6,5,5,3,3,6,3,2,4,3,2,9,3,1,2,4,1,1,2,1,3,10,5,2,5,1,5,10,4,10,7,11,3,2,11,2,1,12,2,3,1,2,4,5,3,11,4,3,11,8,2,6,1,9,2,1,2,2,2,4,4,8,1,3,18,1,3,3,4,7,2,4,10,1,6,9,8,2,6,4,6,1,5,3,1,7,8,2,3,1,5,4,1,5,6,8,2,1,1,1,5,3,7,1,4,5,2,12,4,2,1,6,3,5,2,2,1,4,2,6,2,6,2,5,3,3,2,5,8,11,12,1,5,5,7,2,9,6,8,5,2,8,7,1,4,7,13,11,7,3,9,2,1,2,4,9,5,11,10,10,1,10,3,7,3,3,8,6,1,4,2,11,8,15,4,2,6,10,1,9,2,2,3,3,3,8,11,4,6,6,3,1,15],[0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,1,1,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>Organisation<\/th>\n      <th>Age<\/th>\n      <th>LOS<\/th>\n      <th>Death<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-920bf6bf8afcd62af667" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-920bf6bf8afcd62af667">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","215","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233","234","235","236","237","238","239","240","241","242","243","244","245","246","247","248","249","250","251","252","253","254","255","256","257","258","259","260","261","262","263","264","265","266","267","268","269","270","271","272","273","274","275","276","277","278","279","280","281","282","283","284","285","286","287","288","289","290","291","292","293","294","295","296","297","298","299","300"],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300],["Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10","Trust1","Trust2","Trust3","Trust4","Trust5","Trust6","Trust7","Trust8","Trust9","Trust10"],[55,27,93,45,70,60,25,48,51,81,58,16,21,82,11,76,72,29,59,88,64,53,12,16,83,49,84,58,57,6,13,82,94,24,18,92,13,83,30,67,40,59,24,67,33,49,94,95,46,21,34,18,14,69,81,11,8,95,19,12,67,39,78,60,49,8,44,79,43,66,91,79,7,93,18,66,41,13,17,90,27,54,9,19,90,13,26,22,13,6,84,60,55,28,67,33,66,77,92,32,77,71,28,11,15,83,76,40,65,42,41,19,49,23,16,40,16,14,83,20,8,59,82,18,20,39,8,42,95,91,30,8,29,44,93,27,78,62,87,29,92,86,16,14,74,11,38,33,20,26,79,44,69,75,22,74,49,50,53,92,82,17,5,36,24,18,58,26,49,31,70,10,78,22,77,42,94,9,26,72,5,65,69,63,59,63,33,83,8,34,58,7,69,46,12,59,5,91,61,40,80,69,65,27,15,10,58,58,74,56,15,59,48,55,9,25,14,51,69,38,82,14,24,50,24,13,79,82,11,69,68,76,20,21,31,70,74,75,89,77,60,90,58,76,62,87,70,12,74,60,73,90,75,87,72,93,91,79,7,11,17,84,73,79,68,81,79,45,88,20,81,54,54,89,44,81,95,55,95,69,95,74,38,70,81,52,67,14,35,90,17,53,81,75,32,32,55,21,54,93],[2,1,12,3,11,7,4,4,7,1,4,3,1,9,12,1,4,3,4,2,7,7,5,3,7,10,14,10,3,10,2,2,4,3,1,11,2,7,3,8,7,2,6,9,3,7,15,1,3,3,5,1,18,4,13,1,2,14,1,1,8,2,5,10,4,1,2,11,6,1,9,6,1,5,2,7,1,2,1,5,12,8,1,1,12,2,3,2,3,4,9,1,5,4,10,5,5,10,10,2,9,3,3,1,1,9,3,6,5,5,3,3,6,3,2,4,3,2,9,3,1,2,4,1,1,2,1,3,10,5,2,5,1,5,10,4,10,7,11,3,2,11,2,1,12,2,3,1,2,4,5,3,11,4,3,11,8,2,6,1,9,2,1,2,2,2,4,4,8,1,3,18,1,3,3,4,7,2,4,10,1,6,9,8,2,6,4,6,1,5,3,1,7,8,2,3,1,5,4,1,5,6,8,2,1,1,1,5,3,7,1,4,5,2,12,4,2,1,6,3,5,2,2,1,4,2,6,2,6,2,5,3,3,2,5,8,11,12,1,5,5,7,2,9,6,8,5,2,8,7,1,4,7,13,11,7,3,9,2,1,2,4,9,5,11,10,10,1,10,3,7,3,3,8,6,1,4,2,11,8,15,4,2,6,10,1,9,2,2,3,3,3,8,11,4,6,6,3,1,15],[0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,1,1,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ID<\/th>\n      <th>Organisation<\/th>\n      <th>Age<\/th>\n      <th>LOS<\/th>\n      <th>Death<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"columnDefs":[{"className":"dt-right","targets":[1,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 
 ---
 
@@ -444,8 +575,8 @@ data(LOS_model)
 flextable(data = LOS_model %&gt;% arrange(Organisation, Death, ID) #order the data
           , col_keys = c("Organisation", "Age", "LOS", "Death") #display these columns (not ID)
           ) %&gt;%
-  merge_v(j = c(1,4)) %&gt;% # merge the Organisation and Death columns
-  valign(j = c(1,4),valign = "top") # move the merged column entries to the top
+  merge_v(j = c("Organisation", "Death")) %&gt;% # merge the Organisation and Death columns
+  valign(j = c("Organisation", "Death"),valign = "top") # move the merged column entries to the top
 ```
 
 .pull-left[
@@ -460,6 +591,984 @@ flextable(data = LOS_model %&gt;% arrange(Organisation, Death, ID) #order the da
 
 
 ---
+
+# Output Styles
+
+&lt;img src="https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/rmarkdown_wizards.png" width="700"&gt;
+
+
+https://yihui.org/knitr/
+
+
+---
+
+# Output styles
+
+As menitoned earlier, there are various output styles you can use, including:
+
++ beamer_presentation
++ github_document
++ html_document
++ ioslides_presentation
++ latex_document
++ md_document
++ odt_document
++ pdf_document
++ powerpoint_presentation
++ rtf_document
++ slidy_presentation
++ word_document
+
+---
+
+# PDF output
+
+PDF is a tricky format, but Pandoc is your friend.
+
+Default PDF output converts markdown to Latex, and Pandoc converts Latex to PDF.
+
+Tex installed: 'tinytex'
+
+
+---
+class: middle, left 
+
+# HTML &amp; CSS
+
+---
+# What is CSS?
+
+- CSS stands for Cascading Style Sheets
+- They are typically used in conjunction with HTML to help style websites
+- They aid with formatting and appearance, allowing for a consistent approach to be used
+- Not exclusive to R - used in other programming languages such as Node.js
+
+
+---
+
+# What do I need to code in CSS?
+
+.pull-left[
+- Notepad!  The most basic of all applications is sufficient
+- R Studio also allows you to create text files you can save as CSS
+
+
+&lt;br&gt;
+
+* Better alternatives do exist - I prefer a program called 'Atom' (free!)
+&lt;br&gt;
+  + It has colour coding for tag/section/class identification
+  + Code suggestions for open tags
+
+]
+
+.pull-right[
+&lt;figure&gt;
+  &lt;p class="aligncenter"&gt; &lt;img src='./Assets/notepad_css.png' 
+  width=100% height=100%&gt;
+  &lt;figcaption&gt; Notepad use in CSS
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;
+  &lt;p class="aligncenter"&gt; &lt;img src='./Assets/Atom_CSS.png' 
+  width=75% height=75%&gt;
+  &lt;figcaption&gt; Atom view of CSS files
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+]
+
+---
+
+# Attaching and storing CSS files
+
+At the top of a Markdown document, in the YAML section, you will have see a section that looks similar to the below - 
+
+```r
+  title: "Trust review of LOS, 2018 - 2019"
+  output:
+  html_document:default
+  pdf_document: default
+```
+--
+A small change to the `html_document` property attaches a CSS file to the Markdown
+
+
+```r
+  html_document:
+    css:styles.css
+```
+--
+## Locating files 
+
+.pull-left[
+In a simple implementation of CSS, keep CSS files in the same folder as the Markdown file.  You can however, use sub-directories
+]
+
+.pull-right[
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/file_locations.png' 
+  width=100% height=100%&gt;
+  &lt;figcaption&gt; Typical folder location
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+]
+
+---
+
+# HTML tags
+
++ Not essential for formatting Markdown, but important if you use CSS
++ They identify a section of HTML code and allow you to apply rules to it
++ All tags 'open' and 'close' in a particular way
+  + Not following this method causes strange behaviour!
+
+##How they work
+
++ All tags use angle brackets `&lt;  &gt;` to contain an identifier
++ Opening tags start of a tag and contain the identifier of what you are creating e.g. `&lt;p&gt;`
++ Closing tags use the same content as the opener, but you add a `/` before the content of the tag e.g. `&lt;/p&gt;`
+
+---
+
+# Examples of HTML tags
+
+| Code |  Purpose |
+| :------------: | :------:|
+| `&lt;h4&gt;` | Creates a header tag.  Used to make titles &amp; subtitles|
+| `&lt;p&gt;` | Creates a paragraph tag.  Used to put in standard/paragraphed text|
+| `&lt;li&gt;`  | Creates a list tag.  Used to make a bullet pointed list|
+| `&lt;body&gt;` | This is what HTML elements should be contained in e.g. text, hyperlinks, tables etc.
+| `&lt;div&gt;` | Divides the HTML code up into a section, allowing you to refer to that specific block
+
+
+---
+
+# Internal vs external CSS
+
++ You can choose to either build your CSS into your Markdown file directly, or...
++ Put it into an external file (the route I prefer!)
+
+--
+
+## Think about your needs...
+
++ Internal/inline CSS code makes your Markdown file much longer, but it is in one place
++ External CSS means switching backwards and forwards, but is easier to find errors
+
+--
+
+## Today's use of CSS
+
++ Will be through external files
++ If you look at this Markdown file, you can see how internal CSS works
+
+---
+
+# CSS Rules
+
+All CSS tags start and end with braces/curly brackets `{ }`.  For example -
+
+
+```css
+{margin-top:0;
+text-align:justify;}
+```
+
+&lt;br&gt;
+--
+CSS mainly uses classes or element selectors.  The key difference is the dot before the reference to the section.  An element selector has no dot -
+
+
+```css
+h3 { position:absolute; }
+```
+
+&lt;br&gt;
+--
+A class has a dot before the name of the section  -
+
+
+```css
+.sidebar { margin-left:600px;}
+```
+
+---
+# Further CSS rules
+
+Properties in a CSS file use a colon after the property identifier -
+
+
+```css
+footer { text-align:center;}
+```
+
+--
+
+At the end of each rule, a semi colon is used
+
+
+```css
+header {padding-top:20px;}
+```
+
+--
+
+To use a sub-class (change of a property inside of a class), put a space after the class name 
+
+```css
+.sidebar ul {margin : 0;}
+```
+
+--
+
+##Tip of the iceberg...
+
+Go to https://www.w3schools.com/css/ for many more examples
+
+---
+
+# Quick CSS reference guide &amp; examples
+
+| CSS Property | Example | Purpose |
+| :------------: | :------:| :-------:|
+| margin |`margin-top:100px`|Puts a buffer/margin on the side of something|
+| color | `&lt;h1 style=background-color:DodgerBlue;&gt;`|Simply sets the colour of that element.  Can use names or hexadecimal values|
+| padding |`div{padding-top:50px};`|Allows a section of space around the area to be added|
+| Font-family, font-size | `font-family: Arial; font-weight: bold;`|Allows you to select a specific font(e.g. Arial), size (e.g. 12) and weight (e.g. bold)
+
+
+---
+
+#Activity 1
+
+| Choice 1 | Choice 2 | Choice 3 |
+| :------------: | :------:| :-------:|
+| Use an existing R Markdown template I have created and tackle the areas that are commented out (CSS_Activity_1.rmd) in the 'Exercises' folder | Produce an R Markdown with HTML and CSS from scratch that utilise these skills | Adapt an existing R Markdown file that you have used in today's sessions
+
+&lt;br&gt;
+&lt;br&gt;
+
+Extension - Add in stylings for bullet points / list elements in your CSS file (may need research)
+
+&lt;br&gt;
+&lt;br&gt;
+
+### Look for the below in the code for where to action areas -
+
+
+```diff
+-&lt;!-- Insert some text below that can be used to introduce the cars dataset (inside the 'p' tags) --&gt;
+&lt;p&gt;  &lt;/p&gt;
+&lt;p&gt;  &lt;/p&gt;
+&lt;p&gt;  &lt;/p&gt;
+```
+---
+
+# Body formatting
+
++ Affects ALL elements of the HTML section, unless overriden with other HTML tags
++ For example, adding a `&lt;p&gt;` tag into your body code means that text will then follow the rules of the `&lt;p&gt;` tag, rather than the body tag rules
++ Do not ignore body formatting!  We will investigate this more in the next activity
+
+&lt;br&gt;
+--
+
+# Backgrounds in CSS
+
+* Backgrounds be changed in CSS at various levels including -
+  + Overall 'body', header, div tags (looked at later), paragraphs and many more
++ Can use the usual colour formatting style e.g. hex, RGB, name values, or can use images
+
+---
+
+# Code examples
+
+
+```css
+
+body { background-color:lightblue;
+}
+
+h1   { background-color:lightblue;
+}
+
+div  { background-color:lightblue;
+}
+
+p    { background-color:lightblue;
+}
+```
+
+&lt;br&gt;
+
+Examples above showing you to use CSS to respectively change the `body`, `h1`, `div` and `p` tag content in your document
+
+---
+
+# More complete example and output
+
+.pull-left[
+
+
+```css
+
+p {
+ font-family: Arial;
+ font-size: 14px;
+ color: #6870B8;
+}
+
+body{
+  font-family: Verdana;
+  font-size:12px;
+  color: #303248;
+}
+
+```
+]
+.pull-right[
+
+&lt;figure&gt;
+  &lt;p class="aligncenter"&gt; &lt;img src='./Assets/Activity_1_Output.png' 
+  width=125% height=125%&gt;
+  &lt;figcaption&gt; Output in Markdown
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+]
+
+---
+
+# Borders in CSS
+
++ These create 'zones' and borders around text in the same way you would in any application
++ Can choose to put a border around the whole body, some it, individual parts etc.
++ One extra line of code in a CSS section e.g. - `border: 5px solid red;`
+
+&lt;figure&gt;
+  &lt;p class="aligncenter"&gt; &lt;img src='./Assets/CSS_border.png' 
+  width=75% height=75%&gt;
+  &lt;figcaption&gt; Output in Markdown
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+Further options available at https://www.w3schools.com/css/css_border.asp
+
+---
+
+# Activity 2
+
++ Add in a suitable 'body' tag in the R Markdown code around the areas that you wish to use it in (you can just keep it as it is, if preferred)
++ Add in background-color (forgive the Americanisation!) property tags into the CSS file for relevant tags of your choice
++ Try using a text and hex value for the colours so that you are aware of how to do it either way
++ Add in some borders to your CSS text.  Try and keep them relevant and not random!
+
+&lt;br&gt;
+
+As before, a 'complete' example of this can be seen in the file called `styles(Activity_2_complete).css`
+
+
+---
+
+# Using images in a CSS file
+
++ By using the `background-image` property, you can add a picture to your background  
++ This could be a logo or something similar to represent your trust
++ The default view for this is for the image to repeat itself (if it is not large enough to fit the whole page)
+
+&lt;br&gt;
+
+The code and output might look like this (not good!) - 
+
+| Code &lt;img width=375/&gt;  | Output &lt;img width=375/&gt;  |
+|------|--------|
+|` body`&lt;br&gt;`{  background-color: #fff;`&lt;br&gt; `background-position: right top;` &lt;br&gt; `background-image:url("Rightblox2.png");`&lt;br&gt;`display: table-cell;`&lt;br&gt;`}`|&lt;p class="aligncenter"&gt;&lt;img src='./Assets/CSS_background.png' width=100% height=50%&gt;&lt;/p&gt;&lt;/figure&gt; |
+
+
+---
+
+#  Fixing backgrounds
+
+By adding a line using `background-repeat`, you can prevent the image from repeating.  With a few extra tweaks, the final output is much better
+&lt;br&gt;
+&lt;br&gt;
+
+| Code &lt;img width=400/&gt;  | Output &lt;img width=400/&gt;   |
+|------|--------|
+|` body`&lt;br&gt;`{  background-position: right top;`&lt;br&gt; `background-image: url("Rightblox2.png");` &lt;br&gt; `background-repeat: no-repeat;`&lt;br&gt;`display: table-cell;`&lt;br&gt;`}`|&lt;p class="aligncenter"&gt;&lt;img src='./Assets/Background_repeat_fixed.png' width=100% height=100%&gt;&lt;/p&gt;&lt;/figure&gt; |
+
+---
+
+# Using data in Markdown
+
++ You have already seen how to use data in Markdown
++ You can use additional formatting to improve the appearance of these outputs
++ When using the summary function, some data that you see is less relevant than others
+&lt;br&gt;
+&lt;br&gt;
+For example, the highlighted columns below are irrelevant in this context
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt;       ID &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt;  Organisation &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt;      Age &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt;      LOS &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt;     Death &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Min.   :  1.00 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Trust1 : 30 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Min.   : 5.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Min.   : 1.000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Min.   :0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; 1st Qu.: 75.75 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Trust2 : 30 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1st Qu.:24.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1st Qu.: 2.000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1st Qu.:0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Median :150.50 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Trust3 : 30 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Median :54.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Median : 4.000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Median :0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Mean   :150.50 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Trust4 : 30 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mean   :50.66 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mean   : 4.937 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mean   :0.1767 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; 3rd Qu.:225.25 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Trust5 : 30 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3rd Qu.:75.25 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3rd Qu.: 7.000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3rd Qu.:0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Max.   :300.00 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; Trust6 : 30 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Max.   :95.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Max.   :18.000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Max.   :1.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: yellow !important;"&gt; (Other):120 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+---
+
+# Improving summary output
+
+Using the `within` function, you can remove column names from the output
+
+&lt;br&gt;&lt;br&gt;
+
+
+```r
+LOS_summary &lt;-  within(LOS_model, rm(ID,Organisation))
+LOS_without_columns &lt;- summary(LOS_summary)
+LOS_without_columns
+##       Age             LOS             Death       
+##  Min.   : 5.00   Min.   : 1.000   Min.   :0.0000  
+##  1st Qu.:24.00   1st Qu.: 2.000   1st Qu.:0.0000  
+##  Median :54.00   Median : 4.000   Median :0.0000  
+##  Mean   :50.66   Mean   : 4.937   Mean   :0.1767  
+##  3rd Qu.:75.25   3rd Qu.: 7.000   3rd Qu.:0.0000  
+##  Max.   :95.00   Max.   :18.000   Max.   :1.0000
+```
+
+---
+
+# Activity 3
+
++ If you wish to use Markdown for making reports that are specific to your trust, why not start by making a suitable template today!
++ In the `Activity_3_complete.css` CSS file in the library, you will see some part customisation towards 'HED' colours.  
++ All I have done here is change a few elements around and it is now similar to HED's
+
+---
+
+# Messy HTML in Markdown!
+
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/HTML_in_R.png' 
+  width=110% height=110%&gt;
+  &lt;figcaption&gt; In R Studio, HTML is not colour coded and blends in too easily
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/HTML_in_Atom.png' 
+  width=110% height=110%&gt;
+  &lt;figcaption&gt; In programs like Atom, proper colour coding helps to seperate out 
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+&lt;br&gt;
+
+It is not always necessary to use pure HTML tags in Markdown.  Fully removing HTML is not wise, as you lose some of the unique abilities &amp; facilities it provides.
+
+&lt;br&gt;
+
+There is however, a compromise...
+
+---
+
+# The compromise
+
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/Refined_HTML.png' 
+  width=80% height=80%&gt;
+  &lt;figcaption&gt; The h4 tags have been replaced with four hashtags, which means the same thing in Markdown
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+&lt;br&gt;
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/Refined_HTML_output.png' 
+  width=80% height=80%&gt;
+  &lt;figcaption&gt; Identical output to using the h4 tags
+  &lt;/figcaption&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+---
+
+# Span tags
+
++ We have used `&lt;p&gt;` tags so far to enclose text
++ Span tags can be used to enclose multiple lines of text, saving time
++ You need to add a span reference in your CSS file.  You then use span tags in HTML sections
+
+
+```css
+
+# CSS coding
+span {
+  font-family: Verdana;
+  font-size: 14px;
+  color:darkblue;
+}
+```
+
+```html
+# HTML coding
+&lt;span&gt;
+  The report ahead outlines some key statistics involved in the Length of the Stay metric on a national basis.  The table you see next is a simple summary of key findings from this dataset.
+&lt;/span&gt;
+```
+&lt;br&gt;
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/Span_output.png' 
+  width=100% height=100%&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+---
+
+# More adjustments
+
++ Span is just the start of what we can change.  We can adjust other parts of the CSS file
++ We have used properties in our `body` section that could interfere with our `span` tag
++ If you wanted to use a span tag to apply to all text, we would no longer need the 'p' tag in our CSS file
+&lt;br&gt;
+
+
+```css
+body{
+  border: 2px #94C11F;
+  background-color: #fff;
+  background-position: right top;
+  background-image: url("Rightblox2.png");
+  background-repeat: no-repeat;
+  display: table-cell;
+}
+span {
+  font-family: Verdana;
+  font-size: 14px;
+  color:darkblue;
+}
+```
+
+&lt;br&gt;
+&lt;br&gt;
+The body tag no longer includes references to the text size, colour or style.
+
+The span tag now includes the font details that were in the previous 'body' tag
+
+---
+
+# Classes vs element selectors
+
++ Reminder - No dot before a selector means it &lt;i&gt; directly&lt;/i&gt; affects a HTML element
+&lt;br&gt;&lt;br&gt;
+Example -
+
+```css
+p{
+  font-family:Arial;
+}
+```
+&lt;br&gt;&lt;br&gt;
++ This is the approach we have taken so far in the CSS section.  Now we will look at classes
++ A class in CSS has a dot before the selector, which has to be specifically referred to in the HTMLK
+
+---
+# Using classes with lists
+
+.pull-left[
+
+
+```css
+
+# CSS
+
+.listformat {
+  font-family: Arial;
+  font-size: 14px;
+  color: darkgreen;
+}
+```
+
+```html
+# HTML
+
+&lt;span class ="listformat&gt;
+Your text to go here
+Your text to go here
+Your text to go here
+Your text to go here
+&lt;/span&gt;
+```
+
+&lt;br&gt;
+&lt;figcaption&gt; A new class has been added here called 'listformat' (can be called whatever you wish). &lt;br&gt;&lt;br&gt;  This is then referred to in the HTML tags by using the 'class' addition to the right of the word 'span'. &lt;/figcaption&gt;
+]
+.pull-right[
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/Classes_output.png' 
+  width=150% height=150%&gt;
+  &lt;/p&gt;
+  &lt;figcaption&gt; The output from running the HTML &amp; CSS&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+---
+
+#Tidied up further
+
+.pull-left[
+
+
+```html
+# HTML
+
+&lt;body() class ="listformat&gt;
+Your text to go here
+Your text to go here
+Your text to go here
+Your text to go here
+&lt;/span&gt;
+```
+
+&lt;br&gt;
+&lt;figcaption&gt; The R HTML/Markdown code used with the new class structure &lt;/figcaption&gt;
+]
+.pull-right[
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/Classes_output_body.png' 
+  width=150% height=150%&gt;
+  &lt;/p&gt;
+  &lt;figcaption&gt; The new output using the 'body' class&lt;/figcaption&gt;
+&lt;/figure&gt;
+]
+
+---
+
+#Space: The Final Frontier
+
+
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/Space_incorrect.png' 
+  width=100% height=100%&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+
+&lt;figure&gt;
+  &lt;p&gt; &lt;img src='./Assets/Space_correct.png' 
+  width=100% height=100%&gt;
+  &lt;/p&gt;
+&lt;/figure&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+Warning!  The span tag in Markdown in particular is VERY sensitive to extra and unnecessary spaces/line breaks! For example -
+
+---
+
+#Activity 4 - Combining Markdown &amp; HTML
+
++ Refine your R Markdown file so that it has a 'best of both worlds' approach - some Markdown, some HTML
++ Use HTML if you have something in particular in mind that you would like to do in Markdown that isn't possible with built-in options, but, for straight forward text and titles, tags can be overkill
+
+## Extended
+
++ We haven't used these so far, but you may find 'div' tags useful, 
++ Or, using the newer HTML5 standards, the layout elements such as 'header' &amp; 'section'
++ These all allow for your page to be split up into sections, personalising each part
++ Try it yourself!  Feel free to look at `styles(Activity_4_complete).css` and `CSS_Activity_4_complete.rmd`
+
+---
+
+# Using images
+
++ Inserting images is an inevitable requirement
++ Like other CSS/HTML elements, you can apply properties in image tags across all images
++ The image example looked at so far for our CSS background is  different to how it is done elsewhere in HTML
++ If you have used the `align` attribute in the past, HTML5 has changed things...
+
+.pull-left[
+
+```html
+.center {
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%
+}
+
+&lt;section&gt;
+  &lt;p&gt; &lt;img src = "./Assets/hospital_bed.jpeg" width = 100% class="center"&gt; &lt;/p&gt;
+&lt;/section&gt; 
+```
+]
+.pull-right[
+&lt;section&gt;
+  &lt;p&gt; &lt;img src = "./Assets/hospital_bed.jpeg" 
+  width = 100% 
+  class="center"&gt; 
+  &lt;/p&gt;
+&lt;/section&gt; 
+]
+
+---
+
+# Figures and captions
+
++ You can make reports more professional by using a 'figures' and 'captions' approach
++ Needs a little more coding, but it's well worth it!
+
+```css
+# CSS coding
+
+figure {
+  float: left;
+  border: thin silver solid;
+  margin: 0.5em;
+  padding: 0.5em;
+}
+img.scaled {
+  width: 50%;
+}
+figcaption {
+  font-size: 0.9em;
+  font-style: italic;
+  color: grey;
+  margin-right: 10%;
+  margin-left: 10%;
+  text-align: center;
+}
+```
+
+--
+
+
+```html
+# HTML coding
+
+&lt;figure&gt;
+  &lt;p&gt;&lt;img src= "hospital_bed.jpeg"
+  width= 50% height=50%
+  class = "center"
+    alt="Hospital bed"&gt;
+  &lt;figcaption&gt; As of September 2019, the average length of stay in England's NHS hospitals is 4.52 days &lt;/figcaption&gt;
+&lt;/figure&gt;
+```
+
+---
+
+# Output of figures &amp; captions
+
+&lt;figure&gt;
+  &lt;p&gt;&lt;img src= "/Assets/figure_caption_output.png"
+  width= 100% height=100%
+&lt;/figure&gt;
+
+
+---
+
+# Activity 6
+
++ Add in a figure with an appropriate caption of your choice to your Markdown and CSS file.  
++ You will need to add in a new section to your CSS file to do this - a `figure` one and a `figcaption` one
++ If you wish to extend this further, you can also add in some 'normal' images that are not figures
++ There are ways to do this in Markdown without using HTML tags, but this session revolves specifically around the use of these!
++ An example of how to do this can be found in the file `CSS_Activity_6.rmd` on line 78
+
+---
+
+# Tidy CSS!
+
++ Over the course of this CSS session, you will have been adding in various CSS tags.  
++ Good practice with CSS tags in a file is to order them in alphabetical order
++ This makes it easier in future to find any areas that you need to modify or add to
+
+.pull-left[
+
+
+```css
+
+body{
+  border: 2px #94C11F;
+}
+
+.center {
+  display:block;
+}
+
+figure {
+  float: left;
+}
+
+figcaption {
+  font-size: 0.9em;
+}
+
+```
+
+]
+--
+.pull-right[
+&lt;br&gt;
+&lt;br&gt;
+### Activity 7
++ The final activity here is to rearrange your CSS tags in the file so that they are in alphabetical order
++ Be careful not to mix any areas up though - it could stop your CSS file from working
+]
+
+---
+
+# Other methods of presentation
+
++ Respected data visualisation experts like Edward Tufte have produced, such as the 'Tufte handout' style, can also be easily produced in Markdown without the use of CSS files
++ For more details, have a look at the Bookdown section on this
+&lt;br&gt;&lt;br&gt;https://bookdown.org/yihui/rmarkdown/tufte-handouts.html
+
+&lt;figure&gt;
+  &lt;p&gt;&lt;img src= "./Assets/tufte_output.png"
+  width= 75% height=75%
+  class="center"
+    alt="Theme output"&gt;
+&lt;/figure&gt;
+
+---
+
+# Other areas to consider investigating
+
+| Method | Explanation | Website |
+| :------------: | :------:| :-------:|
+| Dillinger |Supports conversion of Markdown into HTML5 files, including the ability to import, save and export to Dropbox, Google Drive, One Drive &amp; Github|https://dillinger.io/|
+| Flexbox | This is a method of designing a structured, full layout of a webpage|https://www.w3schools.com/css/css3_flexbox.asp|
+| Bootstrap |Bootstrap is a way of using newer techniques as well as pre-made CSS layouts for your design needs - very professional &amp; well made ones!  Great for mobile site development &amp; resizable pages|https://www.w3schools.com/bootstrap/default.asp|
+| CSS Floats | Uses 'floating' techniques to get elements of your page to float to the left or right.  Quite simple in practice, and allows for an easier build|https://www.w3schools.com/css/css_float.asp
+
+---
+
+# Closing remarks
+
++ We have built a CSS file here in stages to see what individual components do 
++ One of the best ways to learn is to experiment with an existing CSS file and make changes
+
+
+---
+
+# Easy styling of Markdown
+
++ Whilst CSS and HTML are powerful and allow you to fully customise your document, it can be quite time consuming if all you want to do is apply a straight forward theme
++ This is where the 'themes' section comes in - it allows you to automatically produce themed Markdown documents based on the use of a single word e.g. 'striped', 'sandstone'
++ This removes the need to add in all of the CSS coding you have done if you want a generically applied theme
+
+
+```eval
+---
+title: Trust evaluation of LOS_model
+output:
+  html_document:
+    theme:united
+---  
+```
+
+By adding the above `theme:united` section of code into the YAML header, you can instantly apply the theme.  Let's see what this does.
+
+---
+
+# Applying themes
+
+&lt;figure&gt;
+  &lt;p&gt;&lt;img src= "./Assets/themes_output.png"
+  width= 50% height=50%
+  class="center"
+    alt="Theme output"&gt;
+  &lt;figcaption&gt; How the 'united' theme appears on output &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+--
+
+## Activity 
+&lt;br&gt;
++ Try out a theme on your Markdown file instead of using CSS
++ Use the example on the previous slide to see how to do it
++ Remember to comment / hashtag out your CSS file reference in the YAML header
+
+
+---
+
 class: middle, left
 
 # Lunch
@@ -595,6 +1704,40 @@ Rmarkdown documents can be served by a Shiny Server to make accessing them as si
 &lt;br&gt;
 
 Congratulations, you are now a web developer!
+
+---
+
+
+# Leaflet package
+
+
+```r
+library(leaflet)
+
+m &lt;- leaflet() %&gt;%
+  addTiles() %&gt;%  # Add default OpenStreetMap map tiles
+  addMarkers(lng=-1.93917290996, lat=52.4510115293, popup="QE Hospital, Birmingham") # This uses the 'decimal degrees' measurement of longitude and latitude
+
+m
+```
+
+<div id="htmlwidget-d71148edb64c546a7a52" style="width:504px;height:504px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d71148edb64c546a7a52">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[52.4510115293,-1.93917290996,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"QE Hospital, Birmingham",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[52.4510115293,52.4510115293],"lng":[-1.93917290996,-1.93917290996]}},"evals":[],"jsHooks":[]}</script>
+
+---
+
+# Using leaflet with purpose
+
++ By using the `LOS_model` that we have been using today, you could produce 'heat maps'or similar concepts to represent a distribution of data
++ I will add in a small, additional data frame with some longitude 
++ You could then use something like this to identify where there may be patterns
+
+
+<div id="htmlwidget-aaf5f12aa5c105f1d210" style="width:504px;height:504px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-aaf5f12aa5c105f1d210">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[52.47819,52.48372,52.479],[-1.89984,-1.89837,-1.8925],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"Cardiology patients with LOS above 4 days in the Birmingham area",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[52.47819,52.48372],"lng":[-1.89984,-1.8925]}},"evals":[],"jsHooks":[]}</script>
+
+---
+
 
 ---
 

@@ -74,7 +74,7 @@ _(Plus coffee, and lunch, of course...)_
 <br>
 
 
-Much of our intro section is based on: __R Markdown: The Definitive Guide__ by _Yihui Xie, J. J. Allaire, Garrett Grolemund_
+Sections of this course are based on the free ebook: __R Markdown: The Definitive Guide__ by _Yihui Xie, J. J. Allaire, Garrett Grolemund_
 https://bookdown.org/yihui/rmarkdown/
 
 ---
@@ -118,25 +118,16 @@ It could also be used as a final report, teaching material, blog post etc.
 + Write your documentaion as you go.
 + Reproducible
 + Can be used as both scripts and final reports (and more...)
-+ Can be parameterised to build regular reports / multiple versions of outputs.
++ Can be parameterised to build regular reports / multiple versions.
 ]
 
 .pull-right[
 ### Challenges
 + Requires some `R` knowledge
-+ Output formats can be tricky, particularly with PDF
++ Output formats can be tricky at first, particularly with PDF
 + Works best if shared.  Difficult if lone analyst using it.
 
 ]
-
-
-
-
---
-
-<br>
-This course pairs well with the free ebook __R Markdown: The Definitive Guide__ by _Yihui Xie, J. J. Allaire, Garrett Grolemund_
-https://bookdown.org/yihui/rmarkdown/
 
 
 ---
@@ -170,6 +161,11 @@ https://bookdown.org/yihui/rmarkdown/
 --
 
 + DT
+
++ flextable
+
++ kable & kableExtra
+
 
 ---
 
@@ -337,19 +333,6 @@ Can also be changed in RStudio by clicking on the cog in the top right of the co
 
 <img src= 'Assets/code-chunk-header-1.PNG' width=100%>
 
----
-class: left, middle
-
-# Exercise 2: 
-### Build a parametrised `Rmarkdown` using `LOS_model`
-#### Part (a)
-+ Create a new markdown document or clear your last one.
-+ In this document, please do the following:
- + Create a hidden code block that loads the LOS_model data
- + Add some titles and text to explain what is happening
- + Add a hyper-link to the `NHSRdataset` package (find it via Google)
- + Add a code block using `dplyr` to summarise the `mean` and `median` LOS
- + Create a histogram of the LOS
 
 ---
 
@@ -382,17 +365,22 @@ The sum of 4 and 5 is <code>&#96;r 4+5&#96;</code>
 ]
 
 ---
+class: left, middle
 
-# knitr
-
-<img src="https://github.com/allisonhorst/stats-illustrations/blob/master/rstats-artwork/rmarkdown_wizards.png" width="500">
-
-
-https://yihui.org/knitr/
-
-
+# Exercise 2: 
+### Build an `Rmarkdown` using `LOS_model`
+#### Part (a)
++ Create a new markdown document or clear your last one.
++ In this document, please do the following:
+ + Create a hidden code block that loads the LOS_model data
+ + Add some titles and text to explain what is happening
+ + Add a hyper-link to the `NHSRdataset` package (find it via Google)
+ + Add a code block using `dplyr` to summarise the `mean` and `median` LOS
+ + Create a chart/histogram of the LOS
+ 
+ 
 ---
-class middle, left
+class: middle, left
 
 # Formatting R markdown documents
 
@@ -403,8 +391,11 @@ class middle, left
 You want to make it look nice....
 
 
----
+Figure sizes
 
+COnsider output style (later section)
+
+---
 
 # Kable
 
@@ -438,76 +429,17 @@ dt[1:2, 1:5] %>%
 
 ```
 
-## Activity 
-
-+ Convert a table that you have already loaded into R into Kable format.  
-+ You can use the example I have shown and stick to the same styling or experiment with other Kable options
-+ Look at the vignette -`vignette("awesome_table_in_html")`
-
----
-
-
-# HTML Tables with `DT`
-
-Creates HTML tables from R data frames and includes filters, searching and pagination
-
-Can be used in interactive Rmarkdown documents, shiny apps and html outputs
-
-```{r using_DT, message=FALSE, warning=FALSE}
-library(NHSRdatasets)
-library(DT)
-data(LOS_model)
-
-datatable(LOS_model, options = list(pageLength = 5))
-```
-
----
-
-# Tables with `flextable`
-
-```{r using_flextable_shown, message=FALSE, warning=FALSE, eval=FALSE}
-library(NHSRdatasets)
-library(flextable)
-library(dplyr) # for %>% and arrange()
-data(head(LOS_model))
-
-flextable(data = (LOS_model %>% arrange(Organisation, Death, ID) #order the data
-          , col_keys = c("Organisation", "Age", "LOS", "Death") #display these columns (not ID)
-          ) %>%
-  merge_v(j = c(1,4)) %>% # merge the Organisation and Death columns
-  valign(j = c(1,4),valign = "top") # move the merged column entries to the top
-```
-
-.pull-left[
-+ Creates well formatted tables that will render in html, pdf, Word and Powerpoint.
-+ Can also 'plot' the tables as images
-+ Excellent range of formatting options including fonts, borders, merging, cell sizes, etc.
-]
-
-.pull-right[
-
-```{r using_flextable_hidden, message=FALSE, warning=FALSE, echo=FALSE}
-library(NHSRdatasets)
-library(flextable)
-library(dplyr) # for %>% and arrange()
-data(LOS_model)
-
-flextable(data = LOS_model %>% arrange(Organisation, Death, ID) #order the data
-          , col_keys = c("Organisation", "Age", "LOS", "Death") #display these columns (not ID)
-          ) %>%
-  merge_v(j = c("Organisation", "Death")) %>% # merge the Organisation and Death columns
-  valign(j = c("Organisation", "Death"),valign = "top") # move the merged column entries to the top
-```
-
-]
 ---
 class: middle, left
 
-# Output Styles
+## Exercise 3: Activity 
 
----
++ Create a new document
++ Load the NHSRdatasets package and the `LOS_models` dataset
++ Print the table using Kable format.  
++ You can use the example above, and stick to the same styling, or experiment with other Kable options
++ Look at the vignette -`vignette("awesome_table_in_html")`
 
-Anthony
 
 ---
 # HTML Tables with `DT`
@@ -537,8 +469,8 @@ data(LOS_model)
 flextable(data = LOS_model %>% arrange(Organisation, Death, ID) #order the data
           , col_keys = c("Organisation", "Age", "LOS", "Death") #display these columns (not ID)
           ) %>%
-  merge_v(j = c(1,4)) %>% # merge the Organisation and Death columns
-  valign(j = c(1,4),valign = "top") # move the merged column entries to the top
+  merge_v(j = c("Organisation", "Death")) %>% # merge the Organisation and Death columns
+  valign(j = c("Organisation", "Death"),valign = "top") # move the merged column entries to the top
 ```
 
 .pull-left[
@@ -562,12 +494,53 @@ flextable(data = LOS_model %>% arrange(Organisation, Death, ID) #order the data
 ```
 ]
 
+
 ---
+
+# Output Styles
+
+<img src="https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/rmarkdown_wizards.png" width="700">
+
+
+https://yihui.org/knitr/
+
+
+---
+
+# Output styles
+
+As menitoned earlier, there are various output styles you can use, including:
+
++ beamer_presentation
++ github_document
++ html_document
++ ioslides_presentation
++ latex_document
++ md_document
++ odt_document
++ pdf_document
++ powerpoint_presentation
++ rtf_document
++ slidy_presentation
++ word_document
+
+---
+
+# PDF output
+
+PDF is a tricky format, but Pandoc is your friend.
+
+Default PDF output converts markdown to Latex, and Pandoc converts Latex to PDF.
+
+Tex installed: 'tinytex'
+
+
+---
+class: middle, left 
 
 # HTML & CSS
 
 ---
-
 # What is CSS?
 
 - CSS stands for Cascading Style Sheets
@@ -768,7 +741,7 @@ Go to https://www.w3schools.com/css/ for many more examples
 
 ---
 
-#Activity 1
+# Exercise 4
 
 | Choice 1 | Choice 2 | Choice 3 |
 | :------------: | :------:| :-------:|
@@ -885,7 +858,7 @@ Further options available at https://www.w3schools.com/css/css_border.asp
 
 ---
 
-# Activity 2
+# Exercise 5
 
 + Add in a suitable 'body' tag in the R Markdown code around the areas that you wish to use it in (you can just keep it as it is, if preferred)
 + Add in background-color (forgive the Americanisation!) property tags into the CSS file for relevant tags of your choice
