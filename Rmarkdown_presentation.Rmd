@@ -1497,6 +1497,17 @@ class: middle, left
 
 # Recap
 
+---
+
+# Using R markdown with Office: Powerpoint
+
++ Uses Pandoc
++ Old versions of RStudio (< 1.2) don't support it
++ Headers will make new slide
++ Images / Tables occupy a whole slide
+  - Use captions and titles to provide text
++ Change formatting with styles (see Word section)
++ Can be useful, but we prefer Xaringan
 
 ---
 
