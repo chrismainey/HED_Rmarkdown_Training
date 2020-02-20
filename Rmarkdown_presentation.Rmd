@@ -373,8 +373,8 @@ The sum of 4 and 5 is <code>&#96;r 4+5&#96;</code>
 class: left, middle
 
 # Exercise 2: 
-### Build an `Rmarkdown` using `LOS_model`
-#### Part (a)
+### Build an `Rmarkdown` doc using `LOS_model`
+
 + Create a new markdown document or clear your last one.
 + In this document, please do the following:
  + Create a hidden code block that loads the LOS_model data
@@ -382,7 +382,6 @@ class: left, middle
  + Add a hyper-link to the `NHSRdataset` package (find it via Google)
  + Add a code block using `dplyr` to summarise the `mean` and `median` LOS
  + Create a chart/histogram of the LOS
- 
  
 ---
 class: middle, left 
@@ -438,12 +437,11 @@ If you are not presenting a data set, but want a table, you can use markdown syn
 
 ---
 
-
 # Kable
 
 + Kable is an R package that allows for advanced table formatting
 + 'Standard' views of tables can be dull without any styling applied
-+ Kable code is simple and allows for easy, pleasurable output
++ Kable code is simple and allows for easy, pleasant output
 
 ``` {r, include=TRUE, echo=TRUE, warning =FALSE}
 library(NHSRdatasets)
@@ -476,19 +474,17 @@ class: middle, left
 
 ## Exercise 3: 
 
-+ Create a new Markdown file, or use an existing one created from earlier
-+ Load the NHSRdatasets package and the `LOS_models` dataset
++ Create a new Rmarkdown file, or use an existing one created from earlier
 + Print the table using Kable format.  
 + You can use the example above, and stick to the same styling, or experiment with other Kable options
 + Look at the vignette -`vignette("awesome_table_in_html")`
 
-
 ---
 # HTML Tables with `DT`
 
-Creates HTML tables from R data frames and includes filters, searching and pagination
++ Creates HTML tables from R data frames and includes filters, searching and pagination
 
-Can be used in interactive Rmarkdown documents, shiny apps and html outputs
++ Can be used in interactive Rmarkdown documents, shiny apps and html outputs
 
 ```{r using_DT, message=FALSE, warning=FALSE}
 library(NHSRdatasets)

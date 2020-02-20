@@ -1,0 +1,59 @@
+---
+title: 'Exercise 3: Kable Tables'
+author: "Matthew Bass"
+date: "20/02/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown Exercise
+
+This exercise is used to develop a sample report using the `LOS_model` dataset from the `NHSRdatasets` package.
+More information about this package is avaialble [here](https://cran.r-project.org/web/packages/NHSRdatasets/index.html).
+
+```{r load, echo = FALSE, message=FALSE, warning=FALSE}
+# Load the data set here
+library(NHSRdatasets)
+library(dplyr)
+library(kableExtra)
+data(LOS_model)
+```
+
+## Full dataset
+
+Here is the full LOS_model dataset printed with kable.
+
+```{r}
+kable(LOS_model) %>%
+  kable_styling()
+```
+
+
+## Full dataset statistics
+
+Here is a summary of the LOS using `dplyr`. It uses Kable to make the table look a bit nicer.
+
+```{r summary, message=FALSE}
+
+summary_data <- LOS_model %>%
+              summarise("Mean LOS" = mean(LOS),
+                        "Median LOS" = median(LOS))
+
+kable(summary_data) %>%
+  kable_styling()
+```
+
+Now we will create a histogram of the LOS stay:
+
+```{r LOS_all_plot, message=FALSE, fig.retina=2}
+library(ggplot2)
+ggplot(LOS_model, aes(x=LOS)) +
+  geom_histogram(fill="dodgerblue2", alpha=0.6, col=1, bins=12) +
+  labs(title = "Length of Stay for all patients in `LOS_models`") +
+  scale_x_continuous(name="Length-of-Stay (LOS)")+
+  scale_y_continuous(name="Patients")
+```
+
