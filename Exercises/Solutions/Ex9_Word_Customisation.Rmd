@@ -1,16 +1,17 @@
 ---
-title: "My example"
-author: "Chris Mainey"
-date: "20/09/2019"
+title: 'Exercise 9: Customising MS Word Documents'
+author: "Matthew Bass"
+date: "20/02/2020"
 output:
-  html_document: default
+  word_document:
+    reference_docx: style-guide.docx
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown (something else)
+## R Markdown
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
@@ -24,7 +25,7 @@ summary(cars)
 
 You can also embed plots, for example:
 
-```{r pressure, echo=TRUE}
+```{r pressure, echo=FALSE}
 plot(pressure)
 ```
 
