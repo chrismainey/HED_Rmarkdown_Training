@@ -607,11 +607,11 @@ As menitoned earlier, there are various output styles you can use, including:
 
 # pagedown
 
-+ The alternative to the complicated PDF generation is the `pagedown`.
++ An alternative to the complicated PDF generation is the `pagedown` package.
 
-+ It doens't require the Latex translation, and paginated HTML
++ It doesn't require the Latex translation, and offers paginated HTML
 
-+ `pagedown` has templates for page html, thesis, posters, CV, business cards, journals etc.
++ `pagedown` has templates for webpages, thesis, posters, CV, business cards, journals etc.
 
 ```{YAML, eval=FALSE}
 ---
@@ -847,7 +847,7 @@ Go to https://www.w3schools.com/css/ for many more examples
 
 | Choice 1 | Choice 2 | Choice 3 |
 | :------------: | :------:| :-------:|
-| Use an existing R Markdown template I have created and tackle the areas that are commented out (Ex4_CSS_Activity_1.rmd) in the 'Exercises' folder | Produce an R Markdown with HTML and CSS from scratch that utilise these skills | Adapt an existing R Markdown file that you have used in today's sessions
+| Use an existing R Markdown template I have created and tackle the areas that are commented out (Ex4_CSS_Activity.rmd) in the 'Exercises' folder | Produce an R Markdown with HTML and CSS from scratch that utilise these skills | Adapt an existing R Markdown file that you have used in today's sessions
 
 <br>
 <br>
@@ -857,7 +857,7 @@ Extension - Add in stylings for bullet points / list elements in your CSS file (
 <br>
 <br>
 
-### Look for the below in the code for where to action areas -
+### Look for the below in the code for where to make changes -
 
 ``` {diff eval=FALSE}
 -<!-- Insert some text below that can be used to introduce the cars dataset (inside the 'p' tags) -->
@@ -1174,7 +1174,7 @@ p{
 ```
 <br><br>
 + This is the approach we have taken so far in the CSS section.  Now we will look at classes
-+ A class in CSS has a dot before the selector, which has to be specifically referred to in the HTMLK
++ A class in CSS has a dot before the selector, which has to be specifically referred to in the HTML
 
 ---
 # Using classes with lists
@@ -1358,7 +1358,7 @@ figcaption {
 # Output of figures & captions
 
 <figure>
-  <p><img src= "/Assets/figure_caption_output.png"
+  <p><img src= "Assets/figure_caption_output.png"
   width= 100% height=100%
 </figure>
 
@@ -1368,7 +1368,7 @@ figcaption {
 # Exercise 8
 
 + Add in a figure with an appropriate caption of your choice to your Markdown and CSS file.  
-+ You will need to add in a new section to your CSS file to do this - a `figure` one and a `figcaption` one
++ You will need to add in a new section to your CSS file to do this - a `figure` section and a `figcaption` section
 + If you wish to extend this further, you can also add in some 'normal' images that are not figures
 + There are ways to do this in Markdown without using HTML tags, but this session revolves specifically around the use of these!
 + An example of how to do this can be found in the file `Ex_CSS_Activity_8.rmd` on line 78
@@ -1417,7 +1417,7 @@ figcaption {
 
 # Other methods of presentation
 
-+ Respected data visualisation experts like Edward Tufte have produced, such as the 'Tufte handout' style, can also be easily produced in Markdown without the use of CSS files
++ Respected data visualisation experts like Edward Tufte have produced styles, such as the 'Tufte handout' style, that can be easily reproduced in Markdown without the use of CSS files
 + For more details, have a look at the Bookdown section on this
 <br><br>https://bookdown.org/yihui/rmarkdown/tufte-handouts.html
 
@@ -1499,7 +1499,8 @@ class: middle, left
 
 
 ---
-# Using R markdown with Office# Word Documents
+
+# Using R markdown with Office: Word Documents
 
 .pull-left[
 + Available by default
