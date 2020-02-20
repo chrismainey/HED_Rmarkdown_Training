@@ -1,0 +1,44 @@
+---
+title: "Exercise 2a: Build an `Rmarkdown` doc using `LOS_model`"
+author: "Chris Mainey"
+date: "14/01/2020"
+output: html_document
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown Exercise
+
+This exercise is used to develop a sample report using the `LOS_model` dataset from the `NHSRdatasets` package.
+More information about this package is avaialble [here](https://cran.r-project.org/web/packages/NHSRdatasets/index.html).
+
+```{r load, echo = FALSE}
+# Load the data set here
+library(NHSRdatasets)
+data(LOS_model)
+```
+
+## Full dataset statistics
+
+Here is a summary of the LOS using `dplyr`. It just prints the result and does not look very nice.
+
+```{r summary, message=FALSE}
+library(dplyr)
+print(LOS_model %>%
+        summarise("Mean LOS" = mean(LOS),
+                  "Median LOS" = median(LOS)))
+```
+
+Now we will create a histogram of the LOS stay:
+
+```{r LOS_all_plot, message=FALSE, fig.retina=2}
+library(ggplot2)
+ggplot(LOS_model, aes(x=LOS)) +
+  geom_histogram(fill="dodgerblue2", alpha=0.6, col=1, bins=12) +
+  labs(title = "Length of Stay for all patients in `LOS_models`") +
+  scale_x_continuous(name="Length-of-Stay (LOS)")+
+  scale_y_continuous(name="Patients")
+```
+
