@@ -31,7 +31,7 @@ __Anthony Harmon__
 
 <br><br>
 2020-01-20 (updated: `r Sys.Date()`)
-<br><br><br><br><br><br>
+<br><br><br><br>
 <span style="font-size:14px !important;"> __&copy; Healthcare Evaluation Data (HED)__- part of Health Informatics, University Hospitals Birmingham NHS Foundation Trust.  
 <b>NOT TO BE REPUBLISHED OR DISTRIBUTED WITHOUT CONSENT</b> </span>
 
@@ -187,8 +187,8 @@ Markdown documents are composed of three main elements:
 <br>
 Other elements, depending on the output, might be:
 + CSS files
-+ javascript
-+ html 'widgets'
++ JavaScript
++ HTML 'widgets'
 + Shiny apps
 
 ---
@@ -212,7 +212,7 @@ title: "An introduction to Rmarkdown"
 author: "Chris Mainey"
 date: "16/05/2019"
 output: 
-  html_doucment
+  html_document
   word_document
 bibliography: references.bib
 ---
