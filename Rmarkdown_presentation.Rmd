@@ -634,7 +634,7 @@ class: middle, left
 
 # Exercise 3.5
 
-Knit your  document together as a PDF using both the default `pdf_output` and `pagedown`.
+Knit your document together as a PDF using both the default `pdf_output` and `pagedown`.
 
 
 ---
