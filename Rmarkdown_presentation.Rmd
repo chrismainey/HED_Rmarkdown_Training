@@ -48,7 +48,7 @@ We are using RStudio cloud for this course.
 
 <br><br>
 ### Please got to the following link and register for the workspace:
-# https://bit.ly/34ntbTx
+# https://bit.ly/2vQVk98
 
 
 ---
@@ -450,8 +450,9 @@ LOS_summary <- (summary(LOS_model))
 library(kableExtra)
 dt <-  LOS_model
 head(dt) %>%    # Only shows the first 6 lines of the table
-  kable %>% 
+  kable() %>%
   kable_styling()   # Applies the 'Twitter' bootstrap styling
+ 
 ```
 
 ---

@@ -2,7 +2,8 @@ p {
  font-family: Arial;
  font-size: 14px;
  color: black;
-}
+}
+
 
 body{
   font-family: Verdana;
@@ -11,7 +12,7 @@ body{
   border: 2px #94C11F;
   background-color: #fff;
   background-position: right top;
-  background-image: url("../../Assets/Rightblox2.png");
+  background-image: url("../../Assets/RightBlox2.png");
   background-repeat: no-repeat;
 }
 
