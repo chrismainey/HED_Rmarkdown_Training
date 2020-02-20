@@ -22,7 +22,9 @@ class: center, middle
 <br>
 
 __Chris Mainey__
+<br>
 __Matthew Bass__
+<br>
 __Anthony Harmon__
 
 <a href="mailto:HED@uhb.nhs.uk">HED@uhb.nhs.uk</a>
@@ -168,6 +170,7 @@ It could also be used as a final report, teaching material, blog post etc.
 
 + kable & kableExtra
 
++ redoc
 
 ---
 
@@ -382,7 +385,7 @@ class: left, middle
  
  
 ---
-class: middle, left
+class: middle, left 
 
 # Formatting R markdown documents
 
@@ -483,7 +486,7 @@ class: middle, left
 ---
 # HTML Tables with `DT`
 
-The DT package creates HTML tables from R data frames and includes filters, searching and pagination
+Creates HTML tables from R data frames and includes filters, searching and pagination
 
 Can be used in interactive Rmarkdown documents, shiny apps and html outputs
 
@@ -519,6 +522,7 @@ flextable(data = LOS_model %>% arrange(Organisation, Death, ID) #order the data
 ]
 
 .pull-right[
+
 ```{r using_flextable_hidden, message=FALSE, warning=FALSE, echo=FALSE}
 library(NHSRdatasets)
 library(flextable)
@@ -531,6 +535,7 @@ flextable(data = LOS_model %>% arrange(Organisation, Death, ID) #order the data
   merge_v(j = c("Organisation", "Death")) %>% # merge the Organisation and Death columns
   valign(j = c("Organisation", "Death"),valign = "top") # move the merged column entries to the top
 ```
+
 ]
 
 
@@ -1756,9 +1761,12 @@ m
 `r icon::fa("github", color=rgb(148, 198, 0, maxColorValue = 255))` <a href="https://github.com/chrismainey)" style="line-height:2;">chrismainey</a>
 <br>
 
-# CM's website build in blogdown
+##### CM's personal website built in blogdown
 `r icon::fa("globe", color=rgb(148, 198, 0, maxColorValue = 255))` <a href="http://www.mainard.co.uk" style="line-height:2;">http://www.mainard.co.uk</a>
 <br>
+#### MB's personal website built in blogdown
+`r icon::fa("globe", color=rgb(148, 198, 0, maxColorValue = 255))` <a href="https://atomic-vector.netlify.com/" style="line-height:2;">https://atomic-vector.netlify.com/</a>
+
 <br>
 <img src= 'Assets/funnelplotr.png' width=10% height=10% align="middle"> `FunnelPlotR`  `r icon::fa("box")`  now available on CRAN!
 
