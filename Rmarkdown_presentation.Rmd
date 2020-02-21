@@ -47,7 +47,7 @@ We are using RStudio cloud for this course.
 + We will send round details after the course
 
 <br><br>
-### Please got to the following link and register for the workspace:
+### Please go to the following link and register for the workspace:
 # https://bit.ly/2vQVk98
 
 
