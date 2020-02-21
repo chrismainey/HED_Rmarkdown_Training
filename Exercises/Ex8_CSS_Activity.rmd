@@ -69,7 +69,7 @@ Key metric analysis include the following headline figures -
 
 #### Closing report remarks 
 
-<!-- Activity 9 - Add in a figure (do not leave it as just an image, as seen below!) of your choice in this section. Feel free to use the one with the hospital bed shown -->
+<!-- Activity 8 - Add in a figure (do not leave it as just an image, as seen below!) of your choice in this section. Feel free to use the one with the hospital bed shown -->
 
 
 <section>

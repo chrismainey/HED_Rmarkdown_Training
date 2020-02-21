@@ -27,8 +27,11 @@ data(LOS_model)
 Here is the full LOS_model dataset printed with kable.
 
 ```{r}
-kable(head(LOS_model)) %>%
-  kable_styling(bootstrap_options="striped", full_width = F)
+
+
+# Exercise 3 Add in parameters to the kable() function below and then pipe in the `kable styling` function in the line below that
+
+
 ```
 
 
@@ -38,22 +41,10 @@ Here is a summary of the LOS using `dplyr`. It uses Kable to make the table look
 
 ```{r summary, message=FALSE}
 
-summary_data <- LOS_model %>%
-              summarise("Mean LOS" = mean(LOS),
-                        "Median LOS" = median(LOS))
+# Exercise 3 continued -
 
-kable(summary_data) %>%
-  kable_styling(bootstrap_options="striped", full_width = F)
-```
+# Produce a new variable to store a copy of the LOS_model and then pipe in the summarise function, using the mean and median functions on the relevant columns of your choice.  Finally, use kable and kable styling to output the summarised model
 
-Now we will create a histogram of the LOS stay:
 
-```{r LOS_all_plot, message=FALSE, fig.retina=2}
-library(ggplot2)
-ggplot(LOS_model, aes(x=LOS)) +
-  geom_histogram(fill="dodgerblue2", alpha=0.6, col=1, bins=12) +
-  labs(title = "Length of Stay for all patients in `LOS_models`") +
-  scale_x_continuous(name="Length-of-Stay (LOS)")+
-  scale_y_continuous(name="Patients")
 ```
 

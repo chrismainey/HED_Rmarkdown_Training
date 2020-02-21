@@ -476,8 +476,9 @@ class: middle, left
 ## Exercise 3: 
 
 + Create a new Rmarkdown file, or use an existing one created from earlier
-+ Print the table using Kable format.  
++ Print the `LOS_model` table using Kable format (using the `head` function will make it more manageable)
 + You can use the example above, and stick to the same styling, or experiment with other Kable options
++ Try and use the `summarise` and `mean` / `median` functions with the Kable table for a second output
 + Look at the vignette -`vignette("awesome_table_in_html")`
 
 ---
@@ -1224,7 +1225,7 @@ Your text to go here
 ``` {HTML eval=FALSE}
 # HTML
 
-<body() class ="listformat>
+<span class ="listformat">
 Your text to go here
 Your text to go here
 Your text to go here
