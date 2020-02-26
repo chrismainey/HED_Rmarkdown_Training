@@ -46,7 +46,7 @@ We are using RStudio cloud for this course.
 
 <br><br>
 ### Please go to the following link and register for the workspace:
-# https://bit.ly/2vQVk98
+# https://bit.ly/38Z0kre
 
 
 ---
