@@ -19,8 +19,6 @@ class: center, middle
 
 # Introduction to `Rmarkdown`
 
-<br>
-
 __Chris Mainey__
 <br>
 __Matthew Bass__
@@ -1681,7 +1679,7 @@ There are lots of fancier things you can do, some of which require plugins, HTML
 + `pagedown` - Page HTML files, shown earlier
 + `bookdown` - Create online books.  Many books written in this, including the Rmarkdown book and R4DS
 + `thesisdown` - Package for building academic theses in Rmarkdown
-+ `blogdown` - BUild websites using Rmarkdown and the static site generator 'Hugo'
++ `blogdown` - Build websites using Rmarkdown and the static site generator 'Hugo'
 + `pkgdown` - Turn your documentaion and help files for an R package into a website
 + `xaringan` - Rmarkdown presentations using HTML slides. Like this one.
 
@@ -1745,6 +1743,57 @@ m
 
 ```
 
+
+---
+
+# blogdown
+
+Markdown can be used to create websites using `blogdown`.
+<br><br>
+Uses the `Hugo` static site generator, and a website theme.
+<br><br>
+Many themes to choose from and you can customise or write one yourself.
+
++ `Academic` is a common theme for CV type personal websites.
++ Themes are specific, so need to read about the one you choose
++ Publish for free via GitHub pages or Netlify
++ Don't `knit`! Use `blogdown::serve_site` to run
+
+<br>
+Post is a little old now, but CM used this to get started:
+<br>
+[https://alison.rbind.io/post/2017-06-12-up-and-running-with-blogdown/](https://alison.rbind.io/post/2017-06-12-up-and-running-with-blogdown/)
+
+<br>
+CM's website (Netlify): [www.mainard.co.uk](https://www.mainard.co.uk)<br>
+Code (Github): [https://github.com/chrismainey/Mainard](https://github.com/chrismainey/Mainard)
+
+
+
+---
+
+## xaringan:  Rmarkdown presentations
+
+You can build powerpoint, isoslides or other formats, but HTML seems to look best.
+<br><br>
+
+`xaringan` allows you to build markdown slides and create them using `remark.js`
+<br><br>
+
+Similar to normal markdown, but:
+
++ `---` divides sides
++ `--` reveals them incrementally
++  `class:` allows you to select a class for each slide
++ `.pull-left[]` is an examples sub-class that can be used to create a left column.
++ knit using `infinite_moon_reader`
+
+Can use `xaringanthemer` package to easily write CSS for you:
+[https://github.com/gadenbuie/xaringanthemer](https://github.com/gadenbuie/xaringanthemer)
+
+
+
+### This presentation is built with `xaringan`
 
 ---
 
